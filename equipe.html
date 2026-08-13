@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>L'équipe — QlickLab</title>
+<meta name="description" content="Les femmes et les hommes derrière QlickLab et ses startups : direction du groupe et équipes de Carelin, Lumina, Inclue, Verdae et des projets en incubation." />
+<link rel="icon" href="assets/icon-duo.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="L'équipe — QlickLab" />
+<meta property="og:description" content="Les équipes du groupe QlickLab et de ses startups à impact." />
+<meta property="og:image" content="assets/icon-duo.png" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500,400&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="preloader">
+  <svg class="pl-logo" viewBox="0 0 200 200" fill="none">
+    <g><path d="M100 100 L100 12 A88 88 0 0 1 176 56 Z" fill="#A62FBD"/><path d="M100 100 L176 56 A88 88 0 0 1 176 144 Z" fill="#F97316"/><path d="M100 100 L176 144 A88 88 0 0 1 100 188 Z" fill="#A62FBD"/><path d="M100 100 L100 188 A88 88 0 0 1 24 144 Z" fill="#F97316"/><path d="M100 100 L24 144 A88 88 0 0 1 24 56 Z" fill="#A62FBD"/><path d="M100 100 L24 56 A88 88 0 0 1 100 12 Z" fill="#F97316"/></g>
+    <circle cx="100" cy="100" r="38" fill="#FAF6FC"/>
+  </svg>
+  <div class="pl-bar"><i></i></div>
+</div>
+<div id="progress"></div>
+
+<!-- NAV -->
+<header id="header">
+  <nav class="wrap nav">
+    <a href="index.html" class="brand" data-magnetic><img loading="lazy" decoding="async" src="assets/wordmark-duo.webp" alt="QlickLab" /></a>
+    <div class="nav-links">
+      <div class="nav-item">
+        <a class="nav-top" href="index.html#philosophie">Le groupe<span class="car"></span></a>
+        <div class="nav-dd"><a href="index.html#philosophie">Notre philosophie</a><a href="index.html#education">L'éducation</a><a href="index.html#ia">L'IA responsable</a><a href="index.html#vision">Notre vision</a></div>
+      </div>
+      <div class="nav-item">
+        <a class="nav-top" href="index.html#faire">Ce qu'on fait<span class="car"></span></a>
+        <div class="nav-dd"><a href="index.html#faire">Nos domaines</a><a href="index.html#startups">Nos startups</a><a href="index.html#impact">Impact en chiffres</a><a href="index.html#europe">Présence en Europe</a><a href="index.html#approche">Notre méthode</a></div>
+      </div>
+      <div class="nav-item">
+        <a class="nav-top" href="index.html#certifications">Confiance<span class="car"></span></a>
+        <div class="nav-dd"><a href="index.html#certifications">Certifications</a><a href="index.html#faq">FAQ</a><a href="index.html#journal">Le journal</a></div>
+      </div>
+      <a class="nav-plain" href="projets.html">Nos projets</a>
+      <a class="nav-plain active" href="equipe.html">L'équipe</a>
+    </div>
+    <div class="nav-cta">
+      <a href="index.html#contact" class="btn btn-primary" data-magnetic><span>Proposer un projet</span></a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-group">Le groupe</div>
+  <a href="index.html#philosophie">Notre philosophie</a><a href="index.html#education">L'éducation</a><a href="index.html#ia">L'IA responsable</a><a href="index.html#vision">Notre vision</a>
+  <div class="mm-group">Ce qu'on fait</div>
+  <a href="index.html#faire">Nos domaines</a><a href="index.html#startups">Nos startups</a><a href="index.html#impact">Impact en chiffres</a><a href="index.html#europe">Présence en Europe</a><a href="index.html#approche">Notre méthode</a>
+  <div class="mm-group">Confiance</div>
+  <a href="index.html#certifications">Certifications</a><a href="index.html#faq">FAQ</a><a href="index.html#journal">Le journal</a>
+  <div class="mm-group">Explorer</div>
+  <a href="projets.html">Nos projets</a><a href="equipe.html">L'équipe</a><a href="index.html#contact">Proposer un projet</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="hero-mesh"><span class="m1"></span><span class="m2"></span><span class="m3"></span></div>
+  <div class="wrap">
+    <span class="eyebrow">Celles & ceux qui construisent</span>
+    <h1>L'équipe derrière <span class="grad-text">l'impact</span></h1>
+    <p>Une centaine de personnes réparties entre le groupe et ses startups — designers, ingénieurs, soignants, pédagogues, chercheurs. Toutes réunies par une même conviction : la tech doit servir l'humain.</p>
+  </div>
+</section>
+
+<!-- ÉQUIPES -->
+<section class="team-section">
+  <div class="wrap" id="teamRoot"></div>
+</section>
+
+<!-- CTA -->
+<section class="proj-cta">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:0" data-reveal>
+      <span class="eyebrow">On recrute</span>
+      <h2>Envie de mettre votre métier <span class="grad-text">au service de l'utile</span> ?</h2>
+      <p>IA, produit, design, ingénierie, terrain : rejoignez une équipe qui construit des projets qui comptent.</p>
+      <a href="index.html#engager" class="btn btn-primary btn-lg" data-magnetic style="margin-top:8px"><span>Voir nos opportunités</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <div class="f-brand">
+        <img class="logo" loading="lazy" decoding="async" src="assets/wordmark-duo.webp" alt="QlickLab" />
+        <p>Groupe tech européen à impact. La différence comme force, la philosophie et l'éducation avant le code, l'IA responsable comme simple outil.</p>
+        <div class="f-eu"><img loading="lazy" decoding="async" src="assets/eu-duo.webp" alt="Union européenne" /><span>Conçu & hébergé<br/>en Europe</span></div>
+      </div>
+      <div class="f-col"><h5>Le groupe</h5><a href="index.html#philosophie">Notre vision</a><a href="index.html#faire">Ce qu'on fait</a><a href="projets.html">Nos projets</a><a href="index.html#approche">Notre méthode</a></div>
+      <div class="f-col"><h5>S'engager</h5><a href="index.html#contact">Proposer un projet</a><a href="index.html#engager">Carrières</a><a href="index.html#engager">Partenariats</a><a href="index.html#contact">Contact</a></div>
+      <div class="f-col"><h5>Légal</h5><a href="#">Mentions légales</a><a href="#">Charte IA responsable</a><a href="#">RGPD</a><a href="#">Confidentialité</a></div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 QlickLab — Groupe tech européen à impact. Site de démonstration.</span>
+      <div class="f-social">
+        <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.56-2.3 3.17V21h-4z"/></svg></a>
+        <a href="#" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.3 8.3L23 22h-6.6l-5.2-6.8L5.3 22H2l7.8-8.9L1.7 2h6.8l4.7 6.2zM17.7 20h1.7L7.2 4H5.4z"/></svg></a>
+        <a href="#" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-3.16 19.5c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Haut de page"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+<script>
+const progress=document.getElementById('progress'),header=document.getElementById('header'),toTop=document.getElementById('toTop');
+function onScroll(){const st=window.scrollY,h=document.documentElement.scrollHeight-window.innerHeight;progress.style.width=(st/h*100)+'%';header.classList.toggle('scrolled',st>30);toTop.classList.toggle('show',st>600);}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+toTop.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+const burger=document.getElementById('burger'),menu=document.getElementById('mobileMenu');
+burger.onclick=()=>{burger.classList.toggle('open');menu.classList.toggle('open');};
+menu.querySelectorAll('a').forEach(a=>a.onclick=()=>{burger.classList.remove('open');menu.classList.remove('open');});
+(function(){const pl=document.getElementById('preloader');if(!pl)return;window.addEventListener('load',()=>setTimeout(()=>pl.classList.add('done'),400));setTimeout(()=>pl.classList.add('done'),2500);})();
+
+/* ===== TEAMS DATA + RENDER ===== */
+const ICONS={
+  dir:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.4 5 5.6.5-4.2 3.6 1.3 5.4L12 20l-5.1 2.5 1.3-5.4L4 13.5l5.6-.5z" stroke="#A62FBD" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+  sante:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 20s-7-4.3-7-9a4 4 0 017-2.6A4 4 0 0119 11c0 4.7-7 9-7 9z" stroke="#A62FBD" stroke-width="1.7" stroke-linejoin="round"/><path d="M7 12h2l1.5-3 1.5 5 1-2h2" stroke="#F97316" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  edu:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 7l9-3 9 3-9 3-9-3z" stroke="#A62FBD" stroke-width="1.7" stroke-linejoin="round"/><path d="M7 10v4c0 1.3 2.2 2.5 5 2.5s5-1.2 5-2.5v-4" stroke="#F97316" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  incl:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="4.8" r="1.9" stroke="#A62FBD" stroke-width="1.8"/><path d="M5 9h14M12 9v6M8.5 20l3.5-5 3.5 5" stroke="#F97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  env:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 20c0-8 6-13 14-13 0 8-6 13-14 13z" stroke="#A62FBD" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 16c2-3 5-5 8-6" stroke="#F97316" stroke-width="1.7" stroke-linecap="round"/></svg>',
+  incub:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3c3 2 5 5 5 9 0 2-1 4-2 5H9c-1-1-2-3-2-5 0-4 2-7 5-9z" stroke="#A62FBD" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 22h6M12 8v3" stroke="#F97316" stroke-width="1.6" stroke-linecap="round"/></svg>'
+};
+const TEAMS=[
+  {icon:'dir',title:'Direction du groupe',sub:'Paris — siège',people:[
+    ['Amélie Rousseau','Fondatrice & CEO','Paris'],['Karim Haddad','Directeur technique','Paris'],['Léa Mercier','Directrice impact & éthique','Paris'],['Thomas Berg','Directeur des opérations','Berlin']]},
+  {icon:'sante',title:'Carelin',sub:'Santé · suivi patient',people:[
+    ['Dr. Sofia Lindqvist','CEO','Rome'],['Yanis Cherif','Lead IA santé','Paris'],['Marta Rossi','Product manager','Rome'],['Dr. Paul Neumann','Référent médical','Berlin']]},
+  {icon:'edu',title:'Lumina',sub:'Éducation · tuteur IA',people:[
+    ['Nadia Fournier','CEO','Paris'],['Hugo Lefèvre','Lead pédagogie','Paris'],['Ana Duarte','Data science','Lisbonne'],['Camille Petit','Design produit','Madrid']]},
+  {icon:'incl',title:'Inclue',sub:'Inclusion · accessibilité',people:[
+    ['Sara Oliveira','CEO','Lisbonne'],['Lucas Moreau','Lead accessibilité','Paris'],['Emma Janssen','Experte LSF & FALC','Amsterdam'],['Noé Garnier','Ingénierie','Paris']]},
+  {icon:'env',title:'Verdae',sub:'Environnement · data',people:[
+    ['Erik Johansson','CEO','Stockholm'],['Chloé Martin','Data environnement','Paris'],['Marco Bianchi','Partenariats territoires','Rome']]},
+  {icon:'incub',title:'Studio d\'incubation',sub:'Sentinel · Rebond · Aidae · Terra',people:[
+    ['Inès Traoré','Lead incubation','Paris'],['Jonas Weber','Ventures','Berlin'],['Fatima El Amrani','Design de service','Madrid'],['Pauline Roy','Terrain & usagers','Varsovie']]}
+];
+function initials(n){return n.split(' ').filter(w=>w[0]&&/[A-Za-zÀ-ÿ]/.test(w[0])).slice(-2).map(w=>w[0]).join('').toUpperCase();}
+const root=document.getElementById('teamRoot');
+root.innerHTML=TEAMS.map(g=>`
+  <div class="team-group" data-reveal>
+    <div class="team-group-head"><div class="tg-ic">${ICONS[g.icon]}</div><div><h2>${g.title}</h2><div class="tg-sub">${g.sub}</div></div></div>
+    <div class="team-grid">
+      ${g.people.map(p=>`<div class="tm-card"><div class="tm-av">${initials(p[0])}</div><h4>${p[0]}</h4><div class="role">${p[1]}</div><div class="loc">${p[2]}</div></div>`).join('')}
+    </div>
+  </div>`).join('');
+
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.1});
+document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
+if(window.matchMedia('(hover:hover)').matches){
+  document.querySelectorAll('[data-magnetic]').forEach(el=>{el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.35}px)`;});el.addEventListener('mouseleave',()=>el.style.transform='');});
+}
+document.querySelectorAll('.btn').forEach(btn=>btn.addEventListener('click',e=>{const r=btn.getBoundingClientRect(),c=document.createElement('span');c.className='ripple';const d=Math.max(r.width,r.height);c.style.width=c.style.height=d+'px';c.style.left=(e.clientX-r.left-d/2)+'px';c.style.top=(e.clientY-r.top-d/2)+'px';btn.appendChild(c);setTimeout(()=>c.remove(),600);}));
+</script>
+</body>
+</html>
