@@ -23,6 +23,7 @@
   <div class="pl-bar"><i></i></div>
 </div>
 <div id="progress"></div>
+<div class="pt-overlay"><img src="assets/wordmark-white.webp" alt=""></div>
 
 <!-- NAV -->
 <header id="header">
@@ -155,7 +156,7 @@ root.innerHTML=TEAMS.map(g=>`
   <div class="team-group" data-reveal>
     <div class="team-group-head"><div class="tg-ic">${LG[g.title]||g.title[0]}</div><div><h2>${g.title}</h2><div class="tg-sub">${g.sub}</div></div></div>
     <div class="team-grid">
-      ${g.people.map(p=>`<div class="tm-card"><img class="tm-av" loading="lazy" decoding="async" src="assets/av/${slug(p[0])}.svg" alt="${p[0]}"><h4>${p[0]}</h4><div class="role">${p[1]}</div><div class="loc">${p[2]}</div>${p[3]?`<div class="tm-badge">${p[3]}</div>`:''}</div>`).join('')}
+      ${g.people.map(p=>`<div class="tm-card"><img class="tm-av" loading="lazy" decoding="async" src="assets/av/${slug(p[0])}.webp" alt="${p[0]}"><h4>${p[0]}</h4><div class="role">${p[1]}</div><div class="loc">${p[2]}</div>${p[3]?`<div class="tm-badge">${p[3]}</div>`:''}</div>`).join('')}
     </div>
   </div>`).join('');
 
@@ -166,5 +167,6 @@ if(window.matchMedia('(hover:hover)').matches){
 }
 document.querySelectorAll('.btn').forEach(btn=>btn.addEventListener('click',e=>{const r=btn.getBoundingClientRect(),c=document.createElement('span');c.className='ripple';const d=Math.max(r.width,r.height);c.style.width=c.style.height=d+'px';c.style.left=(e.clientX-r.left-d/2)+'px';c.style.top=(e.clientY-r.top-d/2)+'px';btn.appendChild(c);setTimeout(()=>c.remove(),600);}));
 </script>
+<script src="shared.js"></script>
 </body>
 </html>
