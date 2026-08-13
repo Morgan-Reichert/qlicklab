@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>QlickLab — La différence, outillée par la tech</title>
+<meta name="description" content="QlickLab est un groupe tech européen qui bâtit des startups à impact. Notre boussole : la différence comme force, la philosophie et l'éducation avant le code, et l'IA responsable comme simple outil au service de l'humain." />
+<link rel="icon" href="assets/icon-duo.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="QlickLab — La différence, outillée par la tech" />
+<meta property="og:description" content="Groupe tech européen à impact : des startups responsables, la philosophie et l'éducation avant le code, l'IA au service de l'humain." />
+<meta property="og:image" content="assets/st-difference.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500,400&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+<style>
+/* ================= TOKENS — LIGHT EDITORIAL ================= */
+:root{
+  --bg:#FAF6FC;            --bg-2:#F3EAF8;           --bg-3:#FFFFFF;
+  --surface:#FFFFFF;       --surface-2:#F8F1FB;
+  --border:#ECE0F2;        --border-2:#DFCEE9;
+  --ink:#221327;           --text:#2C2233;          --muted:#6E6479;          --muted-2:#9A90A8;
+  --purple:#A62FBD;        --purple-deep:#7C1F92;    --purple-soft:#F4E5F8;
+  --orange:#F97316;        --orange-deep:#E0590A;
+  --grad:linear-gradient(115deg,#A62FBD 0%,#F97316 100%);
+  --shadow-sm:0 2px 12px rgba(34,19,39,.06);
+  --shadow:0 26px 60px -30px rgba(124,31,146,.32);
+  --shadow-lg:0 40px 90px -36px rgba(124,31,146,.4);
+  --r:16px; --r-lg:24px; --r-xl:32px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --maxw:1180px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Satoshi',system-ui,-apple-system,sans-serif;
+  color:var(--text);background:var(--bg);line-height:1.7;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative;
+}
+body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(50% 40% at 12% 5%, rgba(166,47,189,.10), transparent 60%),
+    radial-gradient(45% 35% at 92% 12%, rgba(249,115,22,.09), transparent 60%),
+    radial-gradient(55% 45% at 50% 108%, rgba(166,47,189,.08), transparent 60%);}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+h1,h2,h3,h4,.display{font-family:'Clash Display','Satoshi',sans-serif;line-height:1.04;letter-spacing:-.015em;font-weight:600;color:var(--ink)}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:'Satoshi',sans-serif;
+  font-weight:600;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--purple-deep);background:var(--purple-soft);padding:8px 15px;border-radius:100px;}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--grad)}
+.sec-head{max-width:760px;margin:0 auto 58px;text-align:center}
+.sec-head h2{font-size:clamp(30px,4.4vw,52px);margin:20px 0 16px;font-weight:600}
+.sec-head p{font-size:18px;color:var(--muted)}
+
+/* ================= BUTTONS ================= */
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;
+  font-family:'Satoshi',sans-serif;font-weight:600;font-size:15.5px;
+  padding:15px 26px;border-radius:100px;cursor:pointer;border:none;overflow:hidden;
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease);will-change:transform;}
+.btn svg{transition:transform .35s var(--ease)}
+.btn:hover svg{transform:translateX(4px)}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 14px 34px -12px rgba(166,47,189,.6)}
+.btn-primary:hover{box-shadow:0 22px 46px -14px rgba(249,115,22,.55);transform:translateY(-2px)}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--border-2)}
+.btn-ghost:hover{border-color:var(--purple);color:var(--purple-deep);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.btn-lg{padding:18px 34px;font-size:16.5px}
+.ripple{position:absolute;border-radius:50%;transform:scale(0);background:rgba(255,255,255,.5);pointer-events:none;animation:rip .6s ease-out;z-index:2}
+@keyframes rip{to{transform:scale(2.6);opacity:0}}
+
+/* ================= PROGRESS + CURSOR ================= */
+#progress{position:fixed;top:0;left:0;height:2.5px;width:0;background:var(--grad);z-index:2000;transition:width .1s linear}
+
+/* ================= NAV ================= */
+header{position:fixed;top:0;left:0;right:0;z-index:1000;transition:transform .4s var(--ease)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;
+  margin:16px auto;max-width:var(--maxw);width:calc(100% - 52px);
+  padding:11px 12px 11px 20px;border-radius:100px;
+  background:rgba(255,255,255,.72);backdrop-filter:blur(18px) saturate(1.3);
+  border:1px solid rgba(236,224,242,.9);box-shadow:var(--shadow-sm);transition:padding .3s var(--ease),box-shadow .3s;}
+header.scrolled .nav{padding-top:8px;padding-bottom:8px;box-shadow:0 14px 40px -22px rgba(124,31,146,.4);background:rgba(255,255,255,.88)}
+.brand img{height:28px;width:auto}
+.nav-links{display:flex;gap:4px}
+.nav-links a{font-weight:500;font-size:14.5px;color:var(--text);padding:9px 15px;border-radius:100px;transition:color .25s,background .25s}
+.nav-links a:hover{color:var(--purple-deep);background:var(--purple-soft)}
+.nav-cta{display:flex;align-items:center;gap:12px}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+.burger span{width:24px;height:2px;background:var(--ink);border-radius:2px;transition:.3s var(--ease)}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{position:fixed;inset:0;z-index:999;background:rgba(250,246,252,.98);backdrop-filter:blur(20px);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
+.mobile-menu.open{opacity:1;pointer-events:auto}
+.mobile-menu a{font-family:'Clash Display',sans-serif;font-size:30px;font-weight:500;color:var(--ink);padding:10px}
+
+/* ================= HERO ================= */
+.hero{padding:168px 0 80px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(38px,5.4vw,66px);margin:24px 0 22px;font-weight:600}
+.hero h1 .word{display:inline-block;opacity:0;transform:translateY(36px);animation:wordIn .9s var(--ease) forwards}
+@keyframes wordIn{to{opacity:1;transform:none}}
+.hero p.lead{font-size:18.5px;color:var(--muted);max-width:560px;margin-bottom:32px;opacity:0;animation:fadeUp .8s var(--ease) .7s forwards}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s var(--ease) .85s forwards}
+.hero-visual{position:relative;opacity:0;animation:fadeUp 1s var(--ease) .5s forwards}
+.hero-frame{position:relative}
+.hero-frame img{width:100%;display:block;animation:floaty 8s ease-in-out infinite}
+.hero-badge{position:absolute;left:0;bottom:6px;display:flex;align-items:center;gap:12px;
+  background:#fff;border:1px solid var(--border);border-radius:16px;padding:13px 17px;box-shadow:var(--shadow);animation:floaty 6s ease-in-out infinite}
+.hero-badge .ic{width:40px;height:40px;border-radius:12px;background:var(--purple-soft);display:grid;place-items:center;flex:none}
+.hero-badge b{display:block;font-size:14px;color:var(--ink)}
+.hero-badge span{font-size:12.5px;color:var(--muted)}
+@keyframes floaty{50%{transform:translateY(-14px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* ================= MARQUEE ================= */
+.marquee-wrap{padding:38px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;background:var(--bg-2)}
+.mq-label{text-align:center;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);margin-bottom:22px;font-weight:600}
+.marquee{display:flex;gap:56px;width:max-content;animation:scrollx 34s linear infinite}
+.marquee:hover{animation-play-state:paused}
+.marquee .m-item{display:inline-flex;align-items:center;gap:22px;font-family:'Clash Display',sans-serif;font-weight:600;font-size:23px;color:#C3B6CE;white-space:nowrap;transition:color .3s}
+.marquee .m-item::before{content:"";width:9px;height:9px;background:var(--grad);border-radius:2px;transform:rotate(45deg);opacity:.6;flex:none}
+.marquee .m-item:hover{color:var(--purple)}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+
+/* ================= STATS ================= */
+.stats{padding:66px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.stat{text-align:center;padding:12px 22px;position:relative}
+.stat+.stat::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);height:56px;width:1px;background:var(--border)}
+.stat .num{font-family:'Clash Display';font-weight:600;font-size:clamp(40px,5vw,58px);line-height:1;color:var(--ink)}
+.stat .num i{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{color:var(--muted);margin-top:12px;font-size:14px}
+
+/* ================= NARRATIVE CHAPTERS ================= */
+.story-intro{text-align:center;max-width:780px;margin:0 auto;padding:74px 0 20px}
+.story-intro h2{font-size:clamp(28px,3.6vw,44px);margin:16px 0}
+.story-intro p{font-size:19px;color:var(--muted)}
+.chapter{padding:66px 0}
+.chapter .inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.chapter.flip .chap-visual{order:2}
+.chap-visual{position:relative;display:grid;place-items:center;padding:10px}
+.chap-visual img{width:100%;max-width:520px;display:block;filter:drop-shadow(0 24px 40px rgba(124,31,146,.14))}
+.chap-num{display:inline-flex;align-items:center;gap:10px;font-family:'Clash Display';font-weight:600;font-size:13.5px;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:16px}
+.chap-num::before{content:"";width:26px;height:2px;background:var(--grad);border-radius:2px}
+.chapter h2{font-size:clamp(28px,3.6vw,44px);margin-bottom:18px;font-weight:600}
+.chapter p{color:var(--muted);font-size:17px;margin-bottom:16px}
+.chapter .pull{font-family:'Clash Display';font-weight:500;font-size:20px;color:var(--ink);border-left:3px solid;border-image:var(--grad) 1;padding-left:18px;margin-top:24px;line-height:1.4}
+
+/* ================= FEATURES / DOMAINES ================= */
+.features{padding:90px 0}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+.card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);border-color:var(--border-2)}
+.card-media{position:relative;height:180px;overflow:hidden;background:linear-gradient(160deg,rgba(166,47,189,.09),rgba(249,115,22,.06))}
+.card-media img{width:100%;height:100%;object-fit:contain;padding:14px 16px;transition:transform .6s var(--ease)}
+.card:hover .card-media img{transform:scale(1.05)}
+.card-ic{position:absolute;left:16px;bottom:14px;z-index:2;width:44px;height:44px;border-radius:12px;background:#fff;border:1px solid var(--border);display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.card-body{padding:22px 24px 26px}
+.card h3{font-size:19px;margin-bottom:8px;font-weight:600}
+.card p{color:var(--muted);font-size:14.5px}
+
+/* ================= SHOWCASE ================= */
+.showcase{padding:90px 0;overflow:hidden}
+.carousel{position:relative}
+.track-view{overflow:hidden;border-radius:var(--r-xl)}
+.track{display:flex;transition:transform .65s var(--ease);cursor:grab}
+.track.grabbing{cursor:grabbing;transition:none}
+.slide{min-width:100%;padding:4px}
+.slide-inner{display:grid;grid-template-columns:1fr 1fr;border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--border);background:#fff;box-shadow:var(--shadow)}
+.slide-copy{padding:50px 46px}
+.slide-copy .tag{font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--grad);display:inline-block;padding:5px 13px;border-radius:100px}
+.slide-copy h3{font-size:28px;margin:16px 0 14px;font-weight:600}
+.slide-copy p{color:var(--muted);margin-bottom:22px}
+.slide-copy ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.slide-copy li{display:flex;gap:11px;align-items:center;font-size:15px}
+.slide-copy li svg{flex:none}
+.slide-visual{position:relative;overflow:hidden;min-height:410px;background:var(--bg-2)}
+.slide-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.v-chip{position:absolute;z-index:2;display:flex;flex-direction:column;padding:14px 18px;border-radius:15px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border:1px solid var(--border);box-shadow:var(--shadow)}
+.v-chip b{font-family:'Clash Display';font-size:24px;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.v-chip small{color:var(--muted);font-size:12px;margin-top:3px}
+.vc-1{top:22px;left:22px}.vc-2{bottom:22px;right:22px}
+.car-nav{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:32px}
+.car-btn{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--border-2);background:#fff;cursor:pointer;display:grid;place-items:center;transition:.3s var(--ease);color:var(--ink)}
+.car-btn:hover{background:var(--grad);color:#fff;border-color:transparent;transform:scale(1.08)}
+.dots{display:flex;gap:9px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border-2);cursor:pointer;transition:.3s var(--ease)}
+.dot.active{background:var(--grad);width:30px;border-radius:5px}
+
+/* ================= PROCESS ================= */
+.process{padding:96px 0;background:var(--bg-2)}
+.steps{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:20px}
+.steps::before{content:"";position:absolute;top:34px;left:9%;right:9%;height:2px;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform 1.3s var(--ease)}
+.steps.drawn::before{transform:scaleX(1)}
+.step{text-align:center;position:relative;z-index:1}
+.step .n{width:70px;height:70px;border-radius:50%;margin:0 auto 20px;display:grid;place-items:center;background:#fff;border:1.5px solid var(--border-2);font-family:'Clash Display';font-weight:600;font-size:23px;transition:transform .4s var(--ease),background .4s,color .4s}
+.step:hover .n{background:var(--grad);color:#fff;transform:translateY(-6px) scale(1.05);border-color:transparent;box-shadow:var(--shadow)}
+.step h4{font-size:18px;margin-bottom:8px;font-weight:600}
+.step p{color:var(--muted);font-size:14.5px}
+
+/* ================= CERTIFICATIONS ================= */
+.certs{padding:96px 0}
+.certs-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center}
+.certs-visual{position:relative;display:grid;place-items:center;min-height:300px}
+.certs-visual::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(166,47,189,.18),transparent 65%);filter:blur(14px)}
+.certs-visual img{position:relative;max-width:310px;filter:drop-shadow(0 30px 50px rgba(166,47,189,.35));animation:floaty 6.5s ease-in-out infinite}
+.certs-head h2{font-size:clamp(26px,3.4vw,40px);margin:16px 0 14px;font-weight:600}
+.certs-head p{color:var(--muted);font-size:16px;margin-bottom:24px;max-width:520px}
+.certs-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cert{display:flex;gap:14px;align-items:flex-start;padding:15px 16px;border-radius:14px;border:1px solid transparent;transition:background .3s,border-color .3s}
+.cert:hover{background:var(--surface);border-color:var(--border);box-shadow:var(--shadow-sm)}
+.cert .ci{width:44px;height:44px;border-radius:12px;background:var(--purple-soft);display:grid;place-items:center;flex:none}
+.cert b{display:block;font-size:15px;color:var(--ink);margin-bottom:2px}
+.cert small{color:var(--muted);font-size:12.5px;line-height:1.4}
+
+/* ================= TESTIMONIALS ================= */
+.testi{padding:96px 0;background:var(--bg-2)}
+.t-view{overflow:hidden;max-width:860px;margin:0 auto}
+.t-track{display:flex;transition:transform .6s var(--ease)}
+.t-slide{min-width:100%;text-align:center;padding:0 20px}
+.t-slide .quote{font-family:'Clash Display';font-weight:500;font-size:clamp(23px,3.2vw,33px);line-height:1.32;margin-bottom:30px;color:var(--ink)}
+.t-slide .quote span{background:linear-gradient(120deg,rgba(166,47,189,.16),rgba(249,115,22,.16));padding:0 6px;border-radius:6px}
+.t-person{display:flex;align-items:center;justify-content:center;gap:14px}
+.t-person .av{width:54px;height:54px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#fff;font-family:'Clash Display';box-shadow:var(--shadow-sm)}
+.t-person b{display:block;color:var(--ink)}
+.t-person small{color:var(--muted)}
+.t-dots{justify-content:center;margin-top:36px;display:flex;gap:9px}
+
+/* ================= ENGAGER ================= */
+.pricing{padding:96px 0}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+.plan{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:34px;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+.plan:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);border-color:var(--border-2)}
+.plan.pop{border-color:transparent;background:linear-gradient(165deg,#fff,#FBF2FC);box-shadow:var(--shadow-lg)}
+.plan.pop::after{content:"";position:absolute;inset:0;border-radius:var(--r-xl);padding:1.5px;background:var(--grad);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.plan .pill{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.plan.pop .pill{color:#fff;background:var(--grad);padding:5px 13px;border-radius:100px;position:absolute;top:-13px;right:26px;box-shadow:var(--shadow-sm)}
+.plan h3{font-size:22px;margin:8px 0 6px;font-weight:600}
+.plan .muted{color:var(--muted);font-size:15px}
+.plan ul{list-style:none;margin:24px 0 28px;display:flex;flex-direction:column;gap:13px}
+.plan li{display:flex;gap:11px;font-size:14.5px}
+.plan li svg{flex:none;margin-top:3px}
+.plan .btn{width:100%;justify-content:center}
+
+/* ================= CTA ================= */
+.cta{padding:104px 0}
+.cta-box{position:relative;border-radius:var(--r-xl);overflow:hidden;background:var(--grad);box-shadow:var(--shadow-lg);
+  display:flex;align-items:center;gap:20px;padding:56px 30px 56px 56px}
+.cta-box::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 70% at 85% 90%,rgba(0,0,0,.14),transparent 60%)}
+.cta-content{flex:1;position:relative;z-index:1;color:#fff}
+.cta-box h2{color:#fff;font-size:clamp(28px,4.2vw,46px);margin-bottom:14px;font-weight:600}
+.cta-box p{font-size:18px;color:rgba(255,255,255,.9);max-width:560px;margin:0 0 28px}
+.cta-box .btn-primary{background:#fff;color:var(--purple-deep)}
+.cta-box .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
+.cta-person{flex:none;align-self:flex-end;width:290px;margin:0 6px -56px 0;position:relative;z-index:1;filter:drop-shadow(0 24px 44px rgba(0,0,0,.28))}
+.cta-ap{position:absolute;opacity:.16;width:420px;z-index:0}
+.cta-ap.a1{top:-140px;left:-120px;animation:apspin 44s linear infinite}
+@keyframes apspin{to{transform:rotate(360deg)}}
+
+/* ================= FOOTER ================= */
+footer{background:var(--bg-2);color:var(--muted);padding:70px 0 32px;border-top:1px solid var(--border)}
+.f-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;padding-bottom:44px;border-bottom:1px solid var(--border)}
+.f-brand img.logo{height:30px;margin-bottom:18px}
+.f-brand p{max-width:300px;font-size:14.5px}
+.f-eu{display:flex;align-items:center;gap:12px;margin-top:22px;font-size:13px}
+.f-eu img{height:44px}
+.f-col h5{color:var(--ink);font-family:'Clash Display';font-size:15px;margin-bottom:15px;font-weight:600}
+.f-col a{display:block;padding:6px 0;font-size:14.5px;transition:color .25s,transform .25s}
+.f-col a:hover{color:var(--purple-deep);transform:translateX(4px)}
+.f-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;font-size:13.5px;flex-wrap:wrap;gap:14px}
+.f-social{display:flex;gap:10px}
+.f-social a{width:40px;height:40px;border-radius:50%;border:1px solid var(--border-2);display:grid;place-items:center;transition:.3s var(--ease);color:var(--muted)}
+.f-social a:hover{background:var(--grad);border-color:transparent;color:#fff;transform:translateY(-3px)}
+
+#toTop{position:fixed;bottom:26px;right:26px;width:50px;height:50px;border-radius:50%;background:var(--grad);color:#fff;border:none;cursor:pointer;display:grid;place-items:center;box-shadow:var(--shadow);z-index:900;opacity:0;transform:translateY(20px) scale(.8);pointer-events:none;transition:.4s var(--ease)}
+#toTop.show{opacity:1;transform:none;pointer-events:auto}
+
+/* ================= REVEAL ================= */
+[data-reveal]{opacity:0;transform:translateY(34px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+[data-reveal].in{opacity:1;transform:none}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:980px){
+  .nav-links,.nav-cta .btn{display:none}
+  .burger{display:flex}
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-visual{order:-1;max-width:560px;margin:0 auto}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:34px 0}
+  .stat+.stat::before{display:none}
+  .chapter .inner{grid-template-columns:1fr;gap:32px}
+  .chapter.flip .chap-visual{order:-1}
+  .chap-visual{order:-1;max-width:560px;margin:0 auto}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .slide-inner{grid-template-columns:1fr}
+  .slide-visual{order:-1;min-height:260px}
+  .steps{grid-template-columns:1fr 1fr;gap:36px}
+  .steps::before{display:none}
+  .certs-grid{grid-template-columns:1fr;gap:34px}
+  .certs-visual{min-height:200px}
+  .certs-visual img{max-width:220px}
+  .price-grid{grid-template-columns:1fr;max-width:460px;margin:0 auto}
+  .cta-box{flex-direction:column;text-align:center;padding:52px 28px}
+  .cta-box p{margin-left:auto;margin-right:auto}
+  .cta-box .hero-actions{justify-content:center}
+  .cta-person{width:230px;margin:6px 0 -52px}
+  .f-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .stats-grid,.feat-grid,.certs-list,.f-top{grid-template-columns:1fr}
+  .slide-copy{padding:34px 28px}
+  .cta-person{display:none}
+  .hero{padding:132px 0 60px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ============= ENHANCEMENTS ============= */
+/* preloader */
+#preloader{position:fixed;inset:0;z-index:5000;background:var(--bg);display:grid;place-items:center;transition:opacity .7s var(--ease),visibility .7s}
+#preloader.done{opacity:0;visibility:hidden}
+#preloader .pl-logo{width:78px;height:78px;animation:plspin 1.5s var(--ease) infinite;filter:drop-shadow(0 12px 24px rgba(166,47,189,.35))}
+@keyframes plspin{0%{transform:rotate(0) scale(.92)}50%{transform:rotate(180deg) scale(1.06)}100%{transform:rotate(360deg) scale(.92)}}
+#preloader .pl-bar{position:absolute;bottom:19%;left:50%;transform:translateX(-50%);width:150px;height:3px;border-radius:3px;background:var(--border);overflow:hidden}
+#preloader .pl-bar i{position:absolute;top:0;bottom:0;width:42%;background:var(--grad);border-radius:3px;animation:plbar 1.1s ease-in-out infinite}
+@keyframes plbar{0%{left:-42%}100%{left:100%}}
+/* hero mesh + particles */
+.hero{isolation:isolate}
+#heroCanvas{position:absolute;inset:0;z-index:-1;width:100%;height:100%;opacity:.55;pointer-events:none}
+.hero-mesh{position:absolute;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.hero-mesh span{position:absolute;border-radius:50%;filter:blur(72px);opacity:.5;animation:meshmove 20s ease-in-out infinite}
+.hero-mesh .m1{width:420px;height:420px;background:rgba(166,47,189,.34);top:-130px;left:-70px}
+.hero-mesh .m2{width:360px;height:360px;background:rgba(249,115,22,.26);top:18%;right:-110px;animation-delay:-7s}
+.hero-mesh .m3{width:320px;height:320px;background:rgba(166,47,189,.22);bottom:-140px;left:32%;animation-delay:-13s}
+@keyframes meshmove{50%{transform:translate(46px,-34px) scale(1.12)}}
+/* split word reveal */
+.split .w{display:inline-block;opacity:0;transform:translateY(22px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.split.in .w{opacity:1;transform:none}
+/* sticky chapter visual */
+@media(min-width:981px){.chapter .chap-visual{position:sticky;top:104px}}
+/* impact */
+.impact{padding:96px 0}
+.impact-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:30px;box-shadow:var(--shadow-sm)}
+.chart-card h4{font-size:16px;margin-bottom:4px}
+.chart-card .sub{color:var(--muted);font-size:13px;margin-bottom:16px}
+.line-svg{width:100%;height:auto;display:block}
+.line-path{fill:none;stroke:url(#lg);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.line-area{fill:url(#lga);opacity:0;transition:opacity 1.6s var(--ease) .4s}
+.impact.in .line-area{opacity:1}
+.line-dot{fill:#fff;stroke:#A62FBD;stroke-width:3;opacity:0;transition:opacity .4s}
+.impact.in .line-dot{opacity:1;transition-delay:1.6s}
+.bars{display:flex;flex-direction:column;gap:15px}
+.bar-row{display:grid;grid-template-columns:118px 1fr 52px;align-items:center;gap:12px;font-size:14px}
+.bar-row b{font-family:'Clash Display';text-align:right;color:var(--purple-deep)}
+.bar-track{height:12px;background:var(--bg-2);border-radius:8px;overflow:hidden}
+.bar-fill{height:100%;width:0;background:var(--grad);border-radius:8px;transition:width 1.5s var(--ease)}
+/* europe map */
+.eumap{padding:96px 0;background:var(--bg-2)}
+.eu-wrap{position:relative;max-width:720px;margin:24px auto 0;aspect-ratio:1/.82}
+.eu-svg{position:absolute;inset:0;width:100%;height:100%}
+.eu-land{fill:rgba(166,47,189,.10);stroke:rgba(166,47,189,.35);stroke-width:1.5}
+.eu-link{stroke:url(#lg2);stroke-width:1.4;opacity:.5;stroke-dasharray:4 5}
+.eu-dot{position:absolute;transform:translate(-50%,-50%);cursor:pointer;z-index:2}
+.eu-dot i{display:block;width:13px;height:13px;border-radius:50%;background:var(--grad);position:relative}
+.eu-dot i::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 0 rgba(166,47,189,.5);animation:pulse 2.6s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(166,47,189,.5)}100%{box-shadow:0 0 0 15px rgba(166,47,189,0)}}
+.eu-dot .tip{position:absolute;bottom:20px;left:50%;transform:translateX(-50%) translateY(6px);background:var(--ink);color:#fff;font-size:12px;font-weight:600;padding:6px 11px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:.25s var(--ease);box-shadow:var(--shadow)}
+.eu-dot .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
+.eu-dot:hover{z-index:3}
+.eu-dot:hover .tip{opacity:1;transform:translateX(-50%)}
+/* journal */
+.journal{padding:96px 0}
+.jgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.jcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.jcard:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
+.jcard .jmedia{height:150px;background:linear-gradient(160deg,rgba(166,47,189,.14),rgba(249,115,22,.10));display:grid;place-items:center}
+.jcard .jmedia svg{width:52px;height:52px}
+.jcard .jbody{padding:22px 22px 24px}
+.jcard .jtag{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange-deep)}
+.jcard h3{font-size:18px;margin:8px 0 8px}
+.jcard p{color:var(--muted);font-size:14px}
+.jcard .jmeta{margin-top:14px;font-size:13px;color:var(--muted-2)}
+/* faq */
+.faq{padding:96px 0;background:var(--bg-2)}
+.faq-list{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .3s}
+.faq-item.open{box-shadow:var(--shadow-sm)}
+.faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:20px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:'Clash Display';font-weight:600;font-size:17px;color:var(--ink)}
+.faq-q .chev{flex:none;width:26px;height:26px;border-radius:50%;background:var(--purple-soft);display:grid;place-items:center;transition:transform .35s var(--ease),background .35s}
+.faq-item.open .faq-q .chev{transform:rotate(45deg);background:var(--grad)}
+.faq-item.open .faq-q .chev svg{stroke:#fff}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s var(--ease)}
+.faq-a p{padding:0 22px 22px;color:var(--muted);font-size:15px}
+/* modal */
+.modal{position:fixed;inset:0;z-index:4000;display:grid;place-items:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .35s var(--ease)}
+.modal.open{opacity:1;pointer-events:auto}
+.modal-bg{position:absolute;inset:0;background:rgba(34,19,39,.5);backdrop-filter:blur(6px)}
+.modal-card{position:relative;z-index:1;width:min(640px,100%);max-height:88vh;overflow:auto;background:var(--surface);border-radius:var(--r-xl);box-shadow:var(--shadow-lg);transform:translateY(24px) scale(.97);transition:transform .4s var(--ease)}
+.modal.open .modal-card{transform:none}
+.modal-hero{height:150px;background:var(--grad);display:flex;align-items:flex-end;padding:22px 28px}
+.modal-hero .tag{background:rgba(255,255,255,.2);color:#fff;font-size:12px;font-weight:600;padding:5px 12px;border-radius:100px}
+.modal-body{padding:28px}
+.modal-body h3{font-size:26px;margin-bottom:12px}
+.modal-body p{color:var(--muted);margin-bottom:14px}
+.modal-body .mstats{display:flex;gap:22px;margin:18px 0;flex-wrap:wrap}
+.modal-body .mstats div b{font-family:'Clash Display';font-size:24px;color:var(--purple-deep);display:block}
+.modal-body .mstats div small{color:var(--muted);font-size:12px}
+.modal-close{position:absolute;top:14px;right:14px;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.slide-copy .case-link{margin-top:20px;display:inline-flex;align-items:center;gap:7px;font-weight:600;color:var(--purple-deep);font-size:14.5px;background:none;border:none;cursor:pointer;padding:0}
+@media(max-width:980px){.impact-grid{grid-template-columns:1fr;gap:30px}.jgrid{grid-template-columns:1fr}.eu-wrap{max-width:520px}}
+</style>
+</head>
+<body>
+<div id="preloader">
+  <svg class="pl-logo" viewBox="0 0 200 200" fill="none">
+    <g><path d="M100 100 L100 12 A88 88 0 0 1 176 56 Z" fill="#A62FBD"/><path d="M100 100 L176 56 A88 88 0 0 1 176 144 Z" fill="#F97316"/><path d="M100 100 L176 144 A88 88 0 0 1 100 188 Z" fill="#A62FBD"/><path d="M100 100 L100 188 A88 88 0 0 1 24 144 Z" fill="#F97316"/><path d="M100 100 L24 144 A88 88 0 0 1 24 56 Z" fill="#A62FBD"/><path d="M100 100 L24 56 A88 88 0 0 1 100 12 Z" fill="#F97316"/></g>
+    <circle cx="100" cy="100" r="38" fill="#FAF6FC"/>
+  </svg>
+  <div class="pl-bar"><i></i></div>
+</div>
+<div id="progress"></div>
+
+<!-- NAV -->
+<header id="header">
+  <nav class="wrap nav">
+    <a href="#top" class="brand" data-magnetic><img src="assets/wordmark-duo.png" alt="QlickLab" /></a>
+    <div class="nav-links">
+      <a href="#philosophie">Notre vision</a>
+      <a href="#faire">Ce qu'on fait</a>
+      <a href="#startups">Startups</a>
+      <a href="#certifications">Conformité</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary" data-magnetic><span>Proposer un projet</span></a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#philosophie">Notre vision</a>
+  <a href="#faire">Ce qu'on fait</a>
+  <a href="#startups">Startups</a>
+  <a href="#certifications">Conformité</a>
+  <a href="#contact">Proposer un projet</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-mesh"><span class="m1"></span><span class="m2"></span><span class="m3"></span></div>
+  <canvas id="heroCanvas"></canvas>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Groupe tech européen · Startups à impact</span>
+      <h1>
+        <span class="word" style="animation-delay:.05s">La</span>
+        <span class="word" style="animation-delay:.13s">différence</span>
+        <span class="word" style="animation-delay:.21s">n'est</span>
+        <span class="word" style="animation-delay:.29s">pas</span>
+        <span class="word" style="animation-delay:.37s">un</span>
+        <span class="word" style="animation-delay:.45s">problème.</span><br/>
+        <span class="word grad-text" style="animation-delay:.55s">C'est</span>
+        <span class="word grad-text" style="animation-delay:.63s">une</span>
+        <span class="word grad-text" style="animation-delay:.71s">force</span>
+        <span class="word grad-text" style="animation-delay:.79s">à</span>
+        <span class="word grad-text" style="animation-delay:.87s">outiller.</span>
+      </h1>
+      <p class="lead">QlickLab est un groupe tech européen qui bâtit des startups à impact. Notre point de départ n'est pas la technologie — c'est une conviction : une société ne vaut que par la place qu'elle donne à ses différences. La philosophie et l'éducation guident nos choix ; l'IA responsable n'est qu'un outil.</p>
+      <div class="hero-actions">
+        <a href="#philosophie" class="btn btn-primary btn-lg" data-magnetic>
+          <span>Lire notre vision</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#faire" class="btn btn-ghost btn-lg" data-magnetic><span>Ce qu'on construit</span></a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-frame" data-tilt>
+        <img src="assets/st-difference.png" alt="La différence comme force" onerror="this.parentNode.style.background='var(--purple-soft)'" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <p class="mq-label">Nos startups & domaines d'impact</p>
+  <div class="marquee" id="marquee">
+    <span class="m-item">Carelin</span><span class="m-item">Lumina</span><span class="m-item">Inclue</span>
+    <span class="m-item">Verdae</span><span class="m-item">Sentinel</span><span class="m-item">Rebond</span>
+    <span class="m-item">Aidae</span><span class="m-item">Terra</span>
+    <span class="m-item">Carelin</span><span class="m-item">Lumina</span><span class="m-item">Inclue</span>
+    <span class="m-item">Verdae</span><span class="m-item">Sentinel</span><span class="m-item">Rebond</span>
+    <span class="m-item">Aidae</span><span class="m-item">Terra</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats" id="groupe">
+  <div class="wrap stats-grid">
+    <div class="stat" data-reveal><div class="num"><span class="count" data-to="8">0</span></div><div class="lbl">Startups lancées</div></div>
+    <div class="stat" data-reveal style="transition-delay:.08s"><div class="num"><span class="count" data-to="6">0</span></div><div class="lbl">Domaines d'impact</div></div>
+    <div class="stat" data-reveal style="transition-delay:.16s"><div class="num"><span class="count" data-to="1.2">0</span><i>M</i></div><div class="lbl">Personnes bénéficiaires</div></div>
+    <div class="stat" data-reveal style="transition-delay:.24s"><div class="num"><span class="count" data-to="100">0</span><i>%</i></div><div class="lbl">IA responsable, hébergée en Europe</div></div>
+  </div>
+</section>
+
+<!-- STORY INTRO -->
+<div class="wrap">
+  <div class="story-intro" data-reveal>
+    <span class="eyebrow">Notre ligne</span>
+    <h2>Avant de parler de tech, parlons de ce en quoi <span class="grad-text">on croit</span>.</h2>
+    <p>Quatre convictions guident chaque startup que nous lançons. Elles décident de ce que nous construisons — et surtout de ce que nous refusons.</p>
+  </div>
+</div>
+
+<!-- CHAPITRE 01 — PHILOSOPHIE -->
+<section class="chapter" id="philosophie" data-reveal>
+  <div class="wrap inner">
+    <div class="chap-visual"><img src="assets/st-philosophie.png" alt="La philosophie d'abord" onerror="this.parentNode.style.background='var(--purple-soft)'" /></div>
+    <div class="chap-copy">
+      <span class="chap-num">Chapitre 01 · Philosophie</span>
+      <h2>On commence par « pourquoi ». Jamais par « comment ».</h2>
+      <p>Avant la moindre ligne de code, une question : est-ce que ce produit rend les gens plus libres, plus autonomes, plus dignes&nbsp;? La philosophie n'est pas un supplément d'âme chez QlickLab — c'est la première étape de conception.</p>
+      <p>On interroge le sens, l'éthique et les conséquences d'un projet avant même de décider s'il mérite d'exister. Beaucoup d'idées s'arrêtent là. C'est voulu.</p>
+      <p class="pull">« Une technologie sans intention est une technologie dangereuse. »</p>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPITRE 02 — ÉDUCATION -->
+<section class="chapter flip" id="education" data-reveal>
+  <div class="wrap inner">
+    <div class="chap-visual"><img src="assets/st-education.png" alt="L'éducation comme levier" onerror="this.parentNode.style.background='var(--purple-soft)'" /></div>
+    <div class="chap-copy">
+      <span class="chap-num">Chapitre 02 · Éducation</span>
+      <h2>Éduquer, c'est émanciper.</h2>
+      <p>Rien ne réduit les inégalités aussi durablement que l'accès au savoir. C'est pourquoi l'éducation traverse tout ce que nous faisons : nos outils expliquent, transmettent et rendent autonome — au lieu de créer de la dépendance.</p>
+      <p>Un produit qui infantilise l'utilisateur a échoué, même s'il « marche ». Quand une de nos startups touche l'école, elle est gratuite là où le besoin est le plus grand.</p>
+      <p class="pull">« Donner un outil, c'est bien. Apprendre à s'en passer, c'est mieux. »</p>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPITRE 03 — IA -->
+<section class="chapter" id="ia" data-reveal>
+  <div class="wrap inner">
+    <div class="chap-visual"><img src="assets/st-ia.png" alt="L'IA à sa juste place" onerror="this.parentNode.style.background='var(--purple-soft)'" /></div>
+    <div class="chap-copy">
+      <span class="chap-num">Chapitre 03 · Intelligence artificielle</span>
+      <h2>L'IA n'est pas une fin. C'est un outil au service de l'humain.</h2>
+      <p>Nous ne faisons pas de l'IA pour faire de l'IA. Nous l'utilisons là où elle libère du temps, élargit l'accès et épaule les personnes — jamais là où elle déciderait à leur place.</p>
+      <p>Transparente, documentée, hébergée en Europe : chez nous, l'humain garde la main. Toujours. L'algorithme propose, la personne dispose.</p>
+      <p class="pull">« L'IA doit augmenter les gens, pas les remplacer. »</p>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPITRE 04 — VISION -->
+<section class="chapter flip" id="vision" data-reveal>
+  <div class="wrap inner">
+    <div class="chap-visual"><img src="assets/st-vision.png" alt="Notre vision" onerror="this.parentNode.style.background='var(--purple-soft)'" /></div>
+    <div class="chap-copy">
+      <span class="chap-num">Chapitre 04 · Vision</span>
+      <h2>Une Europe où la technologie répare plus qu'elle ne divise.</h2>
+      <p>Nous imaginons un continent où l'innovation sert d'abord celles et ceux qu'on laisse habituellement de côté : les malades, les élèves en difficulté, les personnes empêchées, les territoires oubliés.</p>
+      <p>Une tech qui rapproche au lieu de fracturer, souveraine et humaine. C'est la boussole de chaque startup que nous lançons.</p>
+      <p class="pull">« Le progrès ne compte que s'il n'oublie personne. »</p>
+    </div>
+  </div>
+</section>
+
+<!-- CE QU'ON FAIT -->
+<section id="faire">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow">Concrètement</span>
+      <h2>Alors, qu'est-ce qu'on <span class="grad-text">fait, au juste</span> ?</h2>
+      <p>On est un venture builder : on détecte des besoins réels, puis on conçoit et on lance des startups pour y répondre. Voici nos terrains — et des produits déjà entre les mains des gens.</p>
+    </div>
+  </div>
+  <div class="features">
+    <div class="wrap">
+      <div class="feat-grid">
+        <div class="card" data-reveal data-tilt>
+          <div class="card-media"><img src="assets/dom-sante.png" alt="Santé" onerror="this.parentNode.style.background='var(--purple-soft)'"/>
+            <div class="card-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 20s-7-4.3-7-9a4 4 0 017-2.6A4 4 0 0119 11c0 4.7-7 9-7 9z" stroke="#A62FBD" stroke-width="2" stroke-linejoin="round"/><path d="M7 12h2l1.5-3 1.5 5 1-2h2" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="card-body"><h3>Santé & prévention</h3><p>Suivi des maladies chroniques, prévention, aide au diagnostic — sans jamais remplacer le soignant.</p></div>
+        </div>
+        <div class="card" data-reveal data-tilt style="transition-delay:.06s">
+          <div class="card-media"><img src="assets/dom-education.png" alt="Éducation" onerror="this.parentNode.style.background='var(--purple-soft)'"/>
+            <div class="card-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 7l9-3 9 3-9 3-9-3z" stroke="#A62FBD" stroke-width="2" stroke-linejoin="round"/><path d="M7 10v4c0 1.3 2.2 2.5 5 2.5s5-1.2 5-2.5v-4" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="card-body"><h3>Éducation & savoir</h3><p>Tuteurs IA, lutte contre le décrochage, accès au savoir pour tous — gratuit là où il le faut.</p></div>
+        </div>
+        <div class="card" data-reveal data-tilt style="transition-delay:.12s">
+          <div class="card-media"><img src="assets/dom-inclusion.png" alt="Inclusion" onerror="this.parentNode.style.background='var(--purple-soft)'"/>
+            <div class="card-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="4.6" r="1.9" stroke="#A62FBD" stroke-width="2"/><path d="M5 9h14M12 9v6M8.5 20l3.5-5 3.5 5" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="card-body"><h3>Inclusion & social</h3><p>Accessibilité, insertion, lutte contre l'isolement — pensés avec les personnes concernées.</p></div>
+        </div>
+        <div class="card" data-reveal data-tilt style="transition-delay:.18s">
+          <div class="card-media"><img src="assets/dom-environnement.png" alt="Environnement" onerror="this.parentNode.style.background='var(--purple-soft)'"/>
+            <div class="card-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 20c0-8 6-13 14-13 0 8-6 13-14 13z" stroke="#A62FBD" stroke-width="2" stroke-linejoin="round"/><path d="M9 16c2-3 5-5 8-6" stroke="#F97316" stroke-width="2" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="card-body"><h3>Environnement & climat</h3><p>Sobriété énergétique et données environnementales, à l'échelle du territoire.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STARTUPS CAROUSEL -->
+<section class="showcase" id="startups">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow">Nos startups</span>
+      <h2>Des convictions <span class="grad-text">devenues produits</span></h2>
+      <p>Chaque startup applique la même ligne : un besoin réel, l'humain au centre, l'IA en soutien.</p>
+    </div>
+    <div class="carousel" data-reveal>
+      <div class="track-view">
+        <div class="track" id="track">
+          <div class="slide"><div class="slide-inner">
+            <div class="slide-copy">
+              <span class="tag">Santé · Suivi patient</span>
+              <h3>Carelin — compagnon des maladies chroniques</h3>
+              <p>Une IA qui aide les patients à suivre leur traitement au quotidien et alerte les soignants au bon moment. Validée avec des médecins, respectueuse du secret médical.</p>
+              <ul>
+                <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F4E5F8"/><path d="M8 12l3 3 5-6" stroke="#A62FBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 40 000 patients accompagnés</li>
+                <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F4E5F8"/><path d="M8 12l3 3 5-6" stroke="#A62FBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> −22% d'hospitalisations évitables</li>
+                <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F4E5F8"/><path d="M8 12l3 3 5-6" stroke="#A62FBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Données hébergées en Europe (HDS)</li>
+              </ul>
+            </div>
+            <div class="slide-visual">
+              <img src="assets/sante.jpg" alt="Carelin" onerror="this.style.display='none'"/>
+              <div class="v-chip vc-1"><b>40k</b><small>patients accompagnés</small></div>
+              <div class="v-chip vc-2"><b>−22%</b><small>hospitalisations</small></div>
+            </div>
+          </div></div>
+          <div class="slide"><div class="slide-inner">
+            <div class="slide-copy">
+              <span class="tag">Éducation · Tuteur IA</span>
+              <h3>Lumina — le tuteur IA contre le décrochage</h3>
+              <p>Un accompagnement personnalisé pour chaque élève, gratuit pour les établissements en zone prioritaire. L'IA détecte les difficultés tôt et propose des exercices adaptés.</p>
+              <ul>
+                <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#FFEEDF"/><path d="M8 12l3 3 5-6" stroke="#E0590A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 210 établissements équipés</li>
+                <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#FFEEDF"/><path d="M8 12l3 3 5-6" stroke="#E0590A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> +1,5 point de moyenne</li>
+                <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#FFEEDF"/><path d="M8 12l3 3 5-6" stroke="#E0590A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Gratuit en éducation prioritaire</li>
+              </ul>
+            </div>
+            <div class="slide-visual">
+              <img src="assets/education.jpg" alt="Lumina" onerror="this.style.display='none'"/>
+              <div class="v-chip vc-1"><b>210</b><small>établissements</small></div>
+              <div class="v-chip vc-2"><b>+1,5</b><small>point de moyenne</small></div>
+            </div>
+          </div></div>
+          <div class="slide"><div class="slide-inner">
+            <div class="slide-copy">
+              <span class="tag">Inclusion · Accessibilité</span>
+              <h3>Inclue — l'IA qui rend l'info accessible à tous</h3>
+              <p>Traduction en langue des signes, lecture facile (FALC) et synthèse vocale, pensées avec les personnes en situation de handicap. Pour des services publics compréhensibles par chacun.</p>
+              <ul>
+                <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F4E5F8"/><path d="M8 12l3 3 5-6" stroke="#A62FBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 120 000 utilisateurs actifs</li>
+                <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F4E5F8"/><path d="M8 12l3 3 5-6" stroke="#A62FBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 4 langues des signes couvertes</li>
+                <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F4E5F8"/><path d="M8 12l3 3 5-6" stroke="#A62FBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Co-construit avec des associations</li>
+              </ul>
+            </div>
+            <div class="slide-visual">
+              <img src="assets/inclusion.jpg" alt="Inclue" onerror="this.style.display='none'"/>
+              <div class="v-chip vc-1"><b>120k</b><small>utilisateurs</small></div>
+              <div class="v-chip vc-2"><b>FALC</b><small>lecture facile</small></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+      <div class="car-nav">
+        <button class="car-btn" id="prev" aria-label="Précédent" data-magnetic><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="dots" id="dots"></div>
+        <button class="car-btn" id="next" aria-label="Suivant" data-magnetic><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT EN CHIFFRES -->
+<section class="impact" id="impact">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow">Impact en chiffres</span>
+      <h2 data-split>Mesurer ce qui <span class="grad-text">change vraiment</span></h2>
+      <p>On ne publie pas que de la croissance. Voici l'impact réel, suivi et vérifié.</p>
+    </div>
+    <div class="impact-grid" data-reveal>
+      <div class="chart-card">
+        <h4>Personnes bénéficiaires</h4>
+        <div class="sub">Cumul sur les 4 dernières années</div>
+        <svg class="line-svg" viewBox="0 0 520 240" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="lg" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#A62FBD"/><stop offset="1" stop-color="#F97316"/></linearGradient>
+            <linearGradient id="lga" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#A62FBD" stop-opacity=".22"/><stop offset="1" stop-color="#A62FBD" stop-opacity="0"/></linearGradient>
+          </defs>
+          <path class="line-area" d="M0,210 L40,192 L140,168 L240,120 L340,88 L440,44 L520,20 L520,240 L0,240 Z"/>
+          <path class="line-path" id="linePath" d="M0,210 L40,192 L140,168 L240,120 L340,88 L440,44 L520,20"/>
+          <circle class="line-dot" cx="520" cy="20" r="6"/>
+        </svg>
+      </div>
+      <div>
+        <div class="bars" id="impactBars">
+          <div class="bar-row"><span>Santé</span><div class="bar-track"><div class="bar-fill" data-w="88"></div></div><b data-v="420">0</b></div>
+          <div class="bar-row"><span>Éducation</span><div class="bar-track"><div class="bar-fill" data-w="72"></div></div><b data-v="310">0</b></div>
+          <div class="bar-row"><span>Inclusion</span><div class="bar-track"><div class="bar-fill" data-w="64"></div></div><b data-v="260">0</b></div>
+          <div class="bar-row"><span>Environnement</span><div class="bar-track"><div class="bar-fill" data-w="46"></div></div><b data-v="190">0</b></div>
+        </div>
+        <p style="color:var(--muted);font-size:13.5px;margin-top:18px">Milliers de personnes touchées par domaine (cumul). Chaque startup publie ses propres indicateurs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARTE EUROPE -->
+<section class="eumap" id="europe">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow">Présence européenne</span>
+      <h2 data-split>Une tech <span class="grad-text">ancrée en Europe</span></h2>
+      <p>Nos startups opèrent depuis plusieurs pays — données hébergées sur le continent, équipes locales. Survolez les points.</p>
+    </div>
+    <div class="eu-wrap" data-reveal>
+      <svg class="eu-svg" viewBox="0 0 100 82" preserveAspectRatio="none">
+        <defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#A62FBD"/><stop offset="1" stop-color="#F97316"/></linearGradient></defs>
+        <path class="eu-land" d="M20,40 C18,25 30,14 45,15 C55,15 58,10 66,12 C75,14 78,22 76,30 C82,32 86,40 82,48 C86,55 80,62 72,60 C70,70 60,74 52,72 C50,78 40,80 34,74 C26,76 18,70 20,60 C14,56 12,46 20,40 Z"/>
+        <g>
+          <line class="eu-link" x1="40" y1="46" x2="55" y2="38"/>
+          <line class="eu-link" x1="40" y1="46" x2="46" y2="36"/>
+          <line class="eu-link" x1="40" y1="46" x2="30" y2="59"/>
+          <line class="eu-link" x1="40" y1="46" x2="56" y2="57"/>
+          <line class="eu-link" x1="55" y1="38" x2="67" y2="36"/>
+          <line class="eu-link" x1="55" y1="38" x2="60" y2="16"/>
+          <line class="eu-link" x1="30" y1="59" x2="22" y2="57"/>
+        </g>
+      </svg>
+      <button class="eu-dot" style="left:40%;top:56%"><i></i><span class="tip">Paris · France</span></button>
+      <button class="eu-dot" style="left:55%;top:46%"><i></i><span class="tip">Berlin · Allemagne</span></button>
+      <button class="eu-dot" style="left:46%;top:44%"><i></i><span class="tip">Amsterdam · Pays-Bas</span></button>
+      <button class="eu-dot" style="left:30%;top:72%"><i></i><span class="tip">Madrid · Espagne</span></button>
+      <button class="eu-dot" style="left:22%;top:70%"><i></i><span class="tip">Lisbonne · Portugal</span></button>
+      <button class="eu-dot" style="left:56%;top:70%"><i></i><span class="tip">Rome · Italie</span></button>
+      <button class="eu-dot" style="left:60%;top:20%"><i></i><span class="tip">Stockholm · Suède</span></button>
+      <button class="eu-dot" style="left:67%;top:44%"><i></i><span class="tip">Varsovie · Pologne</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- APPROCHE -->
+<section class="process" id="approche">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow">Notre méthode</span>
+      <h2>Du besoin détecté à la <span class="grad-text">startup autonome</span></h2>
+      <p>Un modèle de venture builder, transparent, où l'impact prime sur la croissance.</p>
+    </div>
+    <div class="steps" id="steps">
+      <div class="step"><div class="n">01</div><h4>Détection du besoin</h4><p>Un besoin social, sanitaire ou éducatif réel, identifié avec le terrain et les personnes concernées.</p></div>
+      <div class="step"><div class="n">02</div><h4>Validation & éthique</h4><p>Prototype confronté à l'usage, experts métier et comité d'éthique. On ne code que si l'impact est là.</p></div>
+      <div class="step"><div class="n">03</div><h4>Build avec l'IA</h4><p>Équipe dédiée, IA responsable, RGPD et hébergement européen. Construit avec ses futurs usagers.</p></div>
+      <div class="step"><div class="n">04</div><h4>Spin-off & impact</h4><p>La startup gagne son autonomie. L'impact se mesure et se publie, en continu.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certs" id="certifications">
+  <div class="wrap certs-grid">
+    <div class="certs-visual" data-reveal>
+      <img src="assets/shield.png" alt="Conformité QlickLab" onerror="this.style.display='none'" />
+    </div>
+    <div class="certs-head" data-reveal>
+      <span class="eyebrow">Certifications & conformité</span>
+      <h2>La confiance, ce ne sont pas des mots — <span class="grad-text">ce sont des preuves</span></h2>
+      <p>Chaque startup du groupe repose sur un socle certifié. Sécurité, souveraineté et éthique : vérifiées, auditées, documentées.</p>
+      <div class="certs-list">
+        <div class="cert"><div class="ci"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 7-7 8-4-1-7-3.5-7-8V6z" stroke="#A62FBD" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#F97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>RGPD</b><small>Conforme par défaut, privacy by design</small></div></div>
+        <div class="cert"><div class="ci"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#A62FBD" stroke-width="1.8"/><path d="M12 3c-3 3-3 15 0 18M12 3c3 3 3 15 0 18M3.5 9h17M3.5 15h17" stroke="#F97316" stroke-width="1.5"/></svg></div><div><b>Hébergement UE</b><small>Données stockées 100% en Europe</small></div></div>
+        <div class="cert"><div class="ci"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="#A62FBD" stroke-width="1.8"/><path d="M12 8v8M8 12h8" stroke="#F97316" stroke-width="2" stroke-linecap="round"/></svg></div><div><b>HDS — Santé</b><small>Hébergeur de Données de Santé</small></div></div>
+        <div class="cert"><div class="ci"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="#A62FBD" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="#F97316" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><b>ISO 27001</b><small>Sécurité de l'information</small></div></div>
+        <div class="cert"><div class="ci"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#F97316" stroke-width="1.8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" stroke="#A62FBD" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><b>EU AI Act</b><small>IA documentée, transparente, conforme</small></div></div>
+        <div class="cert"><div class="ci"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="4.6" r="2" stroke="#A62FBD" stroke-width="1.8"/><path d="M5 9h14M12 9v6M8.5 20l3.5-5 3.5 5" stroke="#F97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>RGAA</b><small>Accessibilité numérique pour tous</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow">Témoignages</span>
+      <h2>Celles et ceux que <span class="grad-text">nos startups changent</span></h2>
+    </div>
+    <div class="t-view" data-reveal>
+      <div class="t-track" id="tTrack">
+        <div class="t-slide">
+          <p class="quote">« Avec Lumina, nos élèves les plus en difficulté ont <span>repris confiance</span>. Pour la première fois, l'outil s'adapte à eux, et pas l'inverse. »</p>
+          <div class="t-person"><div class="av">NF</div><div><b>Nadia Fournier</b><small>Principale de collège · réseau prioritaire</small></div></div>
+        </div>
+        <div class="t-slide">
+          <p class="quote">« Carelin a été conçue avec des soignants. Enfin une IA santé qui <span>respecte le secret médical</span> et nous fait gagner un temps précieux. »</p>
+          <div class="t-person"><div class="av">DK</div><div><b>Dr. Karim Belhadj</b><small>Médecin partenaire · réseau chronique</small></div></div>
+        </div>
+        <div class="t-slide">
+          <p class="quote">« QlickLab prouve qu'on peut faire de l'IA <span>utile ET éthique</span> en Europe. C'est exactement le genre de projets que nous finançons. »</p>
+          <div class="t-person"><div class="av">SM</div><div><b>Sofia Márquez</b><small>Directrice · fonds à impact</small></div></div>
+        </div>
+      </div>
+      <div class="t-dots" id="tDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow">Questions fréquentes</span>
+      <h2 data-split>Ce qu'on nous <span class="grad-text">demande souvent</span></h2>
+    </div>
+    <div class="faq-list" data-reveal>
+      <div class="faq-item"><button class="faq-q">Pourquoi la philosophie avant la technologie ?<span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#A62FBD" stroke-width="2.4" stroke-linecap="round"/></svg></span></button><div class="faq-a"><p>Parce qu'un produit peut « marcher » et nuire quand même. On interroge le sens, l'éthique et les conséquences avant d'écrire une ligne de code. Beaucoup d'idées s'arrêtent là — volontairement.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Vos données restent-elles en Europe ?<span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#A62FBD" stroke-width="2.4" stroke-linecap="round"/></svg></span></button><div class="faq-a"><p>Oui. Hébergement 100 % européen, RGPD par défaut, et pour la santé, un hébergeur certifié HDS. Vos données ne quittent pas le continent et ne se revendent pas.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Utilisez-vous l'IA partout ?<span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#A62FBD" stroke-width="2.4" stroke-linecap="round"/></svg></span></button><div class="faq-a"><p>Non. Uniquement là où elle libère du temps, élargit l'accès ou épaule les personnes. L'humain garde toujours la décision finale — l'algorithme propose, la personne dispose.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Comment mesurez-vous l'impact ?<span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#A62FBD" stroke-width="2.4" stroke-linecap="round"/></svg></span></button><div class="faq-a"><p>Chaque startup publie des indicateurs concrets — bénéficiaires, résultats cliniques ou pédagogiques — pas seulement sa croissance. Sans impact démontré, le projet n'existe pas.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Peut-on vous proposer un projet ?<span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#A62FBD" stroke-width="2.4" stroke-linecap="round"/></svg></span></button><div class="faq-a"><p>Oui — associations, ONG, collectivités, soignants, enseignants. On étudie chaque besoin réel et, s'il a du sens, on peut le construire avec vous.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGAGER -->
+<section class="pricing" id="engager">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow">S'engager avec le groupe</span>
+      <h2>Trois façons de <span class="grad-text">construire avec nous</span></h2>
+      <p>Que vous portiez un besoin, un talent ou des moyens : il y a une place pour faire avancer les projets qui comptent.</p>
+    </div>
+    <div class="price-grid">
+      <div class="plan" data-reveal>
+        <span class="pill">Porteurs de besoin</span>
+        <h3>Proposer un projet</h3>
+        <p class="muted">Vous avez identifié un besoin réel, sur le terrain.</p>
+        <ul>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4 10-10" stroke="#A62FBD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Associations, ONG, collectivités</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4 10-10" stroke="#A62FBD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> On étudie et on cadre votre idée</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4 10-10" stroke="#A62FBD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> On peut la construire avec vous</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost" data-magnetic><span>Soumettre une idée</span></a>
+      </div>
+      <div class="plan pop" data-reveal style="transition-delay:.08s">
+        <span class="pill">Talents</span>
+        <h3>Rejoindre le studio</h3>
+        <p class="muted">Vous voulez mettre votre métier au service de l'utile.</p>
+        <ul>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4 10-10" stroke="#F97316" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> IA, produit, design, ingénierie</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4 10-10" stroke="#F97316" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Des projets qui ont du sens</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4 10-10" stroke="#F97316" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Possibilité de co-fonder une startup</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" data-magnetic><span>Voir les postes</span></a>
+      </div>
+      <div class="plan" data-reveal style="transition-delay:.16s">
+        <span class="pill">Partenaires</span>
+        <h3>Investir & soutenir</h3>
+        <p class="muted">Vous financez ou accompagnez l'impact.</p>
+        <ul>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4 10-10" stroke="#A62FBD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Fonds à impact & institutions</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4 10-10" stroke="#A62FBD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Co-financement de startups</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4 10-10" stroke="#A62FBD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Impact mesuré et publié</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost" data-magnetic><span>Nous contacter</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="journal" id="journal">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow">Le journal</span>
+      <h2 data-split>Nos <span class="grad-text">réflexions & actus</span></h2>
+      <p>On partage ce qu'on apprend en construisant une tech utile et responsable.</p>
+    </div>
+    <div class="jgrid">
+      <article class="jcard" data-reveal data-tilt>
+        <div class="jmedia"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v5c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V7z" stroke="#A62FBD" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#F97316" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="jbody"><span class="jtag">Éthique</span><h3>IA responsable : 5 questions à se poser avant de coder</h3><p>Notre grille de lecture éthique, celle qui décide si un projet mérite d'exister.</p><div class="jmeta">6 min de lecture · Réflexion</div></div>
+      </article>
+      <article class="jcard" data-reveal data-tilt style="transition-delay:.08s">
+        <div class="jmedia"><svg viewBox="0 0 24 24" fill="none"><path d="M3 7l9-4 9 4-9 4-9-4z" stroke="#A62FBD" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 10v5c0 1.3 2.2 2.5 5 2.5s5-1.2 5-2.5v-5" stroke="#F97316" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="jbody"><span class="jtag">Éducation</span><h3>Lutter contre le décrochage avec un tuteur IA</h3><p>Ce que Lumina nous a appris sur l'accompagnement des élèves fragiles.</p><div class="jmeta">4 min de lecture · Étude de terrain</div></div>
+      </article>
+      <article class="jcard" data-reveal data-tilt style="transition-delay:.16s">
+        <div class="jmedia"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="#A62FBD" stroke-width="1.6"/><circle cx="17" cy="10" r="2.4" stroke="#F97316" stroke-width="1.6"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5M15 20c0-2 .8-3.4 2.5-4" stroke="#A62FBD" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <div class="jbody"><span class="jtag">Méthode</span><h3>Concevoir avec les personnes concernées, pas pour elles</h3><p>Pourquoi nos produits d'inclusion se construisent main dans la main avec les usagers.</p><div class="jmeta">5 min de lecture · Méthode</div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- MODALE ÉTUDE DE CAS -->
+<div class="modal" id="caseModal">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-card">
+    <button class="modal-close" data-close aria-label="Fermer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#221327" stroke-width="2" stroke-linecap="round"/></svg></button>
+    <div class="modal-hero"><span class="tag" id="mTag"></span></div>
+    <div class="modal-body"><h3 id="mTitle"></h3><div id="mContent"></div></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="cta-box" data-reveal>
+      <img class="cta-ap a1" src="assets/icon-white.png" alt="" />
+      <div class="cta-content">
+        <h2>Un besoin réel à adresser ? Écrivons la suite ensemble.</h2>
+        <p>Vous portez un enjeu social, éducatif, sanitaire ou environnemental ? Parlons-en. On étudie chaque projet sérieux — et on vous dit franchement si l'IA a du sens ici.</p>
+        <div class="hero-actions" style="animation:none;opacity:1">
+          <a href="#" class="btn btn-primary btn-lg" data-magnetic><span>Échanger avec le groupe</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="#" class="btn btn-ghost btn-lg" data-magnetic><span>hello@qlicklab.eu</span></a>
+        </div>
+      </div>
+      <img class="cta-person" src="assets/founder.png" alt="" onerror="this.style.display='none'" />
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <div class="f-brand">
+        <img class="logo" src="assets/wordmark-duo.png" alt="QlickLab" />
+        <p>Groupe tech européen à impact. La différence comme force, la philosophie et l'éducation avant le code, l'IA responsable comme simple outil.</p>
+        <div class="f-eu"><img src="assets/eu-duo.png" alt="Union européenne" /><span>Conçu & hébergé<br/>en Europe</span></div>
+      </div>
+      <div class="f-col">
+        <h5>Le groupe</h5>
+        <a href="#philosophie">Notre vision</a><a href="#faire">Ce qu'on fait</a><a href="#startups">Nos startups</a><a href="#approche">Notre méthode</a>
+      </div>
+      <div class="f-col">
+        <h5>S'engager</h5>
+        <a href="#contact">Proposer un projet</a><a href="#engager">Carrières</a><a href="#engager">Partenariats</a><a href="#contact">Contact</a>
+      </div>
+      <div class="f-col">
+        <h5>Légal</h5>
+        <a href="#">Mentions légales</a><a href="#">Charte IA responsable</a><a href="#">RGPD</a><a href="#">Confidentialité</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 QlickLab — Groupe tech européen à impact. Site de démonstration.</span>
+      <div class="f-social">
+        <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.56-2.3 3.17V21h-4z"/></svg></a>
+        <a href="#" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.3 8.3L23 22h-6.6l-5.2-6.8L5.3 22H2l7.8-8.9L1.7 2h6.8l4.7 6.2zM17.7 20h1.7L7.2 4H5.4z"/></svg></a>
+        <a href="#" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-3.16 19.5c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Haut de page"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+<script>
+const progress=document.getElementById('progress'),header=document.getElementById('header'),toTop=document.getElementById('toTop');
+function onScroll(){const st=window.scrollY,h=document.documentElement.scrollHeight-window.innerHeight;
+  progress.style.width=(st/h*100)+'%';header.classList.toggle('scrolled',st>30);toTop.classList.toggle('show',st>600);}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+toTop.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+
+const burger=document.getElementById('burger'),menu=document.getElementById('mobileMenu');
+burger.onclick=()=>{burger.classList.toggle('open');menu.classList.toggle('open');};
+menu.querySelectorAll('a').forEach(a=>a.onclick=()=>{burger.classList.remove('open');menu.classList.remove('open');});
+
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
+document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
+
+const cio=new IntersectionObserver((es)=>{es.forEach(e=>{if(!e.isIntersecting)return;
+  const el=e.target,to=+el.dataset.to,dec=el.dataset.to.indexOf('.')>-1?1:0,dur=1500,t0=performance.now();
+  function tick(now){const p=Math.min((now-t0)/dur,1),v=to*(1-Math.pow(1-p,3));el.textContent=dec?v.toFixed(1):Math.round(v);if(p<1)requestAnimationFrame(tick);}
+  requestAnimationFrame(tick);cio.unobserve(el);})},{threshold:.6});
+document.querySelectorAll('.count').forEach(c=>cio.observe(c));
+
+const steps=document.getElementById('steps');
+new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting)steps.classList.add('drawn')}),{threshold:.4}).observe(steps);
+
+document.querySelectorAll('.btn').forEach(btn=>btn.addEventListener('click',e=>{
+  const r=btn.getBoundingClientRect(),c=document.createElement('span');c.className='ripple';
+  const d=Math.max(r.width,r.height);c.style.width=c.style.height=d+'px';
+  c.style.left=(e.clientX-r.left-d/2)+'px';c.style.top=(e.clientY-r.top-d/2)+'px';
+  btn.appendChild(c);setTimeout(()=>c.remove(),600);}));
+
+if(window.matchMedia('(hover:hover)').matches){
+  document.querySelectorAll('[data-magnetic]').forEach(el=>{
+    el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();
+      el.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.35}px)`;});
+    el.addEventListener('mouseleave',()=>el.style.transform='');});
+  document.querySelectorAll('[data-tilt]').forEach(el=>{
+    el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();
+      const px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;
+      el.style.transform=`perspective(900px) rotateY(${px*5}deg) rotateX(${-py*5}deg) translateY(-6px)`;});
+    el.addEventListener('mouseleave',()=>el.style.transform='');});
+}
+
+(function(){
+  const track=document.getElementById('track'),slides=track.children.length,dots=document.getElementById('dots');
+  let idx=0,timer;
+  for(let i=0;i<slides;i++){const d=document.createElement('button');d.className='dot'+(i?'':' active');d.onclick=()=>go(i);dots.appendChild(d);}
+  function render(){track.style.transform=`translateX(${-idx*100}%)`;[...dots.children].forEach((d,i)=>d.classList.toggle('active',i===idx));}
+  function go(i){idx=(i+slides)%slides;render();restart();}
+  document.getElementById('next').onclick=()=>go(idx+1);
+  document.getElementById('prev').onclick=()=>go(idx-1);
+  function restart(){clearInterval(timer);timer=setInterval(()=>go(idx+1),6000);}restart();
+  let sx=0,down=false,dx=0;const view=track.parentElement;
+  const start=x=>{down=true;sx=x;dx=0;track.classList.add('grabbing');clearInterval(timer);};
+  const move=x=>{if(down)dx=x-sx;};
+  const end=()=>{if(!down)return;down=false;track.classList.remove('grabbing');if(Math.abs(dx)>60)go(idx+(dx<0?1:-1));else restart();};
+  view.addEventListener('mousedown',e=>start(e.clientX));window.addEventListener('mousemove',e=>move(e.clientX));window.addEventListener('mouseup',end);
+  view.addEventListener('touchstart',e=>start(e.touches[0].clientX),{passive:true});
+  view.addEventListener('touchmove',e=>move(e.touches[0].clientX),{passive:true});view.addEventListener('touchend',end);
+})();
+
+(function(){
+  const track=document.getElementById('tTrack'),n=track.children.length,dots=document.getElementById('tDots');
+  let idx=0,timer;
+  for(let i=0;i<n;i++){const d=document.createElement('button');d.className='dot'+(i?'':' active');d.onclick=()=>go(i);dots.appendChild(d);}
+  function go(i){idx=(i+n)%n;track.style.transform=`translateX(${-idx*100}%)`;[...dots.children].forEach((d,k)=>d.classList.toggle('active',k===idx));clearInterval(timer);timer=setInterval(()=>go(idx+1),5000);}
+  timer=setInterval(()=>go(idx+1),5000);
+})();
+
+/* ===== PRELOADER ===== */
+(function(){const pl=document.getElementById('preloader');if(!pl)return;
+  window.addEventListener('load',()=>setTimeout(()=>pl.classList.add('done'),500));
+  setTimeout(()=>pl.classList.add('done'),3000);})();
+
+/* ===== WORD SPLIT REVEAL ===== */
+(function(){
+  function walk(node){const frag=document.createDocumentFragment();
+    node.childNodes.forEach(ch=>{
+      if(ch.nodeType===3){ch.textContent.split(/(\s+)/).forEach(tok=>{
+        if(tok.trim()===''){frag.appendChild(document.createTextNode(tok));}
+        else{const w=document.createElement('span');w.className='w';w.textContent=tok;frag.appendChild(w);}});}
+      else if(ch.nodeType===1){const c=ch.cloneNode(false);c.appendChild(walk(ch));frag.appendChild(c);}});
+    return frag;}
+  const els=document.querySelectorAll('[data-split]');
+  els.forEach(el=>{el.classList.add('split');const f=walk(el);el.innerHTML='';el.appendChild(f);
+    el.querySelectorAll('.w').forEach((w,i)=>w.style.transitionDelay=(i*45)+'ms');});
+  const o=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target);}}),{threshold:.35});
+  els.forEach(el=>o.observe(el));
+})();
+
+/* ===== HERO PARTICLE NETWORK ===== */
+(function(){const canvas=document.getElementById('heroCanvas');if(!canvas||window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const ctx=canvas.getContext('2d');let W,H,pts;
+  function resize(){const r=canvas.getBoundingClientRect();W=canvas.width=r.width;H=canvas.height=r.height;
+    const n=Math.max(24,Math.min(56,Math.floor(W/26)));
+    pts=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28}));}
+  resize();window.addEventListener('resize',resize);
+  function draw(){ctx.clearRect(0,0,W,H);
+    for(let i=0;i<pts.length;i++){const p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      for(let j=i+1;j<pts.length;j++){const q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<118){ctx.strokeStyle='rgba(166,47,189,'+(.14*(1-d/118))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();}}
+      ctx.fillStyle='rgba(166,47,189,.5)';ctx.beginPath();ctx.arc(p.x,p.y,1.7,0,7);ctx.fill();}
+    requestAnimationFrame(draw);}
+  draw();
+})();
+
+/* ===== CHAPTER PARALLAX ===== */
+(function(){if(!window.matchMedia('(min-width:981px)').matches)return;
+  const imgs=[...document.querySelectorAll('.chap-visual img')];if(!imgs.length)return;
+  window.addEventListener('scroll',()=>{imgs.forEach(img=>{const r=img.getBoundingClientRect();
+    const off=(r.top+r.height/2-window.innerHeight/2)/window.innerHeight;img.style.transform='translateY('+(off*-16)+'px)';});},{passive:true});
+})();
+
+/* ===== IMPACT CHARTS ===== */
+(function(){const impact=document.getElementById('impact');if(!impact)return;
+  const line=document.getElementById('linePath');
+  if(line){const len=line.getTotalLength();line.style.strokeDasharray=len;line.style.strokeDashoffset=len;line.style.transition='stroke-dashoffset 2s cubic-bezier(.22,1,.36,1)';}
+  const o=new IntersectionObserver((es)=>es.forEach(e=>{if(!e.isIntersecting)return;
+    impact.classList.add('in');if(line)line.style.strokeDashoffset='0';
+    impact.querySelectorAll('.bar-fill').forEach(f=>f.style.width=f.dataset.w+'%');
+    impact.querySelectorAll('#impactBars b').forEach(b=>{const to=+b.dataset.v,t0=performance.now();
+      (function tk(n){const p=Math.min((n-t0)/1400,1);b.textContent=Math.round(to*(1-Math.pow(1-p,3)))+'k';if(p<1)requestAnimationFrame(tk);})(performance.now());});
+    o.disconnect();}),{threshold:.4});
+  o.observe(impact);
+})();
+
+/* ===== FAQ ACCORDION ===== */
+document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
+  const item=q.parentElement,a=item.querySelector('.faq-a'),open=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>{i.classList.remove('open');i.querySelector('.faq-a').style.maxHeight=null;});
+  if(!open){item.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}
+}));
+
+/* ===== CASE STUDY MODALS ===== */
+(function(){
+  const cases={
+    carelin:{tag:'Santé · Étude de cas',title:'Carelin — compagnon des maladies chroniques',stats:[['40k','patients'],['−22%','hospitalisations'],['HDS','Europe']],body:['Le constat : les patients chroniques manquent de suivi entre deux consultations. Carelin comble ce vide avec des rappels intelligents, un journal de symptômes et une alerte des soignants au bon moment.','Conçue main dans la main avec des médecins, l\'app respecte le secret médical et reste un outil d\'aide — jamais un substitut au soin. Résultat : moins d\'hospitalisations évitables et des patients plus autonomes.']},
+    lumina:{tag:'Éducation · Étude de cas',title:'Lumina — le tuteur IA contre le décrochage',stats:[['210','établissements'],['+1,5','pt de moyenne'],['Gratuit','en REP']],body:['Le décrochage commence souvent par des lacunes invisibles. Lumina les détecte tôt et propose à chaque élève un parcours adapté, à son rythme.','Gratuit pour les établissements en éducation prioritaire, l\'outil rend l\'élève acteur — il explique, il ne fait pas à sa place. Les enseignants gardent la main sur la pédagogie.']},
+    inclue:{tag:'Inclusion · Étude de cas',title:'Inclue — l\'information accessible à tous',stats:[['120k','utilisateurs'],['4','langues des signes'],['FALC','lecture facile']],body:['Trop de services publics restent incompréhensibles pour des millions de personnes. Inclue traduit en langue des signes, en lecture facile (FALC) et en synthèse vocale.','Co-construit avec des associations et les personnes concernées, l\'outil met l\'accessibilité au cœur — pas en option. L\'inclusion se conçoit avec, pas pour.']}
+  };
+  const modal=document.getElementById('caseModal');if(!modal)return;
+  function open(k){const c=cases[k];if(!c)return;
+    document.getElementById('mTag').textContent=c.tag;
+    document.getElementById('mTitle').textContent=c.title;
+    document.getElementById('mContent').innerHTML='<div class="mstats">'+c.stats.map(s=>'<div><b>'+s[0]+'</b><small>'+s[1]+'</small></div>').join('')+'</div>'+c.body.map(p=>'<p>'+p+'</p>').join('');
+    modal.classList.add('open');document.body.style.overflow='hidden';}
+  function close(){modal.classList.remove('open');document.body.style.overflow='';}
+  modal.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click',close));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+  const keys=['carelin','lumina','inclue'];
+  document.querySelectorAll('#track .slide-copy').forEach((el,i)=>{
+    const b=document.createElement('button');b.className='case-link';
+    b.innerHTML='Lire l\'étude de cas <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    b.addEventListener('click',()=>open(keys[i]));el.appendChild(b);});
+})();
+</script>
+</body>
+</html>
