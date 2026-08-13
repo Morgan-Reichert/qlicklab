@@ -571,3 +571,41 @@ img.fadein.ld{opacity:1;filter:blur(0);transform:none}
 form.shake{animation:shake .4s}
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 @media(prefers-reduced-motion:reduce){[data-reveal],img.fadein{filter:none!important}}
+
+/* ================= MOODY (startup vedette) ================= */
+.moody-card{display:grid;grid-template-columns:1.05fr .95fr;border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);background:#fff}
+.moody-left{padding:46px 44px}
+.moody-logo{height:40px;width:auto;margin-bottom:20px}
+.moody-tagline{font-family:'Clash Display',sans-serif;font-weight:500;font-size:22px;line-height:1.32;color:var(--ink);margin-bottom:26px}
+.moody-feats{list-style:none;display:flex;flex-direction:column;gap:15px;margin-bottom:26px}
+.moody-feats li{display:flex;gap:13px;align-items:flex-start;font-size:14.5px;color:var(--text);line-height:1.5}
+.moody-feats li b{color:var(--ink)}
+.moody-feats .fi{width:36px;height:36px;border-radius:10px;background:#E1F6EA;display:grid;place-items:center;flex:none}
+.moody-cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.btn-moody,.btn-moody-ghost{display:inline-flex;align-items:center;gap:9px;font-family:'Satoshi',sans-serif;font-weight:600;font-size:14.5px;padding:13px 19px;border-radius:12px;transition:transform .3s var(--ease),background .3s,border-color .3s;cursor:pointer}
+.btn-moody{background:#00B860;color:#fff;border:none}
+.btn-moody:hover{background:#00994F;transform:translateY(-2px)}
+.btn-moody-ghost{background:#fff;border:1.5px solid #CDEFDC;color:#00994F}
+.btn-moody-ghost:hover{border-color:#00B860;transform:translateY(-2px)}
+.moody-price{font-size:13px;color:var(--muted)}
+.moody-price b{color:#00994F}
+.moody-right{background:linear-gradient(165deg,#00C267,#00934C);display:grid;place-items:center;padding:44px 20px;position:relative;overflow:hidden}
+.moody-right::before{content:"";position:absolute;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.12);top:-90px;right:-90px}
+.phone{position:relative;z-index:1;width:238px;background:#0d2c1d;border-radius:36px;padding:11px;box-shadow:0 34px 64px -18px rgba(0,45,22,.55)}
+.phone .scr{background:#F3FBF6;border-radius:26px;padding:18px 15px}
+.ph-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.ph-top b{font-family:'Clash Display',sans-serif;color:#00934C;font-size:15px}
+.ph-top small{color:#8aa89a;font-size:11px}
+.ph-card{background:#fff;border-radius:16px;padding:14px;box-shadow:0 10px 22px -14px rgba(0,60,30,.25);margin-bottom:11px}
+.ph-card .lbl{font-size:10.5px;color:#8aa89a;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.ph-week{display:flex;justify-content:space-between;margin-top:11px}
+.ph-week i{width:22px;height:22px;border-radius:50%;display:block}
+.ph-chart{display:flex;align-items:flex-end;gap:5px;height:56px;margin-top:12px}
+.ph-chart i{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(#00C267,#00934C)}
+.ph-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.ph-chips span{font-size:10px;background:#E1F6EA;color:#00934C;padding:4px 9px;border-radius:100px;font-weight:600}
+.ph-report{margin-top:12px;background:#00B860;color:#fff;text-align:center;font-size:11.5px;font-weight:600;padding:10px;border-radius:12px}
+@media(max-width:900px){.moody-card{grid-template-columns:1fr}.moody-right{order:-1;padding:36px 20px}.moody-left{padding:34px 28px}}
+/* Diane easter-egg */
+.diane{display:inline-flex;align-items:center;gap:6px;color:var(--muted-2);font-size:12.5px}
+.diane svg{color:#00B860;flex:none}

@@ -12,7 +12,7 @@
 <meta property="og:image" content="assets/icon-duo.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500,400&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=3" />
+<link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
 <div id="preloader">
@@ -67,77 +67,45 @@
   <div class="hero-mesh"><span class="m1"></span><span class="m2"></span><span class="m3"></span></div>
   <div class="wrap">
     <span class="eyebrow">Le portfolio du groupe</span>
-    <h1>Des convictions <span class="grad-text">devenues produits</span></h1>
-    <p>Chaque startup part d'un besoin réel et applique la même ligne : l'humain au centre, l'IA en soutien, l'impact mesuré. En voici le panorama.</p>
-    <div class="filters" id="filters">
-      <button class="filter active" data-cat="all">Tous</button>
-      <button class="filter" data-cat="sante">Santé</button>
-      <button class="filter" data-cat="education">Éducation</button>
-      <button class="filter" data-cat="inclusion">Inclusion</button>
-      <button class="filter" data-cat="environnement">Environnement</button>
-      <button class="filter" data-cat="social">Social</button>
-    </div>
+    <h1>Notre première startup : <span class="grad-text">Moody</span></h1>
+    <p>Un vrai produit, déjà là : le suivi de santé mentale 100 % privé. Conçu par un patient, pour les patients.</p>
+    
   </div>
 </section>
 
 <!-- PROJETS -->
 <section class="proj-section">
   <div class="wrap">
-    <div class="proj-grid" id="projGrid">
-
-      <article class="proj-card" data-cat="sante" data-reveal data-tilt>
-        <div class="proj-media"><span class="proj-badge">Lancée</span><img fetchpriority="high" decoding="async" src="assets/dom-sante.webp" alt="Carelin" onerror="this.style.display='none'"/></div>
-        <div class="proj-body"><span class="ptag">Santé · Suivi patient</span><h3>Carelin</h3><p>Compagnon IA des maladies chroniques : suivi du traitement au quotidien et alerte des soignants au bon moment.</p>
-          <div class="proj-stats"><div><b>40k</b><small>patients</small></div><div><b>−22%</b><small>hospitalisations</small></div></div>
-          <button class="case-link" data-case="carelin">Lire l'étude de cas <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="moody-card" data-reveal>
+        <div class="moody-left">
+          <img class="moody-logo" src="assets/moody-green.webp" alt="Moody" loading="lazy" />
+          <p class="moody-tagline">Le journal de santé mentale qui reste sur votre téléphone.</p>
+          <ul class="moody-feats">
+            <li><span class="fi"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="#00934C" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="#00934C" stroke-width="1.8" stroke-linecap="round"/></svg></span><div><b>100 % privé · local-first.</b> Zéro serveur cloud, chiffrement de bout en bout, aucun compte.</div></li>
+            <li><span class="fi"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="2" stroke="#00934C" stroke-width="1.8"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke="#00934C" stroke-width="1.8" stroke-linecap="round"/></svg></span><div><b>IA embarquée (on-device).</b> Analyse instantanée — coût cloud de 0 $.</div></li>
+            <li><span class="fi"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M4 13h3l2-5 3 9 2-6 1 2h5" stroke="#00934C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Suivi holistique.</b> L'humeur reliée au cycle, aux traitements et à la nutrition.</div></li>
+            <li><span class="fi"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v14H7z" stroke="#00934C" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v4h4M9 13h6M9 16h6" stroke="#00934C" stroke-width="1.8" stroke-linecap="round"/></svg></span><div><b>Prêt pour consultation.</b> Export de rapports clairs pour votre médecin.</div></li>
+          </ul>
+          <div class="moody-cta">
+            <a href="#" class="btn-moody"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.9-.8-3-.8-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-1 2.8-2.1c.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-1-2.5-3.7z"/></svg>App Store</a>
+            <a href="#" class="btn-moody-ghost"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 3l14 9-14 9z" fill="#00934C"/></svg>Google Play</a>
+            <button class="case-link" data-case="moody" style="margin-top:0">Lire l'étude de cas <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <p class="moody-price"><b>Freemium</b> — gratuit · <b>Passe à vie</b> — achat unique (IA locale, intégrations Apple/Garmin, export médical). Coûts fixes : <b>~136 $/an</b>.</p>
         </div>
-      </article>
-
-      <article class="proj-card" data-cat="education" data-reveal data-tilt>
-        <div class="proj-media"><span class="proj-badge">Lancée</span><img loading="lazy" decoding="async" src="assets/dom-education.webp" alt="Lumina" onerror="this.style.display='none'"/></div>
-        <div class="proj-body"><span class="ptag">Éducation · Tuteur IA</span><h3>Lumina</h3><p>Le tuteur IA contre le décrochage : détection précoce des difficultés et parcours adapté à chaque élève, gratuit là où il le faut.</p>
-          <div class="proj-stats"><div><b>210</b><small>établissements</small></div><div><b>+1,5</b><small>pt de moyenne</small></div></div>
-          <button class="case-link" data-case="lumina">Lire l'étude de cas <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="moody-right">
+          <div class="phone"><div class="scr">
+            <div class="ph-top"><b>Moody</b><small>Aujourd'hui</small></div>
+            <div class="ph-card"><div class="lbl">Humeur de la semaine</div>
+              <div class="ph-week"><i style="background:#BFE9CE"></i><i style="background:#8FDCAC"></i><i style="background:#5FCE8A"></i><i style="background:#00B860"></i><i style="background:#8FDCAC"></i><i style="background:#38C57A"></i><i style="background:#00B860"></i></div>
+              <div class="ph-chart"><i style="height:40%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:72%"></i><i style="height:60%"></i><i style="height:85%"></i><i style="height:78%"></i></div>
+            </div>
+            <div class="ph-card"><div class="lbl">Facteurs suivis</div><div class="ph-chips"><span>Sommeil</span><span>Cycle</span><span>Traitement</span><span>Nutrition</span></div></div>
+            <div class="ph-report">Rapport prêt pour le médecin</div>
+          </div></div>
         </div>
-      </article>
-
-      <article class="proj-card" data-cat="inclusion" data-reveal data-tilt>
-        <div class="proj-media"><span class="proj-badge">Lancée</span><img loading="lazy" decoding="async" src="assets/dom-inclusion.webp" alt="Inclue" onerror="this.style.display='none'"/></div>
-        <div class="proj-body"><span class="ptag">Inclusion · Accessibilité</span><h3>Inclue</h3><p>L'information accessible à tous : langue des signes, lecture facile (FALC) et synthèse vocale, co-construites avec les personnes concernées.</p>
-          <div class="proj-stats"><div><b>120k</b><small>utilisateurs</small></div><div><b>4</b><small>langues LSF</small></div></div>
-          <button class="case-link" data-case="inclue">Lire l'étude de cas <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        </div>
-      </article>
-
-      <article class="proj-card" data-cat="environnement" data-reveal data-tilt>
-        <div class="proj-media"><span class="proj-badge">Lancée</span><img loading="lazy" decoding="async" src="assets/dom-environnement.webp" alt="Verdae" onerror="this.style.display='none'"/></div>
-        <div class="proj-body"><span class="ptag">Environnement · Data</span><h3>Verdae</h3><p>La sobriété énergétique à l'échelle du territoire : capteurs, données environnementales et recommandations concrètes pour les collectivités.</p>
-          <div class="proj-stats"><div><b>60</b><small>communes</small></div><div><b>−14%</b><small>conso. énergie</small></div></div>
-          <button class="case-link" data-case="verdae">Lire l'étude de cas <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        </div>
-      </article>
-
-      <article class="proj-card" data-cat="sante" data-reveal data-tilt>
-        <div class="proj-media"><span class="proj-badge soon">En incubation</span><svg width="64" height="64" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v5c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V7z" stroke="#A62FBD" stroke-width="1.4" stroke-linejoin="round"/><path d="M8 12h2l1.5-3 1.5 5 1-2h2" stroke="#F97316" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="proj-body"><span class="ptag">Aide & urgence</span><h3>Sentinel</h3><p>Assistant de premiers secours et d'orientation d'urgence, pensé avec des soignants. En validation terrain.</p></div>
-      </article>
-
-      <article class="proj-card" data-cat="social" data-reveal data-tilt>
-        <div class="proj-media"><span class="proj-badge soon">En incubation</span><svg width="64" height="64" viewBox="0 0 24 24" fill="none"><path d="M12 20V9M12 9l-4 4M12 9l4 4" stroke="#A62FBD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21c0-4 3.1-6 7-6s7 2 7 6" stroke="#F97316" stroke-width="1.6" stroke-linecap="round"/></svg></div>
-        <div class="proj-body"><span class="ptag">Insertion · Emploi</span><h3>Rebond</h3><p>Accompagnement vers l'emploi des personnes éloignées du marché du travail, avec un coach IA humain-dans-la-boucle.</p></div>
-      </article>
-
-      <article class="proj-card" data-cat="social" data-reveal data-tilt>
-        <div class="proj-media"><span class="proj-badge soon">En incubation</span><svg width="64" height="64" viewBox="0 0 24 24" fill="none"><path d="M12 20s-7-4.3-7-9a4 4 0 017-2.6A4 4 0 0119 11c0 4.7-7 9-7 9z" stroke="#A62FBD" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 11c1-1.5 4-1.5 5 0" stroke="#F97316" stroke-width="1.6" stroke-linecap="round"/></svg></div>
-        <div class="proj-body"><span class="ptag">Aide sociale</span><h3>Aidae</h3><p>Simplifier l'accès aux droits sociaux : un guide qui explique, traduit et accompagne, contre le non-recours.</p></div>
-      </article>
-
-      <article class="proj-card" data-cat="environnement" data-reveal data-tilt>
-        <div class="proj-media"><span class="proj-badge soon">En incubation</span><svg width="64" height="64" viewBox="0 0 24 24" fill="none"><path d="M5 20c0-8 6-13 14-13 0 8-6 13-14 13z" stroke="#A62FBD" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 16c2-3 5-5 8-6" stroke="#F97316" stroke-width="1.6" stroke-linecap="round"/></svg></div>
-        <div class="proj-body"><span class="ptag">Climat · Adaptation</span><h3>Terra</h3><p>Aider les territoires à s'adapter au changement climatique grâce à des scénarios de données locales.</p></div>
-      </article>
-
-    </div>
+      </div>
+    <p style="text-align:center;color:var(--muted);margin-top:36px;font-size:15px">Pour l'instant, une seule startup — mais bien réelle. D'autres sont en préparation : <a href="contact.html" style="color:var(--purple-deep);font-weight:600">proposez un besoin</a> et écrivez la prochaine.</p>
   </div>
 </section>
 
@@ -178,7 +146,7 @@
       <div class="f-col"><h5>Légal</h5><a href="legal.html#mentions">Mentions légales</a><a href="legal.html#charte">Charte IA responsable</a><a href="legal.html#rgpd">RGPD</a><a href="legal.html#cookies">Cookies</a></div>
     </div>
     <div class="f-bottom">
-      <span>© 2026 QlickLab — Groupe tech européen à impact. Site de démonstration.</span>
+      <span>© 2026 QlickLab — Groupe tech européen à impact. Site de démonstration.<br><span class="diane">Remerciements spéciaux à Diane — support technique, moral et émotionnel (uptime : 100 %).<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20s-7-4.3-7-9a4 4 0 017-2.6A4 4 0 0119 11c0 4.7-7 9-7 9z"/></svg></span></span>
       <div class="f-social">
         <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.56-2.3 3.17V21h-4z"/></svg></a>
         <a href="#" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.3 8.3L23 22h-6.6l-5.2-6.8L5.3 22H2l7.8-8.9L1.7 2h6.8l4.7 6.2zM17.7 20h1.7L7.2 4H5.4z"/></svg></a>
@@ -206,14 +174,11 @@ if(window.matchMedia('(hover:hover)').matches){
   document.querySelectorAll('[data-tilt]').forEach(el=>{el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(900px) rotateY(${px*4}deg) rotateX(${-py*4}deg) translateY(-6px)`;});el.addEventListener('mouseleave',()=>el.style.transform='');});
 }
 document.querySelectorAll('.btn').forEach(btn=>btn.addEventListener('click',e=>{const r=btn.getBoundingClientRect(),c=document.createElement('span');c.className='ripple';const d=Math.max(r.width,r.height);c.style.width=c.style.height=d+'px';c.style.left=(e.clientX-r.left-d/2)+'px';c.style.top=(e.clientY-r.top-d/2)+'px';btn.appendChild(c);setTimeout(()=>c.remove(),600);}));
-/* FILTERS */
-(function(){const cards=[...document.querySelectorAll('.proj-card')];
-  document.querySelectorAll('.filter').forEach(f=>f.addEventListener('click',()=>{
-    document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));f.classList.add('active');
-    const c=f.dataset.cat;cards.forEach(card=>card.classList.toggle('hide',c!=='all'&&card.dataset.cat!==c));}));})();
+
 /* MODAL */
 (function(){
   const cases={
+    moody:{tag:'Santé mentale · Étude de cas',title:'Moody — le suivi de santé mentale privé',stats:[['0 $','coût cloud'],['100%','local'],['~136 $','/an']],body:['Le constat : les apps de santé mentale monétisent les données les plus intimes. Moody prend le contre-pied — tout reste chiffré sur votre téléphone, sans compte ni serveur.','Une IA embarquée met en corrélation votre humeur avec le sommeil, le cycle, les traitements et la nutrition, puis génère un rapport clair, prêt pour la consultation. Conçue par un patient, pour les patients.']},
     carelin:{tag:'Santé · Étude de cas',title:'Carelin — compagnon des maladies chroniques',stats:[['40k','patients'],['−22%','hospitalisations'],['HDS','Europe']],body:['Le constat : les patients chroniques manquent de suivi entre deux consultations. Carelin comble ce vide avec des rappels intelligents, un journal de symptômes et une alerte des soignants au bon moment.','Conçue main dans la main avec des médecins, l\'app respecte le secret médical et reste un outil d\'aide — jamais un substitut au soin.']},
     lumina:{tag:'Éducation · Étude de cas',title:'Lumina — le tuteur IA contre le décrochage',stats:[['210','établissements'],['+1,5','pt de moyenne'],['Gratuit','en REP']],body:['Le décrochage commence par des lacunes invisibles. Lumina les détecte tôt et propose à chaque élève un parcours adapté, à son rythme.','Gratuit en éducation prioritaire, l\'outil rend l\'élève acteur — il explique, il ne fait pas à sa place.']},
     inclue:{tag:'Inclusion · Étude de cas',title:'Inclue — l\'information accessible à tous',stats:[['120k','utilisateurs'],['4','langues des signes'],['FALC','lecture facile']],body:['Trop de services publics restent incompréhensibles pour des millions de personnes. Inclue traduit en langue des signes, en lecture facile et en synthèse vocale.','Co-construit avec des associations et les personnes concernées : l\'inclusion se conçoit avec, pas pour.']},
@@ -229,6 +194,6 @@ document.querySelectorAll('.btn').forEach(btn=>btn.addEventListener('click',e=>{
   document.querySelectorAll('.case-link[data-case]').forEach(b=>b.addEventListener('click',()=>open(b.dataset.case)));
 })();
 </script>
-<script src="shared.js?v=3"></script>
+<script src="shared.js?v=4"></script>
 </body>
 </html>
