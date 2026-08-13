@@ -12,7 +12,7 @@
 <meta property="og:image" content="assets/icon-duo.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500,400&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
 <div id="preloader">
@@ -126,11 +126,12 @@ document.querySelectorAll('.btn').forEach(function(btn){btn.addEventListener('cl
 (function(){var f=document.getElementById('cform');if(!f)return;
 f.addEventListener('submit',function(e){e.preventDefault();
 var ok=true;f.querySelectorAll('[required]').forEach(function(el){var bad=!el.value|| (el.type==='email'&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value));el.style.borderColor=bad?'#e0559a':'';if(bad)ok=false;});
-if(!ok)return;
-f.style.display='none';document.getElementById('csuccess').style.display='block';
+if(!ok){f.classList.add('shake');setTimeout(function(){f.classList.remove('shake');},420);return;}
+var btn=f.querySelector('button[type=submit]');if(btn){btn.disabled=true;btn.innerHTML='<span>Envoi…</span>';}
+setTimeout(function(){f.style.display='none';document.getElementById('csuccess').style.display='block';if(window.qlToast)window.qlToast('Message envoyé !');},900);
 });
 })();
 </script>
-<script src="shared.js"></script>
+<script src="shared.js?v=3"></script>
 </body>
 </html>
