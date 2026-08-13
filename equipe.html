@@ -136,7 +136,7 @@ const ICONS={
 };
 const TEAMS=[
   {icon:'dir',title:'Direction du groupe',sub:'Paris — siège',people:[
-    ['Amélie Rousseau','Fondatrice & CEO','Paris'],['Karim Haddad','Directeur technique','Paris'],['Léa Mercier','Directrice impact & éthique','Paris'],['Thomas Berg','Directeur des opérations','Berlin']]},
+    ['Amélie Rousseau','Fondatrice & CEO','Paris'],['Morgan Reichert','CTO — référent technique Belgique & Nord France','Lille · Bruxelles','Le cadet'],['Léa Mercier','Directrice impact & éthique','Paris'],['Thomas Berg','Directeur des opérations','Berlin']]},
   {icon:'sante',title:'Carelin',sub:'Santé · suivi patient',people:[
     ['Dr. Sofia Lindqvist','CEO','Rome'],['Yanis Cherif','Lead IA santé','Paris'],['Marta Rossi','Product manager','Rome'],['Dr. Paul Neumann','Référent médical','Berlin']]},
   {icon:'edu',title:'Lumina',sub:'Éducation · tuteur IA',people:[
@@ -148,13 +148,14 @@ const TEAMS=[
   {icon:'incub',title:'Studio d\'incubation',sub:'Sentinel · Rebond · Aidae · Terra',people:[
     ['Inès Traoré','Lead incubation','Paris'],['Jonas Weber','Ventures','Berlin'],['Fatima El Amrani','Design de service','Madrid'],['Pauline Roy','Terrain & usagers','Varsovie']]}
 ];
-function initials(n){return n.split(' ').filter(w=>w[0]&&/[A-Za-zÀ-ÿ]/.test(w[0])).slice(-2).map(w=>w[0]).join('').toUpperCase();}
+const LG={'Direction du groupe':'Q','Carelin':'C','Lumina':'L','Inclue':'I','Verdae':'V',"Studio d'incubation":'S'};
+function slug(n){return n.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');}
 const root=document.getElementById('teamRoot');
 root.innerHTML=TEAMS.map(g=>`
   <div class="team-group" data-reveal>
-    <div class="team-group-head"><div class="tg-ic">${ICONS[g.icon]}</div><div><h2>${g.title}</h2><div class="tg-sub">${g.sub}</div></div></div>
+    <div class="team-group-head"><div class="tg-ic">${LG[g.title]||g.title[0]}</div><div><h2>${g.title}</h2><div class="tg-sub">${g.sub}</div></div></div>
     <div class="team-grid">
-      ${g.people.map(p=>`<div class="tm-card"><div class="tm-av">${initials(p[0])}</div><h4>${p[0]}</h4><div class="role">${p[1]}</div><div class="loc">${p[2]}</div></div>`).join('')}
+      ${g.people.map(p=>`<div class="tm-card"><img class="tm-av" loading="lazy" decoding="async" src="assets/av/${slug(p[0])}.svg" alt="${p[0]}"><h4>${p[0]}</h4><div class="role">${p[1]}</div><div class="loc">${p[2]}</div>${p[3]?`<div class="tm-badge">${p[3]}</div>`:''}</div>`).join('')}
     </div>
   </div>`).join('');
 
