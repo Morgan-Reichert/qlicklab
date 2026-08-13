@@ -512,3 +512,8 @@ p,.lead{text-wrap:pretty}
 .t-person .av{overflow:hidden}
 .t-person .av img{width:100%;height:100%;object-fit:cover;display:block}
 
+
+.ff{display:flex;flex-direction:column;gap:6px}
+.ff label{font-size:13px;font-weight:600;color:var(--muted)}
+.ff input,.ff select,.ff textarea{font-family:'Satoshi',sans-serif;font-size:15px;padding:12px 14px;border:1.5px solid var(--border-2);border-radius:12px;background:#fff;color:var(--ink);transition:border-color .25s;width:100%}
+.ff input:focus,.ff select:focus,.ff textarea:focus{outline:none;border-color:var(--purple)}

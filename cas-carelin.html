@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Étude de cas : Carelin — QlickLab</title>
+<meta name="description" content="Comment Carelin a réduit de 22% les hospitalisations évitables grâce à une IA responsable." />
+<link rel="icon" href="assets/icon-duo.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Étude de cas : Carelin — QlickLab" />
+<meta property="og:description" content="Comment Carelin a réduit de 22% les hospitalisations évitables grâce à une IA responsable." />
+<meta property="og:image" content="assets/icon-duo.png" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500,400&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="preloader">
+  <svg class="pl-logo" viewBox="0 0 200 200" fill="none">
+    <g><path d="M100 100 L100 12 A88 88 0 0 1 176 56 Z" fill="#A62FBD"/><path d="M100 100 L176 56 A88 88 0 0 1 176 144 Z" fill="#F97316"/><path d="M100 100 L176 144 A88 88 0 0 1 100 188 Z" fill="#A62FBD"/><path d="M100 100 L100 188 A88 88 0 0 1 24 144 Z" fill="#F97316"/><path d="M100 100 L24 144 A88 88 0 0 1 24 56 Z" fill="#A62FBD"/><path d="M100 100 L24 56 A88 88 0 0 1 100 12 Z" fill="#F97316"/></g>
+    <circle cx="100" cy="100" r="38" fill="#FAF6FC"/>
+  </svg>
+  <div class="pl-bar"><i></i></div>
+</div>
+<div id="progress"></div>
+<div class="pt-overlay"><img src="assets/wordmark-white.webp" alt=""></div>
+<header id="header">
+  <nav class="wrap nav">
+    <a href="index.html" class="brand" data-magnetic><img loading="lazy" decoding="async" src="assets/wordmark-duo.webp" alt="QlickLab" /></a>
+    <div class="nav-links">
+      <div class="nav-item">
+        <a class="nav-top" href="index.html#philosophie">Le groupe<span class="car"></span></a>
+        <div class="nav-dd"><a href="apropos.html">À propos</a><a href="index.html#philosophie">Notre philosophie</a><a href="index.html#education">L'éducation</a><a href="index.html#ia">L'IA responsable</a><a href="index.html#vision">Notre vision</a></div>
+      </div>
+      <div class="nav-item">
+        <a class="nav-top" href="index.html#faire">Ce qu'on fait<span class="car"></span></a>
+        <div class="nav-dd"><a href="index.html#faire">Nos domaines</a><a href="index.html#startups">Nos startups</a><a href="index.html#impact">Impact en chiffres</a><a href="index.html#europe">Présence en Europe</a><a href="index.html#approche">Notre méthode</a></div>
+      </div>
+      <div class="nav-item">
+        <a class="nav-top" href="index.html#certifications">Confiance<span class="car"></span></a>
+        <div class="nav-dd"><a href="index.html#certifications">Certifications</a><a href="index.html#faq">FAQ</a><a href="index.html#journal">Le journal</a></div>
+      </div>
+      <a class="nav-plain" href="projets.html">Nos projets</a>
+      <a class="nav-plain" href="equipe.html">L'équipe</a>
+    </div>
+    <div class="nav-cta">
+      <a href="index.html#contact" class="btn btn-primary" data-magnetic><span>Proposer un projet</span></a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-group">Le groupe</div>
+  <a href="index.html#philosophie">Notre philosophie</a><a href="index.html#education">L'éducation</a><a href="index.html#ia">L'IA responsable</a><a href="index.html#vision">Notre vision</a>
+  <div class="mm-group">Ce qu'on fait</div>
+  <a href="index.html#faire">Nos domaines</a><a href="index.html#startups">Nos startups</a><a href="index.html#impact">Impact en chiffres</a><a href="index.html#europe">Présence en Europe</a><a href="index.html#approche">Notre méthode</a>
+  <div class="mm-group">Confiance</div>
+  <a href="index.html#certifications">Certifications</a><a href="index.html#faq">FAQ</a><a href="index.html#journal">Le journal</a>
+  <div class="mm-group">Explorer</div>
+  <a href="apropos.html">À propos</a><a href="projets.html">Nos projets</a><a href="equipe.html">L'équipe</a><a href="carrieres.html">Carrières</a><a href="contact.html">Contact</a><a href="index.html#contact">Proposer un projet</a>
+</div>
+<section class="page-hero" style="padding-bottom:8px"><div class="hero-mesh"><span class="m1"></span><span class="m2"></span><span class="m3"></span></div>
+<div class="wrap"><span class="eyebrow">Étude de cas · Santé</span><h1 data-split>Carelin, le compagnon des <span class="grad-text">maladies chroniques</span></h1>
+<p>Comment une IA responsable a réduit de 22% les hospitalisations évitables — sans jamais remplacer le soignant.</p></div></section>
+<section class="proj-section" style="padding-top:20px"><div class="wrap">
+<div class="chart-card" data-reveal style="display:flex;gap:22px;flex-wrap:wrap;justify-content:space-around;text-align:center;margin-bottom:34px">
+<div><div class="num" style="font-family:\'Clash Display\';font-size:38px;color:var(--purple-deep)">40k</div><div style="color:var(--muted);font-size:13px">patients accompagnés</div></div>
+<div><div class="num" style="font-family:\'Clash Display\';font-size:38px;color:var(--purple-deep)">−22%</div><div style="color:var(--muted);font-size:13px">hospitalisations évitables</div></div>
+<div><div class="num" style="font-family:\'Clash Display\';font-size:38px;color:var(--purple-deep)">96%</div><div style="color:var(--muted);font-size:13px">patients satisfaits</div></div>
+<div><div class="num" style="font-family:\'Clash Display\';font-size:38px;color:var(--purple-deep)">HDS</div><div style="color:var(--muted);font-size:13px">hébergement Europe</div></div>
+</div>
+<div style="max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:34px">
+<div data-reveal><span class="chap-num">Le contexte</span><p style="color:var(--muted);font-size:17px">En Europe, une personne sur trois vit avec une maladie chronique. Entre deux consultations, ces patients sont souvent seuls face à leur traitement — oublis, mauvaise observance, signaux d'alerte ignorés.</p></div>
+<div data-reveal><span class="chap-num">Le problème</span><p style="color:var(--muted);font-size:17px">Les soignants manquent de temps et de visibilité sur le quotidien de leurs patients. Les outils existants sont soit intrusifs, soit inutilisables par les publics les plus fragiles.</p></div>
+<div data-reveal><span class="chap-num">Notre approche</span><p style="color:var(--muted);font-size:17px">Nous avons conçu Carelin <b>avec</b> des médecins et des patients, pas pour eux. Trois principes : respecter le secret médical, rester un outil d'aide (jamais de décision), et être compréhensible par tous.</p><p class="pull" style="font-family:\'Clash Display\';font-size:20px;border-left:3px solid;border-image:var(--grad) 1;padding-left:18px;margin-top:16px">« L'algorithme propose, le soignant dispose. Toujours. »</p></div>
+<div data-reveal><span class="chap-num">La solution</span><p style="color:var(--muted);font-size:17px">Une app simple : rappels intelligents, journal de symptômes, et une IA qui repère les signaux faibles et alerte le bon professionnel au bon moment. Hébergement HDS en Europe, RGPD par défaut.</p></div>
+<div data-reveal><span class="chap-num">L'impact</span><p style="color:var(--muted);font-size:17px">En 18 mois, 40 000 patients accompagnés, 22% d'hospitalisations évitables en moins, et des soignants qui regagnent du temps pour l'essentiel : le soin.</p></div>
+<div class="t-slide" data-reveal style="text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:30px;box-shadow:var(--shadow-sm)"><p class="quote" style="font-size:22px">« Enfin une IA santé qui <span>respecte le secret médical</span> et nous fait gagner un temps précieux. »</p><div class="t-person"><div class="av"><img src="assets/av/karimbelhadj.webp" alt=""></div><div><b>Dr. Karim Belhadj</b><small>Médecin partenaire</small></div></div></div>
+</div></div></section>
+<section class="proj-cta"><div class="wrap"><div class="sec-head" style="margin-bottom:0" data-reveal><span class="eyebrow">Explorer</span><h2 data-split>Découvrez <span class="grad-text">nos autres projets</span></h2><a href="projets.html" class="btn btn-primary btn-lg" data-magnetic style="margin-top:8px"><span>Tous nos projets</span></a></div></div></section>
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <div class="f-brand">
+        <img class="logo" loading="lazy" decoding="async" src="assets/wordmark-duo.webp" alt="QlickLab" />
+        <p>Groupe tech européen à impact. La différence comme force, la philosophie et l'éducation avant le code, l'IA responsable comme simple outil.</p>
+        <div class="f-eu"><img loading="lazy" decoding="async" src="assets/eu-duo.webp" alt="Union européenne" /><span>Conçu & hébergé<br/>en Europe</span></div>
+      </div>
+      <div class="f-col"><h5>Le groupe</h5><a href="apropos.html">À propos</a><a href="index.html#faire">Ce qu'on fait</a><a href="projets.html">Nos projets</a><a href="equipe.html">L'équipe</a></div>
+      <div class="f-col"><h5>S'engager</h5><a href="carrieres.html">Carrières</a><a href="contact.html">Proposer un projet</a><a href="index.html#engager">Partenariats</a><a href="contact.html">Contact</a></div>
+      <div class="f-col"><h5>Légal</h5><a href="legal.html#mentions">Mentions légales</a><a href="legal.html#charte">Charte IA responsable</a><a href="legal.html#rgpd">RGPD</a><a href="legal.html#cookies">Cookies</a></div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 QlickLab — Groupe tech européen à impact. Site de démonstration.</span>
+      <div class="f-social">
+        <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11 22 14.1V21h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.56-2.3 3.17V21h-4z"/></svg></a>
+        <a href="#" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.3 8.3L23 22h-6.6l-5.2-6.8L5.3 22H2l7.8-8.9L1.7 2h6.8l4.7 6.2zM17.7 20h1.7L7.2 4H5.4z"/></svg></a>
+        <a href="#" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-3.16 19.5c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+<button id="toTop" aria-label="Haut de page"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<script>
+var progress=document.getElementById('progress'),header=document.getElementById('header'),toTop=document.getElementById('toTop');
+function onScroll(){var st=window.scrollY,h=document.documentElement.scrollHeight-window.innerHeight;progress.style.width=(st/h*100)+'%';header.classList.toggle('scrolled',st>30);toTop.classList.toggle('show',st>600);}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+toTop.onclick=function(){window.scrollTo({top:0,behavior:'smooth'});};
+var burger=document.getElementById('burger'),menu=document.getElementById('mobileMenu');
+burger.onclick=function(){burger.classList.toggle('open');menu.classList.toggle('open');};
+menu.querySelectorAll('a').forEach(function(a){a.onclick=function(){burger.classList.remove('open');menu.classList.remove('open');};});
+(function(){var pl=document.getElementById('preloader');if(!pl)return;window.addEventListener('load',function(){setTimeout(function(){pl.classList.add('done');},400);});setTimeout(function(){pl.classList.add('done');},2500);})();
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
+document.querySelectorAll('[data-reveal]').forEach(function(el){io.observe(el);});
+if(window.matchMedia('(hover:hover)').matches){
+  document.querySelectorAll('[data-magnetic]').forEach(function(el){el.addEventListener('mousemove',function(e){var r=el.getBoundingClientRect();el.style.transform='translate('+((e.clientX-r.left-r.width/2)*.25)+'px,'+((e.clientY-r.top-r.height/2)*.35)+'px)';});el.addEventListener('mouseleave',function(){el.style.transform='';});});
+  document.querySelectorAll('[data-tilt]').forEach(function(el){el.addEventListener('mousemove',function(e){var r=el.getBoundingClientRect();var px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;el.style.transform='perspective(900px) rotateY('+(px*4)+'deg) rotateX('+(-py*4)+'deg) translateY(-6px)';});el.addEventListener('mouseleave',function(){el.style.transform='';});});
+}
+document.querySelectorAll('.btn').forEach(function(btn){btn.addEventListener('click',function(e){var r=btn.getBoundingClientRect(),c=document.createElement('span');c.className='ripple';var d=Math.max(r.width,r.height);c.style.width=c.style.height=d+'px';c.style.left=(e.clientX-r.left-d/2)+'px';c.style.top=(e.clientY-r.top-d/2)+'px';btn.appendChild(c);setTimeout(function(){c.remove();},600);});});
+</script>
+
+<script src="shared.js"></script>
+</body>
+</html>
