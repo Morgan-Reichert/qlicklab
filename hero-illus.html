@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Illustration du héros • 6 pistes • QlickLab</title>
+<link rel="icon" href="assets/icon-duo.png?v=2" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+<style>
+:root{--ink:#160D1C;--text:#2C2233;--muted:#6E6479;--border:#ECE0F2;--purple:#A62FBD;--purple-deep:#7C1F92;--orange:#F97316;
+--grad:linear-gradient(115deg,#A62FBD,#F97316)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Satoshi',system-ui,sans-serif;color:var(--text);background:#EEE8F3;-webkit-font-smoothing:antialiased;line-height:1.45}
+img{display:block;max-width:100%}
+h1,h3{font-family:'Clash Display',sans-serif;color:var(--ink);letter-spacing:-.02em;line-height:1.08}
+.guide{position:sticky;top:0;z-index:80;background:var(--ink);color:#fff;padding:14px 22px;text-align:center;font-size:14px;font-weight:500}
+.guide .g2{display:block;color:#C9BBD6;font-size:12.5px;margin-top:3px}
+.stage{display:flex;flex-wrap:wrap;gap:38px;justify-content:center;padding:44px 20px 80px;max-width:1500px;margin:0 auto}
+.col{width:320px;max-width:100%}
+.opt-head{text-align:center;margin-bottom:14px}
+.opt-head .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--grad);color:#fff;font-family:'Clash Display';font-weight:600;font-size:14px;margin-bottom:8px}
+.opt-head h3{font-size:17px}.opt-head p{font-size:12px;color:var(--muted);margin-top:4px}
+.phone{position:relative;width:320px;background:#0b0810;border-radius:44px;padding:9px;box-shadow:0 40px 78px -32px rgba(30,15,40,.55)}
+.phone .island{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:88px;height:23px;background:#000;border-radius:20px;z-index:20}
+.scr{position:relative;border-radius:36px;overflow:hidden;height:640px;background:#FCFBFD;display:flex;flex-direction:column}
+.scr::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:
+ radial-gradient(60% 36% at 12% 4%,rgba(166,47,189,.09),transparent 60%),
+ radial-gradient(50% 30% at 92% 8%,rgba(249,115,22,.08),transparent 60%)}
+.mnav{position:relative;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:30px 18px 0}
+.mnav img{height:20px;width:auto}
+.mnav .brg{display:flex;flex-direction:column;gap:4px}
+.mnav .brg i{width:20px;height:2px;background:var(--ink);border-radius:2px}
+.body{position:relative;z-index:5;flex:1;display:flex;flex-direction:column}
+.w{font-family:Georgia,serif;font-style:italic;color:var(--purple-deep);position:relative;white-space:nowrap}
+.w::after{content:"";position:absolute;left:-2%;right:-4%;bottom:-.03em;height:.16em;z-index:-1;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'%3E%3Cpath d='M3 10C30 4 60 3 117 7' fill='none' stroke='%23F97316' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;transform:rotate(-1.2deg)}
+h1.t{font-size:28px;text-align:center;margin-top:16px}
+p.l{font-size:12px;color:var(--muted);text-align:center;margin-top:7px}
+.beige{position:relative;flex:1;margin-top:32px;background:#F6ECDF;border-radius:26px 26px 0 0;display:flex;flex-direction:column;justify-content:center;padding:26px 12px 14px}
+.cta{position:absolute;top:-22px;left:8%;width:84%;display:flex;align-items:center;justify-content:center;gap:8px;
+ background:var(--ink);color:#fff;font-weight:600;font-size:12.5px;padding:14px;border-radius:13px;box-shadow:0 18px 38px -16px rgba(22,13,28,.55)}
+.doms{text-align:center;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#8A7457;margin-top:8px}
+.beige svg{display:block;width:88%;margin:0 auto}
+</style>
+</head>
+<body>
+<div class="guide"><b>Illustration de la zone beige • 6 pistes très différentes.</b><span class="g2">Réponds « <b>illu 1</b> » … « <b>illu 6</b> » et je l'intègre (animée) au vrai héros.</span></div>
+<div class="stage" id="stage"></div>
+
+<script>
+var ART={
+ balloon:'<svg viewBox="0 0 360 310" fill="none">\
+<g stroke="#1E1327" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">\
+<path d="M180 26c52 0 86 38 86 84 0 44-38 74-60 92h-52c-22-18-60-48-60-92 0-46 34-84 86-84z" fill="#F97316"/>\
+<path d="M180 26c-20 0-34 42-34 88 0 40 14 70 22 88h24c8-18 22-48 22-88 0-46-14-88-34-88z" fill="#A62FBD"/>\
+<path d="M146 202l-12 44M214 202l12 44M180 206v40"/>\
+<path d="M142 246h76v34a10 10 0 01-10 10h-56a10 10 0 01-10-10z" fill="#EFDFC9"/>\
+<circle cx="160" cy="246" r="11" fill="#F2D8C4"/><circle cx="200" cy="246" r="12" fill="#F2D8C4"/>\
+<g stroke-width="2"><circle cx="156" cy="244" r="1.3" fill="#1E1327"/><circle cx="163" cy="244" r="1.3" fill="#1E1327"/><circle cx="196" cy="243" r="1.4" fill="#1E1327"/><circle cx="204" cy="243" r="1.4" fill="#1E1327"/></g>\
+<path d="M157 250c2.4 1.6 4.6 1.6 7 0M196 250c2.6 1.8 5.4 1.8 8 0" stroke-width="2.2"/>\
+</g>\
+<g fill="#A62FBD"><path d="M64 84l4 9.5 9.5 4-9.5 4-4 9.5-4-9.5-9.5-4 9.5-4z"/></g>\
+<g fill="#F97316"><path d="M300 120l3.5 8.5 8.5 3.5-8.5 3.5-3.5 8.5-3.5-8.5-8.5-3.5 8.5-3.5z"/></g>\
+<path d="M40 160c10-8 24-8 32 0M296 62c8-6 20-6 28 0" stroke="#1E1327" stroke-width="3" stroke-linecap="round"/>\
+<ellipse cx="72" cy="252" rx="34" ry="10" fill="#EFDFC9"/><ellipse cx="292" cy="270" rx="40" ry="11" fill="#EFDFC9"/>\
+</svg>',
+ puzzle:'<svg viewBox="0 0 360 310" fill="none">\
+<g stroke="#1E1327" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">\
+<path d="M180 264C120 224 84 190 84 142c0-30 22-52 50-52 20 0 36 10 46 26 10-16 26-26 46-26 28 0 50 22 50 52 0 48-36 82-96 122z" fill="#fff"/>\
+<path d="M180 116c-10-16-26-26-46-26-28 0-50 22-50 52 0 26 11 47 32 68l64-64z" fill="#A62FBD"/>\
+<path d="M226 90c-20 0-36 10-46 26l50 50 44-44c-8-19-26-32-48-32z" fill="#F97316"/>\
+<path d="M116 210c17 17 38 35 64 54l4-84z" fill="#C86BE0"/>\
+</g>\
+<g stroke="#1E1327" stroke-width="4" stroke-linejoin="round">\
+<path d="M262 176l30-30c6-6 16-6 22 0s6 16 0 22l-30 30c-6 6-16 6-22 0s-6-16 0-22z" fill="#F97316" transform="rotate(8 280 180)"/>\
+</g>\
+<path d="M246 190c8-4 14-10 18-16" stroke="#A62FBD" stroke-width="2.6" stroke-dasharray="1 8" stroke-linecap="round"/>\
+<g fill="#A62FBD"><path d="M70 70l4 9.5 9.5 4-9.5 4-4 9.5-4-9.5-9.5-4 9.5-4z"/></g>\
+<g fill="#F97316"><path d="M296 250l3.5 8.5 8.5 3.5-8.5 3.5-3.5 8.5-3.5-8.5-8.5-3.5 8.5-3.5z"/></g>\
+</svg>',
+ phone:'<svg viewBox="0 0 360 310" fill="none">\
+<g stroke="#1E1327" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">\
+<rect x="118" y="34" width="124" height="242" rx="22" fill="#fff"/>\
+<rect x="130" y="46" width="100" height="218" rx="14" fill="#FDF6EC"/>\
+<circle cx="180" cy="104" r="30" fill="#F2D8C4"/>\
+<g stroke-width="2.8"><circle cx="170" cy="100" r="2" fill="#1E1327"/><circle cx="190" cy="100" r="2" fill="#1E1327"/></g>\
+<path d="M169 113c6 4.5 16 4.5 22 0" stroke-width="3"/>\
+<path d="M142 172h10l6-12 8 24 7-16 5 8h10" stroke="#A62FBD" stroke-width="3.4"/>\
+<path d="M146 216c0-10 8-16 17-16 7 0 13 4 17 10 4-6 10-10 17-10 9 0 17 6 17 16 0 16-20 26-34 34-14-8-34-18-34-34z" fill="#F97316" stroke-width="3.4" transform="scale(.62) translate(108 118)"/>\
+<rect x="196" y="150" width="26" height="26" rx="8" fill="#A62FBD"/>\
+<path d="M204 163h10M209 158v10" stroke="#fff" stroke-width="2.6"/>\
+</g>\
+<g stroke="#1E1327" stroke-width="3.4" stroke-linejoin="round">\
+<circle cx="84" cy="90" r="20" fill="#C86BE0"/><path d="M77 90c4.5-7 9.5-7 14 0" stroke-width="2.6"/>\
+<circle cx="280" cy="196" r="18" fill="#F97316"/><path d="M273 194c4-5 10-5 14 0" stroke-width="2.4"/>\
+</g>\
+<path d="M96 118c14 12 20 20 26 34M264 182c-8-6-16-10-26-12" stroke="#A62FBD" stroke-width="2.6" stroke-dasharray="1 8" stroke-linecap="round"/>\
+<g fill="#A62FBD"><path d="M68 216l4 9.5 9.5 4-9.5 4-4 9.5-4-9.5-9.5-4 9.5-4z"/></g>\
+<g fill="#F97316"><path d="M292 64l3.5 8.5 8.5 3.5-8.5 3.5-3.5 8.5-3.5-8.5-8.5-3.5 8.5-3.5z"/></g>\
+</svg>',
+ rocket:'<svg viewBox="0 0 360 310" fill="none">\
+<g stroke="#1E1327" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">\
+<path d="M180 30c30 26 44 62 44 104 0 26-6 48-14 64h-60c-8-16-14-38-14-64 0-42 14-78 44-104z" fill="#fff"/>\
+<path d="M180 30c-16 14-28 32-35 52h70c-7-20-19-38-35-52z" fill="#F97316"/>\
+<circle cx="180" cy="124" r="24" fill="#EAD9F2"/>\
+<circle cx="180" cy="124" r="15" fill="#F2D8C4"/>\
+<g stroke-width="2.4"><circle cx="175" cy="122" r="1.5" fill="#1E1327"/><circle cx="185" cy="122" r="1.5" fill="#1E1327"/></g>\
+<path d="M175 130c3 2.2 7 2.2 10 0" stroke-width="2.4"/>\
+<path d="M136 198c-18 8-28 24-30 46 16-2 30-8 40-18M224 198c18 8 28 24 30 46-16-2-30-8-40-18" fill="#A62FBD"/>\
+<path d="M162 198h36l-6 34c-4 6-20 6-24 0z" fill="#C86BE0"/>\
+<path d="M172 240c-2 14-2 24 8 38 10-14 10-24 8-38" fill="#F97316"/>\
+</g>\
+<g fill="#A62FBD"><path d="M84 84l4 9.5 9.5 4-9.5 4-4 9.5-4-9.5-9.5-4 9.5-4z"/></g>\
+<g fill="#F97316"><path d="M282 108l3.5 8.5 8.5 3.5-8.5 3.5-3.5 8.5-3.5-8.5-8.5-3.5 8.5-3.5z"/></g>\
+<circle cx="70" cy="192" r="4" fill="#A62FBD"/><circle cx="300" cy="230" r="4" fill="#F97316"/><circle cx="288" cy="52" r="3" fill="#C86BE0"/>\
+</svg>',
+ tree:'<svg viewBox="0 0 360 310" fill="none">\
+<path d="M0 282c60-14 120-18 180-18s120 4 180 18v28H0z" fill="#EFDFC9"/>\
+<g stroke="#1E1327" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">\
+<path d="M172 282v-72c0-22-8-34-22-46M188 282v-88c0-18 8-30 20-40" stroke-width="5"/>\
+<circle cx="180" cy="112" r="52" fill="#A62FBD"/>\
+<circle cx="120" cy="140" r="32" fill="#C86BE0"/>\
+<circle cx="242" cy="136" r="34" fill="#F97316"/>\
+<circle cx="180" cy="112" r="15" fill="#F2D8C4"/>\
+<g stroke-width="2.4"><circle cx="175" cy="110" r="1.5" fill="#1E1327"/><circle cx="185" cy="110" r="1.5" fill="#1E1327"/></g><path d="M175 118c3 2.2 7 2.2 10 0" stroke-width="2.4"/>\
+<circle cx="120" cy="140" r="11" fill="#F2D8C4"/>\
+<g stroke-width="2.2"><circle cx="116" cy="138" r="1.3" fill="#1E1327"/><circle cx="124" cy="138" r="1.3" fill="#1E1327"/></g><path d="M116 144c2.4 1.8 5.6 1.8 8 0" stroke-width="2.2"/>\
+<circle cx="242" cy="136" r="12" fill="#F2D8C4"/>\
+<g stroke-width="2.2"><circle cx="238" cy="134" r="1.3" fill="#1E1327"/><circle cx="246" cy="134" r="1.3" fill="#1E1327"/></g><path d="M238 141c2.4 1.8 5.6 1.8 8 0" stroke-width="2.2"/>\
+<path d="M282 282v-30l24-14" stroke-width="4"/>\
+<path d="M296 226l22-8-4 24c-10 4-16 0-18-16z" fill="#F97316"/>\
+</g>\
+<g fill="#A62FBD"><path d="M80 66l4 9.5 9.5 4-9.5 4-4 9.5-4-9.5-9.5-4 9.5-4z"/></g>\
+<g fill="#F97316"><path d="M292 78l3.5 8.5 8.5 3.5-8.5 3.5-3.5 8.5-3.5-8.5-8.5-3.5 8.5-3.5z"/></g>\
+</svg>',
+ constellation:'<svg viewBox="0 0 360 310" fill="none">\
+<path d="M180 262 106 196c-22-20-30-52-14-76 14-21 42-26 62-14l26 16 26-16c20-12 48-7 62 14 16 24 8 56-14 76z" stroke="#A62FBD" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>\
+<g stroke="#1E1327" stroke-width="3.4" stroke-linejoin="round">\
+<circle cx="106" cy="196" r="17" fill="#F97316"/><path d="M100 194c3.5-5 8.5-5 12 0" stroke-width="2.2"/>\
+<circle cx="92" cy="120" r="19" fill="#A62FBD"/><path d="M85 119c4-5.5 10-5.5 14 0" stroke-width="2.3"/>\
+<circle cx="154" cy="90" r="15" fill="#C86BE0"/><path d="M149 89c3-4.5 7-4.5 10 0" stroke-width="2.1"/>\
+<circle cx="206" cy="90" r="16" fill="#F97316"/><path d="M200 89c3.4-4.6 8-4.6 11.4 0" stroke-width="2.1"/>\
+<circle cx="268" cy="120" r="18" fill="#C86BE0"/><path d="M261 119c4-5 10-5 14 0" stroke-width="2.2"/>\
+<circle cx="254" cy="196" r="16" fill="#A62FBD"/><path d="M248 194c3.4-4.6 8.6-4.6 12 0" stroke-width="2.2"/>\
+<circle cx="180" cy="262" r="20" fill="#F97316"/><path d="M173 260c4-5.5 10-5.5 14 0" stroke-width="2.4"/>\
+</g>\
+<g fill="#A62FBD"><path d="M60 240l4 9.5 9.5 4-9.5 4-4 9.5-4-9.5-9.5-4 9.5-4z"/></g>\
+<g fill="#F97316"><path d="M298 244l3.5 8.5 8.5 3.5-8.5 3.5-3.5 8.5-3.5-8.5-8.5-3.5 8.5-3.5z"/></g>\
+<circle cx="70" cy="66" r="3.5" fill="#F97316"/><circle cx="296" cy="60" r="3.5" fill="#A62FBD"/>\
+</svg>'
+};
+var V=[
+ {k:'balloon',t:'Montgolfière',d:'Deux personnages différents s\'élèvent ensemble dans un ballon violet/orange. Élévation, douceur, aventure partagée — remplit parfaitement la hauteur.'},
+ {k:'puzzle',t:'Cœur-puzzle',d:'Un grand cœur fait de pièces différentes (violet, orange, lilas) — la dernière pièce arrive en flottant. La différence qui complète.'},
+ {k:'phone',t:'Le produit en scène',d:'Un grand téléphone avec Moody à l\'écran (humeur, courbe, check-in), deux compagnons ronds autour. Le plus explicite : on voit ce que vous faites.'},
+ {k:'rocket',t:'Fusée',d:'Une fusée au hublot souriant décolle, ailerons violets, flamme orange. L\'ambition du studio, lisible en une demi-seconde.'},
+ {k:'tree',t:'L\'arbre aux visages',d:'Un arbre dont la canopée est faite de visages différents, quelqu\'un l\'arrose. La croissance qu\'on cultive ensemble.'},
+ {k:'constellation',t:'Constellation de visages',d:'Sept visages différents reliés par un fil pointillé qui dessine… un cœur. Communauté + tendresse, très aérien.'}
+];
+var stage=document.getElementById('stage');
+V.forEach(function(v,i){
+  var b=document.createElement('div');b.className='col';
+  b.innerHTML='<div class="opt-head"><span class="n">'+(i+1)+'</span><h3>'+v.t+'</h3><p>'+v.d+'</p></div>'+
+  '<div class="phone"><span class="island"></span><div class="scr">'+
+  '<div class="mnav"><img src="assets/wordmark-duo.webp?v=3"><span class="brg"><i></i><i></i><i></i></span></div>'+
+  '<div class="body"><h1 class="t">La différence est<br/><span class="w">une force</span>.</h1><p class="l">Des apps qui comptent. À commencer par Moody.</p>'+
+  '<div class="beige"><span class="cta">Découvrir Moody →</span>'+ART[v.k]+'<p class="doms">Santé · Éducation · Climat</p></div></div></div></div>';
+  stage.appendChild(b);
+});
+</script>
+</body>
+</html>
