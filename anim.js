@@ -134,29 +134,30 @@ document.fonts.ready.then(function(){
     var mc = hm.querySelector('.hero-mcard');
     if(mc){ gsap.to(mc,{ y:-6, duration:2.6, ease:'sine.inOut', yoyo:true, repeat:-1, delay:1.7 }); }
 
-    /* mot tournant : une force / un atout / une fierté */
-    var rot = hm.querySelector('.rotw');
-    if(rot){
-      var words = ['une force','un atout','une fierté'];
-      /* largeur stabilisée sur le mot le plus large pour éviter les sauts */
-      var probe = rot.cloneNode(false);
-      probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap';
-      rot.parentNode.appendChild(probe);
-      var wmax = 0;
-      words.forEach(function(w){ probe.textContent = w; wmax = Math.max(wmax, probe.offsetWidth); });
-      probe.remove();
-      rot.style.display = 'inline-block';
-      rot.style.minWidth = wmax + 'px';
-      var wi = 0;
-      setInterval(function(){
-        wi = (wi+1) % words.length;
-        gsap.to(rot,{ opacity:0, y:-9, duration:.28, ease:'power2.in', onComplete:function(){
-          rot.textContent = words[wi];
-          gsap.fromTo(rot,{ opacity:0, y:10 },{ opacity:1, y:0, duration:.38, ease:'power2.out' });
-        }});
-      }, 3200);
-    }
   }
+
+  /* mot tournant : une force / un atout / une fierté (héros desktop + mobile) */
+  document.querySelectorAll('.rotw').forEach(function(rot){
+    if(!rot.offsetParent) return; /* invisible sur ce format */
+    var words = ['une force','un atout','une fierté'];
+    /* largeur stabilisée sur le mot le plus large pour éviter les sauts */
+    var probe = rot.cloneNode(false);
+    probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap';
+    rot.parentNode.appendChild(probe);
+    var wmax = 0;
+    words.forEach(function(w){ probe.textContent = w; wmax = Math.max(wmax, probe.offsetWidth); });
+    probe.remove();
+    rot.style.display = 'inline-block';
+    rot.style.minWidth = wmax + 'px';
+    var wi = 0;
+    setInterval(function(){
+      wi = (wi+1) % words.length;
+      gsap.to(rot,{ opacity:0, y:-9, duration:.28, ease:'power2.in', onComplete:function(){
+        rot.textContent = words[wi];
+        gsap.fromTo(rot,{ opacity:0, y:10 },{ opacity:1, y:0, duration:.38, ease:'power2.out' });
+      }});
+    }, 3200);
+  });
 
   /* ---------- 6. CARTE MOODY — entrée en profondeur ---------- */
   q('.moody-card').forEach(function(card){

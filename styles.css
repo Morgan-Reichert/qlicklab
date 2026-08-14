@@ -94,6 +94,18 @@ header.scrolled .nav{padding-top:8px;padding-bottom:8px;box-shadow:0 14px 40px -
 .hero-visual{position:relative;opacity:0;animation:fadeUp 1s var(--ease) .5s forwards}
 .hero-frame{position:relative}
 .hero-frame img{width:100%;display:block;animation:floaty 8s ease-in-out infinite}
+/* scène dessinée du héros + halo violet/orange */
+.hero-scene{position:relative}
+.hero-scene::before{content:"";position:absolute;inset:-14% -10%;z-index:0;pointer-events:none;background:
+  radial-gradient(52% 46% at 50% 46%,rgba(166,47,189,.17),transparent 65%),
+  radial-gradient(42% 38% at 66% 60%,rgba(249,115,22,.14),transparent 62%)}
+.hero-scene svg{position:relative;z-index:1;width:100%;height:auto;filter:drop-shadow(0 26px 44px rgba(124,31,146,.15))}
+/* pastille du héros desktop (le reste du site garde l'eyebrow classique) */
+.hero-copy .eyebrow{background:rgba(255,255,255,.62);border:1px solid var(--border);border-radius:100px;
+  padding:9px 16px;text-transform:none;letter-spacing:.02em;font-size:13.5px;color:var(--text);
+  box-shadow:0 8px 22px -16px rgba(34,19,39,.3);backdrop-filter:blur(8px)}
+.hero-copy .eyebrow::before{width:7px;height:7px;border-radius:50%;background:var(--grad)}
+.rotw{white-space:nowrap;display:inline-block;text-align:center}
 .hero-badge{position:absolute;left:0;bottom:6px;display:flex;align-items:center;gap:12px;
   background:#fff;border:1px solid var(--border);border-radius:16px;padding:13px 17px;box-shadow:var(--shadow);animation:floaty 6s ease-in-out infinite}
 .hero-badge .ic{width:40px;height:40px;border-radius:12px;background:var(--purple-soft);display:grid;place-items:center;flex:none}
