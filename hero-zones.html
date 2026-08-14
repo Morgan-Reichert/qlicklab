@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zone blanche du héros • 5 options • QlickLab</title>
+<link rel="icon" href="assets/icon-duo.png?v=2" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#FCFBFD;--ink:#160D1C;--text:#2C2233;--muted:#6E6479;--muted-2:#9A90A8;--border:#ECE0F2;--border-2:#DFCEE9;
+--purple:#A62FBD;--purple-deep:#7C1F92;--orange:#F97316;--grad:linear-gradient(115deg,#A62FBD,#F97316);--ease:cubic-bezier(.22,1,.36,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Satoshi',system-ui,sans-serif;color:var(--text);background:#EEE8F3;-webkit-font-smoothing:antialiased;line-height:1.5}
+img{display:block;max-width:100%}a{color:inherit;text-decoration:none}
+h1,h3{font-family:'Clash Display',sans-serif;color:var(--ink);letter-spacing:-.02em;line-height:1.06}
+.guide{position:sticky;top:0;z-index:80;background:var(--ink);color:#fff;padding:14px 22px;text-align:center;font-size:14px;font-weight:500}
+.guide .g2{display:block;color:#C9BBD6;font-size:12.5px;margin-top:3px}
+.stage{display:flex;flex-wrap:wrap;gap:38px;justify-content:center;padding:44px 20px 80px;max-width:1500px;margin:0 auto}
+.col{width:330px;max-width:100%}
+.opt-head{text-align:center;margin-bottom:16px}
+.opt-head .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--grad);color:#fff;font-family:'Clash Display';font-weight:600;font-size:14px;margin-bottom:8px}
+.opt-head h3{font-size:18px}.opt-head p{font-size:12.5px;color:var(--muted);margin-top:4px}
+.phone{position:relative;width:330px;background:#0b0810;border-radius:46px;padding:9px;box-shadow:0 46px 84px -32px rgba(30,15,40,.55)}
+.phone .island{position:absolute;top:19px;left:50%;transform:translateX(-50%);width:92px;height:24px;background:#000;border-radius:20px;z-index:20}
+.scr{position:relative;border-radius:38px;overflow:hidden;height:660px;background:var(--bg);display:flex;flex-direction:column}
+.scr::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:
+ radial-gradient(60% 36% at 12% 4%,rgba(166,47,189,.10),transparent 60%),
+ radial-gradient(50% 30% at 92% 8%,rgba(249,115,22,.09),transparent 60%)}
+.mnav{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:32px 18px 0}
+.mnav img{height:21px;width:auto}
+.mnav .brg{display:flex;flex-direction:column;gap:4px}
+.mnav .brg span{width:20px;height:2px;background:var(--ink);border-radius:2px}
+.hcopy{position:relative;z-index:5;text-align:center;padding:16px 20px 0}
+.pill{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:10.5px;color:var(--text);
+ background:rgba(255,255,255,.62);border:1px solid var(--border);border-radius:100px;padding:6px 12px;box-shadow:0 8px 22px -16px rgba(34,19,39,.3)}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--grad)}
+.hcopy h1{font-size:27px;font-weight:600;margin-top:10px}
+.hcopy h1 .w{font-family:Georgia,serif;font-style:italic;color:var(--purple-deep);position:relative}
+.hcopy h1 .w::after{content:"";position:absolute;left:-3%;right:-5%;bottom:-.05em;height:.18em;z-index:-1;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'%3E%3Cpath d='M3 10C30 4 60 3 117 7' fill='none' stroke='%23F97316' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;transform:rotate(-1.2deg)}
+.hcopy p{font-size:13px;color:var(--muted);margin-top:8px}
+.zone{position:relative;z-index:4;flex:1;min-height:120px}
+.bottom{position:relative;z-index:3;margin-top:auto}
+.wave{position:absolute;left:0;right:0;bottom:0;top:-46px;z-index:0;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='none'%3E%3Cpath d='M0 78C22 60 44 70 68 55 92 41 110 63 138 50 168 36 186 58 214 48 240 39 258 60 288 45 314 32 336 56 366 42 382 35 392 44 400 38L400 300 0 300Z' fill='%23F6ECDF'/%3E%3C/svg%3E") no-repeat bottom/100% 100%}
+.scene{position:relative;z-index:2;display:block;width:82%;margin:0 auto 6px}
+.btns{position:relative;z-index:2;display:flex;gap:9px;padding:0 18px 22px}
+.btns .b{flex:1;text-align:center;font-weight:600;font-size:12.5px;padding:12px 8px;border-radius:12px}
+.btns .bp{background:var(--ink);color:#fff}
+.btns .bg{background:rgba(255,255,255,.42);border:1.5px solid var(--border-2)}
+@keyframes flo{50%{transform:translateY(-8px)}}
+@keyframes osc{50%{transform:rotate(14deg)}}
+
+/* V1 — constellation de valeurs */
+.z1 .node{position:absolute;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--text);
+ background:rgba(255,255,255,.7);border:1px solid var(--border);border-radius:100px;padding:7px 12px;
+ box-shadow:0 10px 24px -16px rgba(34,19,39,.35);animation:flo 4.5s ease-in-out infinite}
+.z1 .node i{font-style:normal;width:6px;height:6px;border-radius:50%;background:var(--grad)}
+.z1 .n1{top:14%;left:7%;rotate:-2deg}
+.z1 .n2{top:8%;right:8%;rotate:1.5deg;animation-delay:-1.6s}
+.z1 .n3{top:56%;left:26%;rotate:-1deg;animation-delay:-3s}
+.z1 svg.links{position:absolute;inset:0;width:100%;height:100%}
+
+/* V2 — courbe qui traverse */
+.z2 svg{position:absolute;inset:0;width:100%;height:100%}
+.z2 .curve{stroke-dasharray:6 10;animation:dashmove 14s linear infinite}
+@keyframes dashmove{to{stroke-dashoffset:-320}}
+.z2 .spark{animation:flo 4s ease-in-out infinite}
+
+/* V3 — griffonnages */
+.z3 .d{position:absolute;animation:flo 5s ease-in-out infinite}
+
+/* V4 — mots manifeste */
+.z4{overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.z4 .row{white-space:nowrap;font-family:'Clash Display',sans-serif;font-weight:600;font-size:38px;letter-spacing:-.02em;
+ color:var(--purple-deep);opacity:.08;animation:mq 26s linear infinite}
+.z4 .row.r2{color:var(--orange);animation-direction:reverse;animation-duration:32s;font-size:34px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* V5 — boussole emblème */
+.z5 .comp{position:absolute;left:50%;bottom:-34px;transform:translateX(-50%);z-index:0}
+.z5 .needle{transform-origin:50% 50%;animation:osc 2.2s ease-in-out infinite}
+</style>
+</head>
+<body>
+<div class="guide"><b>Zone blanche du héros • 5 options en situation.</b><span class="g2">Réponds « <b>zone 1</b> » … « <b>zone 5</b> » et je l'applique au vrai héros.</span></div>
+<div class="stage" id="stage"></div>
+
+<template id="tpl">
+  <div class="col">
+    <div class="opt-head"><div class="n"></div><h3></h3><p></p></div>
+    <div class="phone"><span class="island"></span><div class="scr">
+      <div class="mnav"><img src="assets/wordmark-duo.webp?v=3" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="hcopy">
+        <span class="pill">Studio tech européen · à impact</span>
+        <h1>La différence est <span class="w">une force</span>.</h1>
+        <p>On ne construit que ce qui compte. À commencer par Moody.</p>
+      </div>
+      <div class="zone"></div>
+      <div class="bottom">
+        <span class="wave"></span>
+        <svg class="scene" viewBox="52 120 416 216" fill="none">
+          <g stroke="#1E1327" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+            <g><circle cx="168" cy="204" r="21" fill="#F2D8C4"/><path d="M138 312v-48a30 30 0 0160 0v48z" fill="#A62FBD"/><g stroke-width="2.5"><circle cx="161" cy="201" r="1.6" fill="#1E1327"/><circle cx="175" cy="201" r="1.6" fill="#1E1327"/><path d="M162 210c4 3 8 3 12 0" fill="none" stroke-width="2.8"/></g></g>
+            <g><circle cx="260" cy="176" r="25" fill="#F2D8C4"/><path d="M222 312v-58a38 38 0 0176 0v58z" fill="#F97316"/><path d="M260 270c-8-8-20-4-20 5 0 8 12 14 20 19 8-5 20-11 20-19 0-9-12-13-20-5z" fill="#fff" stroke-width="3.2"/><g stroke-width="2.5"><circle cx="252" cy="172" r="1.8" fill="#1E1327"/><circle cx="268" cy="172" r="1.8" fill="#1E1327"/><path d="M252 183c5 3.5 11 3.5 16 0" fill="none" stroke-width="2.8"/></g></g>
+            <g><circle cx="352" cy="214" r="19" fill="#F2D8C4"/><path d="M326 312v-42a26 26 0 0152 0v42z" fill="#C86BE0"/><g stroke-width="2.5"><circle cx="346" cy="211" r="1.5" fill="#1E1327"/><circle cx="358" cy="211" r="1.5" fill="#1E1327"/><path d="M346 220c4 2.6 8 2.6 12 0" fill="none" stroke-width="2.6"/></g></g>
+            <path d="M118 312h286" stroke-width="4.5"/>
+          </g>
+        </svg>
+        <div class="btns"><span class="b bp">Découvrir Moody</span><span class="b bg">Notre vision</span></div>
+      </div>
+    </div></div>
+  </div>
+</template>
+
+<script>
+var variants = [
+ {t:'Constellation de valeurs', d:'Nos trois piliers en étiquettes flottantes reliées en pointillés. Du vrai contenu, léger.',
+  z:'z1', html:'<svg class="links" viewBox="0 0 330 160" fill="none"><path d="M78 40 C130 60 190 30 252 28 M252 28 C220 70 160 96 112 106" stroke="#C9A8D6" stroke-width="1.6" stroke-dasharray="3 7" stroke-linecap="round"/></svg><span class="node n1"><i></i>Philosophie</span><span class="node n2"><i></i>Éducation</span><span class="node n3"><i></i>IA responsable</span>'},
+ {t:'Fil de vie', d:'Une courbe en pointillés qui coule du texte vers la scène, ponctuée d\'éclats. Relie littéralement les deux zones.',
+  z:'z2', html:'<svg viewBox="0 0 330 170" fill="none"><path class="curve" d="M30 24 C90 60 60 110 140 118 C210 125 240 70 302 96" stroke="#A62FBD" stroke-width="3" stroke-linecap="round"/><g class="spark" fill="#F97316"><path d="M60 36l4 9.5 9.5 4-9.5 4-4 9.5-4-9.5-9.5-4 9.5-4z"/></g><g class="spark" style="animation-delay:-2s" fill="#A62FBD"><path d="M250 62l3.5 8.5 8.5 3.5-8.5 3.5-3.5 8.5-3.5-8.5-8.5-3.5 8.5-3.5z"/></g><circle cx="140" cy="118" r="5" fill="#F97316"/></svg>'},
+ {t:'Griffonnages de designer', d:'Spirale, flèche courbe, soleil, ressort : des doodles au trait éparpillés, comme un carnet de studio.',
+  z:'z3', html:'<svg class="d" style="top:12%;left:8%" width="44" height="44" viewBox="0 0 48 48" fill="none"><path d="M24 8a16 16 0 11-11 27M24 16a8 8 0 11-5 14" stroke="#A62FBD" stroke-width="2.6" stroke-linecap="round"/></svg><svg class="d" style="top:6%;right:10%;animation-delay:-1.4s" width="52" height="40" viewBox="0 0 56 44" fill="none"><path d="M4 36C16 12 36 8 50 14M50 14l-9-2M50 14l-4 8" stroke="#F97316" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="d" style="bottom:16%;left:24%;animation-delay:-2.8s" width="40" height="40" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="9" stroke="#F97316" stroke-width="2.6"/><path d="M22 4v6M22 34v6M4 22h6M34 22h6M9 9l4 4M31 31l4 4M35 9l-4 4M13 31l-4 4" stroke="#F97316" stroke-width="2.6" stroke-linecap="round"/></svg><svg class="d" style="bottom:8%;right:16%;animation-delay:-3.6s" width="46" height="26" viewBox="0 0 50 28" fill="none"><path d="M3 14c5-9 9 9 14 0s9 9 14 0 9 9 16 0" stroke="#A62FBD" stroke-width="2.6" stroke-linecap="round"/></svg>'},
+ {t:'Mots-manifeste', d:'Nos mots en très grand, quasi transparents, qui défilent lentement en sens opposés. Papier peint typographique.',
+  z:'z4', html:'<div class="row">différence · philosophie · éducation · inclusion · différence · philosophie · éducation · inclusion · </div><div class="row r2">humain d\'abord · IA responsable · Europe · humain d\'abord · IA responsable · Europe · </div>'},
+ {t:'Boussole emblème', d:'La boussole du chapitre 1 en grand, à moitié plongée dans la vague beige, aiguille qui oscille. Un emblème, pas une pub.',
+  z:'z5', html:'<svg class="comp" width="150" height="150" viewBox="0 0 116 116" fill="none"><circle cx="58" cy="58" r="44" fill="#F97316" stroke="#1E1327" stroke-width="4"/><circle cx="58" cy="58" r="30" fill="#FDF6EC" stroke="#1E1327" stroke-width="3.5"/><g class="needle"><path d="M58 36l9 22-9 22-9-22z" fill="#A62FBD" stroke="#1E1327" stroke-width="3" stroke-linejoin="round"/><circle cx="58" cy="58" r="4.5" fill="#1E1327"/></g><path d="M58 20v-8M58 104v-8M96 58h8M12 58h8" stroke="#1E1327" stroke-width="3.5" stroke-linecap="round"/></svg>'}
+];
+var stage=document.getElementById('stage'), tpl=document.getElementById('tpl');
+variants.forEach(function(v,i){
+  var n=tpl.content.cloneNode(true);
+  n.querySelector('.n').textContent=i+1;
+  n.querySelector('h3').textContent=v.t;
+  n.querySelector('.opt-head p').textContent=v.d;
+  var z=n.querySelector('.zone'); z.classList.add(v.z); z.innerHTML=v.html;
+  stage.appendChild(n);
+});
+</script>
+</body>
+</html>
