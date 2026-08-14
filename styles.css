@@ -750,6 +750,21 @@ form.shake{animation:shake .4s}
   .moody-card.folded .moody-tagline{margin-left:auto;margin-right:auto}
   .moody-folded-extra{justify-content:center}
   .story-intro,.certs-head{text-align:center}
+  /* footer accordéons */
+  footer .f-top{display:block}
+  footer .f-brand{text-align:center;margin-bottom:18px}
+  footer .f-brand .logo{margin:0 auto}
+  footer .f-brand p{margin-left:auto;margin-right:auto}
+  footer .f-eu{justify-content:center;width:100%}
+  footer .f-col{padding:0;border-bottom:1px solid var(--border)}
+  footer .f-col:nth-of-type(2){border-top:1px solid var(--border)}
+  footer .f-col h5{display:flex;justify-content:space-between;align-items:center;margin:0;padding:14px 4px;cursor:pointer;font-size:14px}
+  footer .f-col h5::after{content:"";width:8px;height:8px;border-right:2px solid var(--muted-2);border-bottom:2px solid var(--muted-2);
+    transform:rotate(45deg);transition:transform .3s var(--ease);margin-right:4px;flex:none}
+  footer .f-col.open h5::after{transform:rotate(-135deg)}
+  footer .f-top .f-col a{display:none;padding:7px 4px;font-size:13.5px}
+  footer .f-top .f-col.open a{display:block}
+  footer .f-bottom{flex-direction:column;gap:14px;text-align:center;align-items:center;margin-top:20px}
   /* le bouton flottant « Proposer un projet » n'apparaît plus sur l'écran en mobile (il est dans le menu) */
   .fab{display:none!important}
 

@@ -223,3 +223,14 @@ document.fonts.ready.then(function(){
   setTimeout(function(){ ScrollTrigger.refresh(); }, 900);
 });
 })();
+
+/* footer mobile : colonnes en accordéons (toutes pages) */
+(function(){
+  if(!window.matchMedia('(max-width:768px)').matches) return;
+  var cols = document.querySelectorAll('footer .f-col');
+  cols.forEach(function(col,i){
+    if(i===0) col.classList.add('open');
+    var h = col.querySelector('h5');
+    if(h) h.addEventListener('click',function(){ col.classList.toggle('open'); });
+  });
+})();
