@@ -181,6 +181,15 @@ h1,h2,h3{font-family:'Clash Display',sans-serif;color:var(--ink);letter-spacing:
 .illu h1{font-size:30px;font-weight:600;margin-top:10px}
 .illu .mlead{margin:12px 0 18px}
 .scr.illu.moody{background:#F6F1E9}
+/* variante texte clair (voile sombre pour lisibilité) */
+.scr.illu.light .bgi::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,9,24,0) 38%,rgba(22,9,24,.32) 60%,rgba(22,9,24,.82) 100%)}
+.illu.light .mnav .brg span{background:#fff}
+.illu.light .eyebrow{color:#F3DEFB}
+.illu.light .eyebrow::before{background:#fff}
+.illu.light h1{color:#fff}
+.illu.light .mlead{color:rgba(255,255,255,.9)}
+.illu.light .grad{background:linear-gradient(115deg,#E98BFF,#FFB877);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.illu.light .mbtn-p{background:#fff;color:var(--ink)}
 
 @media(max-width:520px){.guide .g2{font-size:12px}.stage{gap:30px}}
 </style>
@@ -408,9 +417,9 @@ h1,h2,h3{font-family:'Clash Display',sans-serif;color:var(--ink);letter-spacing:
   <!-- OPTION N -->
   <div class="col">
     <div class="opt-head"><div class="n">N</div><h3>Illustration marque (nouvelle)</h3><p>Illustration verticale sur-mesure (violet/orange), le texte se pose sur le bas clair. Éditorial et signé.</p></div>
-    <div class="phone"><span class="island"></span><div class="scr illu">
+    <div class="phone"><span class="island"></span><div class="scr illu light">
       <div class="bgi"><img src="assets/hero-m-brand.webp" alt=""></div>
-      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="mnav"><img src="assets/wordmark-white.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
       <div class="obody">
         <span class="eyebrow">Studio tech · à impact</span>
         <h1>La différence est une <span class="grad">force</span>.</h1>
