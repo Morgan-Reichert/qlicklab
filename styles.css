@@ -74,8 +74,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:1000;transition:transform .4s
   .tb-lang a.on{color:var(--purple-deep);background:rgba(166,47,189,.12)}
   .tb-lang i{font-style:normal;color:var(--muted-2);margin:0 1px}
   header.scrolled .topbar{margin-top:-36px;opacity:0;pointer-events:none}
-  header .nav{background:transparent;border:none;box-shadow:none;backdrop-filter:none;padding:8px 0;margin:10px auto}
-  header.scrolled .nav{background:transparent;box-shadow:none;padding-top:4px;padding-bottom:4px}
+  header nav.nav{background:transparent;border:none;box-shadow:none;backdrop-filter:none;padding:8px 0;margin:10px auto}
+  header.scrolled nav.nav{background:transparent;box-shadow:none;border:none;backdrop-filter:none;padding-top:4px;padding-bottom:4px}
   header .nav .brand,
   header .nav .nav-links,
   header .nav .navsearch{background:rgba(255,255,255,.62);backdrop-filter:blur(14px) saturate(1.3);
@@ -978,6 +978,13 @@ form.shake{animation:shake .4s}
   .polcard:nth-child(4){rotate:-1.2deg;translate:0 0;z-index:3}
   .polcard:nth-child(5){rotate:2deg;translate:0 0;z-index:4}
 }
+
+/* bouton de connexion e-Qlab (footer) */
+.f-eqlab{display:inline-flex;align-items:center;gap:9px;margin-top:16px;
+  font-weight:600;font-size:13px;color:var(--text);padding:10px 17px;border-radius:11px;
+  border:1.5px solid var(--border-2);background:rgba(255,255,255,.5);
+  transition:border-color .25s,color .25s,transform .25s var(--ease)}
+.f-eqlab:hover{border-color:var(--purple);color:var(--purple-deep);transform:translateY(-2px)}
 
 /* ============ TOUCHES DESIGNER (anti-générique) ============ */
 /* mot-clé mis en évidence : italique éditoriale contrastée + trait brossé dessous */
