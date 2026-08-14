@@ -12,7 +12,7 @@
 <meta property="og:image" content="assets/icon-duo.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500,400&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=8" />
+<link rel="stylesheet" href="styles.css?v=9" />
 </head>
 <body>
 <div id="preloader">
@@ -167,6 +167,6 @@ if(window.matchMedia('(hover:hover)').matches){
 }
 document.querySelectorAll('.btn').forEach(btn=>btn.addEventListener('click',e=>{const r=btn.getBoundingClientRect(),c=document.createElement('span');c.className='ripple';const d=Math.max(r.width,r.height);c.style.width=c.style.height=d+'px';c.style.left=(e.clientX-r.left-d/2)+'px';c.style.top=(e.clientY-r.top-d/2)+'px';btn.appendChild(c);setTimeout(()=>c.remove(),600);}));
 </script>
-<script src="shared.js?v=8"></script>
+<script src="shared.js?v=9"></script>
 </body>
 </html>
