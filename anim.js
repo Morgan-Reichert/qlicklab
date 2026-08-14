@@ -187,22 +187,14 @@ document.fonts.ready.then(function(){
         if(d.chars.length)   tl.to(d.chars,{ opacity:1, duration:.01, ease:'none', stagger:.012 },.25);
       }
 
-      /* aimantation : jamais plus d'une carte par geste */
-      var snapIdx = 0;
+      /* (l'aimantation est gérée par le snap global de sections, qui connaît les 4 étapes de la pile) */
       var poltl = gsap.timeline({
         scrollTrigger:{
           trigger:polboard, start:'top 108px', end:'+=250%', pin:true, scrub:.55, anticipatePin:1,
-          onEnter:function(){ playIntro(0); },
-          snap:{
-            snapTo:function(v){
-              var t = Math.round(v * 3);
-              return Math.max(snapIdx - 1, Math.min(snapIdx + 1, t)) / 3;
-            },
-            onComplete:function(self){ snapIdx = Math.round(self.progress * 3); },
-            duration:{min:.3,max:.7}, ease:'power3.out', delay:.05
-          }
+          onEnter:function(){ playIntro(0); }
         }
       });
+      window._pileST = poltl.scrollTrigger;
       /* 2e carte : de la gauche · 3e : de la droite · 4e : d'en dessous */
       poltl.call(function(){ playIntro(1); },null,0)
         .fromTo(polcards[1],{ x:'-125vw', rotation:-26 },{ x:0, rotation:-2.2, duration:1, ease:'power2.out' },0)
@@ -331,6 +323,68 @@ document.fonts.ready.then(function(){
     var synced = (rot.closest('.hero-m') && document.querySelector('.hero-m .hero-cycle'))
               || (rot.closest('.hero-copy') && document.querySelector('.hero-scene .hero-cycle'));
     if(!synced) setInterval(swapWord, 3400);
+  });
+
+  /* ---------- SNAP GLOBAL DE SECTIONS : pas de scroll libre ----------
+     Chaque relâchement cale la page sur l'arrêt suivant : début de section,
+     pas d'écran dans les sections hautes, et les 4 étapes de la pile de post-its.
+     Un saut volontaire (ancre, haut de page) passe outre le cran-par-cran. */
+  var snapStops = [];
+  function buildStops(){
+    snapStops = [0];
+    var vh = window.innerHeight;
+    var els = q('section, footer, .marquee-wrap').filter(function(el){
+      return !el.parentElement.closest('section, footer, .marquee-wrap') && el.offsetHeight > 40 && el.offsetParent;
+    });
+    els.forEach(function(el){
+      var top = Math.round(el.getBoundingClientRect().top + window.scrollY);
+      var h = el.offsetHeight;
+      /* la section qui contient la pile épinglée : ses vrais arrêts sont les 4 étapes */
+      if(window._pileST && el.contains(window._pileST.trigger)){
+        var st = window._pileST;
+        for(var k=0;k<=3;k++) snapStops.push(Math.round(st.start + (st.end - st.start) * k / 3));
+        return;
+      }
+      snapStops.push(top);
+      for(var y = top + vh*.92; y < top + h - vh*.55; y += vh*.92) snapStops.push(Math.round(y));
+    });
+    var max = ScrollTrigger.maxScroll(window);
+    snapStops = snapStops.filter(function(s){ return s <= max; });
+    snapStops.push(max);
+    snapStops = snapStops.sort(function(a,b){ return a-b; })
+      .filter(function(s,i,arr){ return i===0 || s - arr[i-1] > 60; });
+  }
+  function nearestStopIdx(y){
+    var idx = 0, best = Infinity;
+    snapStops.forEach(function(s,i){ var d = Math.abs(s-y); if(d < best){ best = d; idx = i; } });
+    return idx;
+  }
+  var settledIdx = 0;
+  ScrollTrigger.addEventListener('refreshInit', function(){ /* stops recalculés après refresh */ });
+  ScrollTrigger.addEventListener('refresh', buildStops);
+  setTimeout(function(){ ScrollTrigger.refresh(); buildStops(); settledIdx = nearestStopIdx(window.scrollY); }, 200);
+
+  ScrollTrigger.create({
+    start:0, end:'max',
+    snap:{
+      snapTo:function(v, self){
+        if(!snapStops.length) return v;
+        var max = ScrollTrigger.maxScroll(window);
+        var y = v * max;
+        var vh = window.innerHeight;
+        var delta = y - snapStops[settledIdx];
+        /* saut volontaire (ancre, bouton haut de page) : cale sur l'arrêt le plus proche */
+        if(Math.abs(delta) > 2.6 * vh) return snapStops[nearestStopIdx(y)] / max;
+        /* micro-mouvement : on reste sur place */
+        if(Math.abs(delta) < 40) return snapStops[settledIdx] / max;
+        /* geste normal : l'arrêt SUIVANT dans le sens du scroll */
+        var dir = delta > 0 ? 1 : -1;
+        var target = Math.max(0, Math.min(snapStops.length - 1, settledIdx + dir));
+        return snapStops[target] / max;
+      },
+      onComplete:function(self){ settledIdx = nearestStopIdx(self.scroll()); },
+      duration:{min:.35,max:.85}, delay:.08, ease:'power3.out'
+    }
   });
 
   /* ---------- 6. CARTE MOODY — entrée en profondeur ---------- */
