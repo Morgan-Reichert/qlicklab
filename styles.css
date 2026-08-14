@@ -869,12 +869,18 @@ form.shake{animation:shake .4s}
   border-left:1px dashed rgba(255,255,255,.65);border-right:1px dashed rgba(255,255,255,.65)}
 .polcard:nth-child(odd) .tape{background:rgba(249,115,22,.30);transform:translateX(-50%) rotate(3deg)}
 @media(max-width:768px){
-  .feat-board{gap:12px;padding:22px 0 6px}
-  .polcard{width:calc(50% - 8px);min-width:150px;padding:8px 8px 12px}
-  .polcard img{height:96px}
-  .polcard h3{font-size:14.5px;margin-top:9px}
-  .polcard p{font-size:11px}
-  .polcard .tape{width:58px;height:18px;top:-9px}
+  /* pile de post-its : chaque carte se colle en haut, la suivante vient se poser dessus */
+  .feat-board{display:block;padding:6px 0 4px}
+  .polcard{position:sticky;top:92px;width:min(88vw,350px);margin:0 auto 34vh;padding:12px 12px 18px}
+  .polcard:last-child{margin-bottom:6vh}
+  .polcard img{height:172px}
+  .polcard h3{font-size:18.5px;margin-top:12px}
+  .polcard p{font-size:13px}
+  .polcard .tape{width:80px;height:23px;top:-11px}
+  .polcard:nth-child(2){rotate:-1.8deg;translate:0 0}
+  .polcard:nth-child(3){rotate:1.6deg;translate:0 0}
+  .polcard:nth-child(4){rotate:-1.2deg;translate:0 0}
+  .polcard:nth-child(5){rotate:2deg;translate:0 0}
 }
 
 /* ============ TOUCHES DESIGNER (anti-générique) ============ */

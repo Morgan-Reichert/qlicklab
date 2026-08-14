@@ -113,6 +113,17 @@ document.fonts.ready.then(function(){
     });
   });
 
+  /* ---------- 3ter. DOMAINES mobile — le scroll s'aimante sur chaque post-it ---------- */
+  if(window.matchMedia('(max-width:768px)').matches){
+    var polcards = q('.feat-board .polcard');
+    if(polcards.length > 1){
+      ScrollTrigger.create({
+        trigger:'.feat-board', start:'top 55%', end:'bottom 95%',
+        snap:{ snapTo:1/(polcards.length-1), duration:{min:.25,max:.65}, ease:'power3.out', delay:.08 }
+      });
+    }
+  }
+
   /* ---------- 4. HÉROS desktop — parallaxe de sortie ---------- */
   var hf = document.querySelector('.hero-frame');
   if(hf){
