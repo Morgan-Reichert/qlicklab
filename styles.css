@@ -873,15 +873,16 @@ form.shake{animation:shake .4s}
   /* pile de post-its : chaque carte se colle en haut, la suivante vient se poser dessus */
   .feat-board{display:block;padding:6px 0 4px}
   .polcard{position:sticky;top:92px;width:min(88vw,350px);margin:0 auto 34vh;padding:12px 12px 18px}
-  .polcard:last-child{margin-bottom:6vh}
+  /* course allongée : la dernière carte vient se poser sur la pile avant de libérer le scroll */
+  .polcard:last-child{margin-bottom:52vh}
   .polcard img{height:172px}
   .polcard h3{font-size:18.5px;margin-top:12px}
   .polcard p{font-size:13px}
   .polcard .tape{width:80px;height:23px;top:-11px}
-  .polcard:nth-child(2){rotate:-1.8deg;translate:0 0}
-  .polcard:nth-child(3){rotate:1.6deg;translate:0 0}
-  .polcard:nth-child(4){rotate:-1.2deg;translate:0 0}
-  .polcard:nth-child(5){rotate:2deg;translate:0 0}
+  .polcard:nth-child(2){rotate:-1.8deg;translate:0 0;z-index:1}
+  .polcard:nth-child(3){rotate:1.6deg;translate:0 0;z-index:2}
+  .polcard:nth-child(4){rotate:-1.2deg;translate:0 0;z-index:3}
+  .polcard:nth-child(5){rotate:2deg;translate:0 0;z-index:4}
 }
 
 /* ============ TOUCHES DESIGNER (anti-générique) ============ */
