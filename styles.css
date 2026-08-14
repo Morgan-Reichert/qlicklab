@@ -754,3 +754,22 @@ form.shake{animation:shake .4s}
   .moody-card.folded .moody-left{padding:36px 28px}
   .moody-card.folded .moody-tagline{font-size:22px}
 }
+
+/* ============ LOT UX/UI ============ */
+/* 1 — section active dans la nav */
+.nav-links .nav-top.current,.nav-links .nav-plain.current,.nav-links .nav-plain.active{color:var(--purple-deep);background:var(--purple-soft)}
+/* 9 — ombres cohérentes (échelle de tokens) */
+.moody-card{box-shadow:var(--shadow-lg)}
+.moody-toggle{box-shadow:0 14px 28px -14px rgba(0,120,60,.5)}
+/* 12 — focus clavier visible (sans gêner la souris) */
+:focus{outline:none}
+a:focus-visible,button:focus-visible,.btn:focus-visible,input:focus-visible,textarea:focus-visible,
+select:focus-visible,[tabindex]:focus-visible,.case-link:focus-visible,.moody-toggle:focus-visible,.burger:focus-visible{
+  outline:2.5px solid var(--purple);outline-offset:3px;border-radius:8px}
+.btn-white:focus-visible,.btn-ghost-w:focus-visible,.hero-m a:focus-visible,.mm-cta:focus-visible{outline-color:#fff}
+/* 13 — zones tactiles ≥ 44px sur mobile */
+@media(max-width:768px){
+  .case-link,.btn-store,.moody-toggle{min-height:44px}
+  footer .f-col a{display:inline-block;padding:6px 0;min-height:36px}
+  .nav-dd a{min-height:40px;display:flex;align-items:center}
+}

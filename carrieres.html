@@ -12,7 +12,7 @@
 <meta property="og:image" content="assets/icon-duo.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500,400&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=12" />
+<link rel="stylesheet" href="styles.css?v=13" />
 </head>
 <body>
 <div id="preloader">
@@ -118,10 +118,10 @@ document.querySelectorAll('.btn').forEach(function(btn){btn.addEventListener('cl
 <script>
 var JOBS=[["Ingénieur·e IA (santé)","tech","Paris · CDI","Carelin"],["Développeur·se full-stack","tech","Remote UE · CDI","Studio"],["Product designer","produit","Paris · CDI","Lumina"],["Product manager","produit","Berlin · CDI","Groupe"],["Chargé·e de mission impact","impact","Terrain · CDI","Groupe"],["Data scientist","tech","Amsterdam · CDI","Verdae"],["Chef·fe de projet accessibilité","impact","Lisbonne · CDI","Inclue"],["Designer de service","produit","Madrid · CDI","Incubation"]];
 var jl=document.getElementById('joblist');
-function render(cat){jl.innerHTML=JOBS.filter(function(j){return cat==='all'||j[1]===cat;}).map(function(j){return '<a href="contact.html" class="faq-item" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 24px;text-decoration:none"><div><div style="font-family:\'Clash Display\',sans-serif;font-weight:600;font-size:18px;color:var(--ink)">'+j[0]+'</div><div style="color:var(--muted);font-size:13.5px;margin-top:3px">'+j[3]+' · '+j[2]+'</div></div><span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#A62FBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>';}).join('');}
+function render(cat){jl.innerHTML=JOBS.filter(function(j){return cat==='all'||j[1]===cat;}).map(function(j){return '<a href="contact.html" class="faq-item" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 24px;text-decoration:none"><div><div style="font-family:\'Clash Display\',sans-serif;font-weight:600;font-size:18px;color:var(--ink)">'+j[0]+'</div><div style="color:var(--muted);font-size:13.5px;margin-top:3px">'+j[3]+' · '+j[2]+'</div></div><span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#A62FBD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>';}).join('');}
 render('all');
 document.querySelectorAll('#jobfilters .filter').forEach(function(f){f.addEventListener('click',function(){document.querySelectorAll('#jobfilters .filter').forEach(function(x){x.classList.remove('active');});f.classList.add('active');render(f.dataset.cat);});});
 </script>
-<script src="shared.js?v=12"></script>
+<script src="shared.js?v=13"></script>
 </body>
 </html>

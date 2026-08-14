@@ -146,13 +146,26 @@ document.querySelectorAll('a').forEach(function(a){
   cta.insertBefore(b,cta.firstChild);
 })();
 
-/* ---------- CARTE MOODY DÉPLIANTE ---------- */
+/* ---------- CARTE MOODY DÉPLIANTE (animation de hauteur) ---------- */
 document.addEventListener('click',function(e){
   var btn=e.target.closest('.moody-toggle'); if(!btn)return;
   var card=btn.closest('.moody-card'); if(!card)return;
+  if(card.dataset.animating==='1')return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  card.querySelectorAll('img[loading="lazy"]').forEach(function(im){im.loading='eager';});
+  var start=card.offsetHeight;
   var folded=card.classList.toggle('folded');
   btn.setAttribute('aria-expanded',String(!folded));
-  if(!folded){card.querySelectorAll('img[loading="lazy"]').forEach(function(im){im.loading='eager';});}
+  if(reduce)return;
+  var end=card.offsetHeight;
+  card.dataset.animating='1';
+  card.style.height=start+'px';
+  card.getBoundingClientRect();
+  card.style.transition='height .55s cubic-bezier(.22,1,.36,1)';
+  card.style.height=end+'px';
+  var done=function(){card.style.height='';card.style.transition='';card.dataset.animating='';card.removeEventListener('transitionend',done);};
+  card.addEventListener('transitionend',done);
+  setTimeout(done,650);
 });
 
 })();
