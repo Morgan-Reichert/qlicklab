@@ -834,6 +834,34 @@ form.shake{animation:shake .4s}
 /* illustrations SVG natives des chapitres */
 .chap-visual .chap-svg{width:100%;max-width:520px;height:auto;filter:drop-shadow(0 24px 40px rgba(124,31,146,.16))}
 
+/* ============ DOMAINES : moodboard polaroid + scotch washi ============ */
+.feat-board{position:relative;display:flex;justify-content:center;align-items:flex-start;gap:16px;flex-wrap:wrap;padding:34px 0 10px}
+.feat-blob{position:absolute;inset:2% 0;z-index:0;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' preserveAspectRatio='none'%3E%3Cpath d='M150 8C210 -4 276 26 290 84 302 136 280 178 226 192 176 204 84 200 46 168 12 138 4 90 26 54 48 20 96 18 150 8Z' fill='%23F6ECDF'/%3E%3C/svg%3E") no-repeat center/100% 100%}
+.polcard{position:relative;z-index:1;width:246px;background:#fff;border:1px solid var(--border);border-radius:8px;
+  padding:10px 10px 16px;box-shadow:0 24px 46px -26px rgba(34,19,39,.5);
+  transition:rotate .35s var(--ease),translate .35s var(--ease),box-shadow .35s}
+.polcard:nth-child(2){rotate:-2.6deg;translate:0 6px}
+.polcard:nth-child(3){rotate:1.8deg;translate:0 -8px}
+.polcard:nth-child(4){rotate:-1.4deg;translate:0 10px}
+.polcard:nth-child(5){rotate:2.4deg;translate:0 -4px}
+.polcard:hover{rotate:0deg;translate:0 -6px;box-shadow:0 32px 56px -26px rgba(34,19,39,.6);z-index:3}
+.polcard img{height:132px;width:100%;object-fit:cover;border-radius:4px;display:block}
+.polcard h3{font-size:17.5px;margin:12px 0 4px}
+.polcard p{font-size:12.5px;color:var(--muted);line-height:1.5}
+.polcard .tape{position:absolute;top:-11px;left:50%;width:78px;height:23px;z-index:2;
+  background:rgba(166,47,189,.30);transform:translateX(-50%) rotate(-4deg);backdrop-filter:blur(1px);
+  border-left:1px dashed rgba(255,255,255,.65);border-right:1px dashed rgba(255,255,255,.65)}
+.polcard:nth-child(odd) .tape{background:rgba(249,115,22,.30);transform:translateX(-50%) rotate(3deg)}
+@media(max-width:768px){
+  .feat-board{gap:12px;padding:22px 0 6px}
+  .polcard{width:calc(50% - 8px);min-width:150px;padding:8px 8px 12px}
+  .polcard img{height:96px}
+  .polcard h3{font-size:14.5px;margin-top:9px}
+  .polcard p{font-size:11px}
+  .polcard .tape{width:58px;height:18px;top:-9px}
+}
+
 /* ============ TOUCHES DESIGNER (anti-générique) ============ */
 /* mot-clé mis en évidence : italique éditoriale contrastée + trait brossé dessous */
 .wdepth{position:relative;display:inline-block;z-index:0;
