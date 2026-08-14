@@ -764,10 +764,10 @@ form.shake{animation:shake .4s}
 .chap-visual .chap-svg{width:100%;max-width:520px;height:auto;filter:drop-shadow(0 24px 40px rgba(124,31,146,.16))}
 
 /* ============ TOUCHES DESIGNER (anti-générique) ============ */
-/* mot-clé en profondeur : écho en contour derrière + trait brossé dessous */
-.wdepth{position:relative;display:inline-block;z-index:0}
-.wdepth::before{content:attr(data-w);position:absolute;left:.07em;top:.1em;z-index:-1;color:transparent;
-  -webkit-text-stroke:1.6px rgba(166,47,189,.30)}
+/* mot-clé mis en évidence : italique éditoriale contrastée + trait brossé dessous */
+.wdepth{position:relative;display:inline-block;z-index:0;
+  font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:700;
+  font-size:1.07em;line-height:1;padding-right:.08em;margin-left:.07em}
 .wdepth::after{content:"";position:absolute;left:-3%;right:-5%;bottom:-.06em;height:.2em;z-index:-2;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'%3E%3Cpath d='M3 10C30 4 60 3 117 7' fill='none' stroke='%23F97316' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;
   transform:rotate(-1.2deg)}
