@@ -12,7 +12,7 @@
 <meta property="og:image" content="assets/icon-duo.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500,400&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=11" />
+<link rel="stylesheet" href="styles.css?v=12" />
 </head>
 <body>
 <div id="preloader">
@@ -57,7 +57,7 @@
   <div class="mm-group">Confiance</div>
   <a href="index.html#certifications">Confidentialité</a><a href="index.html#faq">FAQ</a>
   <div class="mm-group">Explorer</div>
-  <a href="apropos.html">À propos</a><a href="projets.html">Nos projets</a><a href="equipe.html">L'équipe</a><a href="carrieres.html">Carrières</a><a href="contact.html">Contact</a><a href="index.html#contact">Proposer un projet</a>
+  <a href="apropos.html">À propos</a><a href="projets.html">Nos projets</a><a href="equipe.html">L'équipe</a><a href="carrieres.html">Carrières</a><a href="contact.html">Contact</a><a href="index.html#contact" class="mm-cta">Proposer un projet <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 </div>
 <section class="page-hero"><div class="hero-mesh"><span class="m1"></span><span class="m2"></span><span class="m3"></span></div>
 <div class="wrap"><span class="eyebrow">Carrières</span><h1 data-split>Mettre votre métier au <span class="grad-text">service de l'utile</span></h1>
@@ -122,6 +122,6 @@ function render(cat){jl.innerHTML=JOBS.filter(function(j){return cat==='all'||j[
 render('all');
 document.querySelectorAll('#jobfilters .filter').forEach(function(f){f.addEventListener('click',function(){document.querySelectorAll('#jobfilters .filter').forEach(function(x){x.classList.remove('active');});f.classList.add('active');render(f.dataset.cat);});});
 </script>
-<script src="shared.js?v=11"></script>
+<script src="shared.js?v=12"></script>
 </body>
 </html>

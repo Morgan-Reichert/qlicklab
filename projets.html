@@ -12,7 +12,7 @@
 <meta property="og:image" content="assets/icon-duo.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500,400&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=11" />
+<link rel="stylesheet" href="styles.css?v=12" />
 </head>
 <body>
 <div id="preloader">
@@ -59,7 +59,7 @@
   <div class="mm-group">Confiance</div>
   <a href="index.html#certifications">Confidentialité</a><a href="index.html#faq">FAQ</a>
   <div class="mm-group">Explorer</div>
-  <a href="apropos.html">À propos</a><a href="projets.html">Nos projets</a><a href="equipe.html">L'équipe</a><a href="carrieres.html">Carrières</a><a href="contact.html">Contact</a><a href="index.html#contact">Proposer un projet</a>
+  <a href="apropos.html">À propos</a><a href="projets.html">Nos projets</a><a href="equipe.html">L'équipe</a><a href="carrieres.html">Carrières</a><a href="contact.html">Contact</a><a href="index.html#contact" class="mm-cta">Proposer un projet <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 </div>
 
 <!-- PAGE HERO -->
@@ -76,10 +76,12 @@
 <!-- PROJETS -->
 <section class="proj-section">
   <div class="wrap">
-    <div class="moody-card" data-reveal>
+    <div class="moody-card folded" data-reveal>
         <div class="moody-left">
           <img class="moody-logo" src="assets/moody-green.webp" alt="Moody" loading="lazy" />
           <p class="moody-tagline">Le journal de santé mentale qui reste sur votre téléphone.</p>
+          <div class="moody-folded-extra"><span class="mchip">100 % privé</span><span class="mchip">IA embarquée</span><span class="mchip">Local-first</span><span class="mchip">Sans compte</span></div>
+          <button class="moody-toggle" aria-expanded="false"><span class="lbl-open">Découvrir Moody</span><span class="lbl-close">Replier</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <ul class="moody-feats">
             <li><span class="fi"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="#00934C" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="#00934C" stroke-width="1.8" stroke-linecap="round"/></svg></span><div><b>100 % privé · local-first.</b> Zéro serveur cloud, chiffrement de bout en bout, aucun compte.</div></li>
             <li><span class="fi"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="2" stroke="#00934C" stroke-width="1.8"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke="#00934C" stroke-width="1.8" stroke-linecap="round"/></svg></span><div><b>IA embarquée (on-device).</b> Analyse instantanée — coût cloud de 0 $.</div></li>
@@ -189,6 +191,6 @@ document.querySelectorAll('.btn').forEach(btn=>btn.addEventListener('click',e=>{
   document.querySelectorAll('.case-link[data-case]').forEach(b=>b.addEventListener('click',()=>open(b.dataset.case)));
 })();
 </script>
-<script src="shared.js?v=11"></script>
+<script src="shared.js?v=12"></script>
 </body>
 </html>

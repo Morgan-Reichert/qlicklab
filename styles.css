@@ -683,7 +683,10 @@ form.shake{animation:shake .4s}
   /* — nav transparente au-dessus du héros (accueil), logo agrandi — */
   body.home:not(.menu-open) header:not(.scrolled) .nav{background:transparent;border-color:transparent;box-shadow:none;backdrop-filter:none}
   body.home:not(.menu-open) header:not(.scrolled) .brand img{filter:brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0,0,0,.4));height:36px}
-  body.home:not(.menu-open) header:not(.scrolled) .burger span{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+  body.home:not(.menu-open) header:not(.scrolled) .burger{background:rgba(16,8,18,.34);border-color:rgba(255,255,255,.36)}
+  body.home:not(.menu-open) header:not(.scrolled) .burger span{background:#fff}
+  /* le bouton flottant « Proposer un projet » n'apparaît plus sur l'écran en mobile (il est dans le menu) */
+  .fab{display:none!important}
 
   /* — refonte mobile globale : rythme resserré — */
   .wrap{padding:0 20px}
@@ -706,4 +709,48 @@ form.shake{animation:shake .4s}
   .hero-m-inner{padding-bottom:40px}
   .hero-m h1{font-size:31px}
   .hero-m p{font-size:14.5px;margin-bottom:18px}
+}
+/* hamburger en bulle translucide (mobile) */
+@media(max-width:980px){
+  .burger{width:44px;height:44px;padding:0;gap:5px;align-items:center;justify-content:center;
+    border-radius:12px;background:rgba(22,13,28,.05);border:1px solid var(--border-2);
+    backdrop-filter:blur(8px);transition:background .3s var(--ease),border-color .3s}
+}
+/* CTA « Proposer un projet » en bas du menu déroulant */
+.mobile-menu .mm-cta{margin-top:24px;display:inline-flex;align-items:center;gap:9px;
+  background:var(--ink);color:#fff !important;font-family:'Satoshi',sans-serif !important;
+  font-weight:600 !important;font-size:16.5px !important;padding:15px 30px !important;border-radius:12px;
+  box-shadow:0 16px 34px -16px rgba(34,19,39,.55);transition:transform .3s var(--ease)}
+.mobile-menu .mm-cta:hover{transform:translateY(-2px)}
+.mobile-menu .mm-cta svg{transition:transform .3s var(--ease)}
+.mobile-menu .mm-cta:hover svg{transform:translateX(4px)}
+
+/* ===== Carte Moody dépliante ===== */
+.moody-toggle{display:inline-flex;align-items:center;gap:9px;margin-top:2px;background:#00B860;color:#fff;border:none;border-radius:12px;padding:12px 20px;font-family:'Satoshi',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;transition:transform .3s var(--ease),background .3s var(--ease)}
+.moody-toggle:hover{background:#00994F;transform:translateY(-2px)}
+.moody-toggle svg{transition:transform .35s var(--ease)}
+.moody-card:not(.folded) .moody-toggle svg{transform:rotate(180deg)}
+.moody-toggle .lbl-close{display:none}
+.moody-card:not(.folded) .moody-toggle .lbl-open{display:none}
+.moody-card:not(.folded) .moody-toggle .lbl-close{display:inline}
+/* plié : logo + accroche + points clés + bouton, sur un fond vert doux */
+.moody-card.folded{grid-template-columns:1fr;position:relative;overflow:hidden;
+  background:radial-gradient(130% 120% at 100% -20%,#E6F6EC 0%,#FCFFFD 54%)}
+.moody-card.folded::after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,184,96,.20),transparent 70%);top:-130px;right:-100px;pointer-events:none}
+.moody-card.folded .moody-left{padding:48px 46px;position:relative;z-index:2}
+.moody-card.folded .moody-logo{height:44px;margin-bottom:22px}
+.moody-card.folded .moody-tagline{font-size:26px;line-height:1.28;max-width:20ch;margin-bottom:20px}
+.moody-folded-extra{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px}
+.moody-card:not(.folded) .moody-folded-extra{display:none}
+.mchip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:#0C6B40;
+  background:#DCF3E5;border-radius:100px;padding:8px 14px}
+.mchip::before{content:"";width:6px;height:6px;border-radius:50%;background:#00B860}
+.moody-card.folded .moody-feats,
+.moody-card.folded .moody-cta,
+.moody-card.folded .moody-price,
+.moody-card.folded .moody-right{display:none}
+@media(max-width:768px){
+  .moody-card.folded .moody-left{padding:36px 28px}
+  .moody-card.folded .moody-tagline{font-size:22px}
 }

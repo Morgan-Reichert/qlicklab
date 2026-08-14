@@ -146,4 +146,13 @@ document.querySelectorAll('a').forEach(function(a){
   cta.insertBefore(b,cta.firstChild);
 })();
 
+/* ---------- CARTE MOODY DÉPLIANTE ---------- */
+document.addEventListener('click',function(e){
+  var btn=e.target.closest('.moody-toggle'); if(!btn)return;
+  var card=btn.closest('.moody-card'); if(!card)return;
+  var folded=card.classList.toggle('folded');
+  btn.setAttribute('aria-expanded',String(!folded));
+  if(!folded){card.querySelectorAll('img[loading="lazy"]').forEach(function(im){im.loading='eager';});}
+});
+
 })();
