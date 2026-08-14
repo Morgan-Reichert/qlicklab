@@ -679,9 +679,18 @@ form.shake{animation:shake .4s}
   .hero-m-actions{display:flex;gap:10px;flex:none}
   .hero-m-actions .btn{flex:1;justify-content:center;padding:14px 12px;font-size:14.5px;white-space:nowrap}
   .hero-m-actions .btn-ghost{background:rgba(255,255,255,.42);backdrop-filter:blur(12px);border-color:rgba(223,206,233,.65)}
-  /* touche éditoriale : sections alignées à gauche sur mobile */
-  .sec-head{text-align:left;margin-left:0;margin-right:0}
-  .certs-head{text-align:left}
+  /* tout centré sur mobile */
+  .hero-m-copy{text-align:center}
+  .hero-m h1{text-wrap:balance}
+  .hero-m p{margin-left:auto;margin-right:auto}
+  .hero-m-actions{max-width:430px;width:100%;margin:0 auto}
+  .chapter .chap-copy{text-align:center}
+  .chapter .pull{border-left:none;border-image:none;padding-left:0;max-width:30ch;margin-left:auto;margin-right:auto}
+  .moody-card.folded .moody-left{text-align:center}
+  .moody-card.folded .moody-logo{margin-left:auto;margin-right:auto}
+  .moody-card.folded .moody-tagline{margin-left:auto;margin-right:auto}
+  .moody-folded-extra{justify-content:center}
+  .story-intro,.certs-head{text-align:center}
   /* le bouton flottant « Proposer un projet » n'apparaît plus sur l'écran en mobile (il est dans le menu) */
   .fab{display:none!important}
 
