@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 726" fill="none">
+  <!-- nappe crème douce en fond, façon bulle de conversation -->
+  <path d="M450 118c150-40 300 10 330 130 24 96-30 180-110 218 30 40 22 76-16 92-30-60-84-64-204-58s-220-16-256-110c-40-104 60-234 256-272z" fill="#FFF7EC" opacity=".22"/>
+
+  <!-- circuits blancs -->
+  <g stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity=".75">
+    <path d="M96 210h74l40-40h52"/><circle cx="88" cy="210" r="8" fill="#fff" stroke="none"/><circle cx="270" cy="170" r="8" fill="#fff" stroke="none"/>
+    <path d="M804 240h-64l-44 44"/><circle cx="812" cy="240" r="8" fill="#fff" stroke="none"/><circle cx="688" cy="292" r="8" fill="#fff" stroke="none"/>
+    <path d="M130 560h58l36-36"/><circle cx="122" cy="560" r="8" fill="#fff" stroke="none"/>
+  </g>
+
+  <!-- icônes accessibilité en traits blancs -->
+  <g stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity=".85">
+    <g><circle cx="112" cy="120" r="9" fill="#fff" stroke="none"/><path d="M112 138v34m0 0h26l12 26M112 150h30" fill="none"/><circle cx="112" cy="186" r="26"/></g>
+    <g><path d="M812 116c14 12 14 34 0 46M828 100c22 20 22 58 0 78M796 132c6 5 6 14 0 19" fill="none"/></g>
+    <g><path d="M806 500c0-12 10-20 22-20s22 8 22 20-10 26-22 34c-12-8-22-22-22-34z" fill="none"/></g>
+    <g><path d="M96 402c8-10 22-10 30 0M88 392c12-16 34-16 46 0" fill="none"/><circle cx="111" cy="412" r="5" fill="#fff" stroke="none"/></g>
+  </g>
+
+  <!-- fil pointillé qui relie les mains -->
+  <path d="M300 306c60 60 240 60 300 0M312 470c66-44 210-44 276 0" stroke="#FFFFFF" stroke-width="6" stroke-dasharray="2 18" stroke-linecap="round" opacity=".9"/>
+
+  <!-- cœur central -->
+  <path d="M450 428c-26-26-64-12-64 16 0 24 38 44 64 62 26-18 64-38 64-62 0-28-38-42-64-16z" fill="#FFFFFF" stroke="#1E1327" stroke-width="9" stroke-linejoin="round"/>
+
+  <!-- personnage haut-gauche : pull violet, signe OK -->
+  <g stroke="#1E1327" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="268" cy="176" r="54" fill="#F2D8C4"/>
+    <path d="M240 148c10-16 46-22 60-8" fill="none" stroke-width="8"/>
+    <path d="M188 388v-92a80 66 0 01160 0v92z" fill="#A62FBD"/>
+    <path d="M212 310l-34 34" stroke-width="10"/>
+    <circle cx="168" cy="356" r="17" fill="#F2D8C4" stroke-width="8"/>
+    <path d="M330 316l40 24" stroke-width="10"/>
+    <circle cx="384" cy="348" r="16" fill="#F2D8C4" stroke-width="8"/>
+    <g stroke-width="5"><circle cx="252" cy="172" r="4.5" fill="#1E1327"/><circle cx="286" cy="172" r="4.5" fill="#1E1327"/></g>
+    <path d="M254 196c9 6.5 20 6.5 29 0" stroke-width="6" fill="none"/>
+  </g>
+
+  <!-- personnage haut-droit : haut orange, main ouverte -->
+  <g stroke="#1E1327" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="626" cy="188" r="52" fill="#C89A6B"/>
+    <path d="M596 156c14-14 44-16 58-4" fill="none" stroke-width="8"/>
+    <path d="M550 396v-88a76 64 0 01152 0v88z" fill="#F97316"/>
+    <path d="M572 320l-42 20" stroke-width="10"/>
+    <circle cx="514" cy="348" r="16" fill="#C89A6B" stroke-width="8"/>
+    <path d="M688 324l38 30" stroke-width="10"/>
+    <circle cx="740" cy="362" r="17" fill="#C89A6B" stroke-width="8"/>
+    <g stroke-width="5"><circle cx="611" cy="184" r="4.5" fill="#1E1327"/><circle cx="643" cy="184" r="4.5" fill="#1E1327"/></g>
+    <path d="M612 208c9 6 19 6 28 0" stroke-width="6" fill="none"/>
+  </g>
+
+  <!-- personnage bas-gauche : en fauteuil roulant, haut lilas -->
+  <g stroke="#1E1327" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="262" cy="452" r="46" fill="#8C5A3B"/>
+    <path d="M204 636v-74a68 58 0 01128 0v20" fill="#C86BE0"/>
+    <path d="M318 542l44-26" stroke-width="10"/>
+    <circle cx="376" cy="508" r="15" fill="#8C5A3B" stroke-width="8"/>
+    <circle cx="268" cy="618" r="52" fill="none" stroke-width="10"/>
+    <circle cx="268" cy="618" r="9" fill="#1E1327" stroke="none"/>
+    <path d="M340 586l28 40" stroke-width="10"/>
+    <g stroke-width="5"><circle cx="248" cy="448" r="4" fill="#1E1327"/><circle cx="278" cy="448" r="4" fill="#1E1327"/></g>
+    <path d="M250 470c8 5.5 17 5.5 25 0" stroke-width="5.5" fill="none"/>
+  </g>
+
+  <!-- personnage bas-droit : pull dégradé violet, pointe le cœur -->
+  <g stroke="#1E1327" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="634" cy="470" r="48" fill="#F2D8C4"/>
+    <path d="M604 440c12-14 42-18 58-6" fill="none" stroke-width="8"/>
+    <path d="M556 664v-84a72 60 0 01144 0v84z" fill="#7C1F92"/>
+    <path d="M578 588l-44-32" stroke-width="10"/>
+    <circle cx="520" cy="546" r="15" fill="#F2D8C4" stroke-width="8"/>
+    <path d="M700 592l34 26" stroke-width="10"/>
+    <circle cx="746" cy="628" r="16" fill="#F2D8C4" stroke-width="8"/>
+    <g stroke-width="5"><circle cx="619" cy="466" r="4.5" fill="#1E1327"/><circle cx="651" cy="466" r="4.5" fill="#1E1327"/></g>
+    <path d="M620 490c9 6 20 6 29 0" stroke-width="6" fill="none"/>
+  </g>
+
+  <!-- éclats -->
+  <g fill="#FFFFFF" opacity=".95">
+    <path d="M446 96l7 17 17 7-17 7-7 17-7-17-17-7 17-7z"/>
+    <path d="M118 300l5.5 13.5 13.5 5.5-13.5 5.5-5.5 13.5-5.5-13.5-13.5-5.5 13.5-5.5z"/>
+    <path d="M788 420l5.5 13.5 13.5 5.5-13.5 5.5-5.5 13.5-5.5-13.5-13.5-5.5 13.5-5.5z"/>
+  </g>
+</svg>

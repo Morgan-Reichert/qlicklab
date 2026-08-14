@@ -804,11 +804,17 @@ form.shake{animation:shake .4s}
     border-radius:12px;background:transparent;border:none;
     transition:background .3s var(--ease)}
   .burger:active{background:rgba(22,13,28,.06)}
-  /* nav pilule plus étroite et plus translucide */
-  .nav{width:calc(100% - 84px);margin:14px auto;padding:7px 8px 7px 16px;
-    background:rgba(255,255,255,.42);backdrop-filter:blur(18px) saturate(1.5);
-    border-color:rgba(255,255,255,.55)}
-  header.scrolled .nav{background:rgba(255,255,255,.6);box-shadow:0 10px 30px -18px rgba(124,31,146,.35)}
+  /* nav éclatée : logo et burger posés sur le fond, chacun gagne SA bulle au scroll */
+  .nav{width:calc(100% - 32px);margin:12px auto;padding:0;
+    background:transparent;backdrop-filter:none;border:none;box-shadow:none}
+  header.scrolled .nav{background:transparent;box-shadow:none;padding-top:0;padding-bottom:0}
+  .brand{padding:10px 15px;border-radius:100px;border:1px solid transparent;
+    transition:background .35s var(--ease),border-color .35s,box-shadow .35s}
+  .burger{border:1px solid transparent;border-radius:100px;
+    transition:background .35s var(--ease),border-color .35s,box-shadow .35s}
+  header.scrolled .brand,
+  header.scrolled .burger{background:rgba(255,255,255,.62);backdrop-filter:blur(16px) saturate(1.4);
+    border-color:rgba(236,224,242,.9);box-shadow:0 10px 30px -18px rgba(124,31,146,.35)}
 }
 /* CTA « Proposer un projet » en bas du menu déroulant */
 .mobile-menu .mm-cta{margin-top:24px;display:inline-flex;align-items:center;gap:9px;

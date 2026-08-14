@@ -242,9 +242,15 @@ document.fonts.ready.then(function(){
         gsap.set(fills,{ fillOpacity:0 });
         return { svg:svg, strokes:strokes, fills:fills };
       });
-      var ci = 0;
+      var ci = 0, cfirst = true;
       (function cycleNext(){
         var d = cdata[ci];
+        /* le mot tournant change en même temps que l'illustration */
+        if(!cfirst){
+          var r = hm.querySelector('.rotw');
+          if(r && r._swap) r._swap();
+        }
+        cfirst = false;
         gsap.timeline({ onComplete:function(){ ci = (ci+1) % cdata.length; cycleNext(); } })
           .set(d.svg,{ autoAlpha:1 })
           .to(d.strokes,{ strokeDashoffset:0, duration:1.05, ease:'power2.inOut', stagger:.03 },0)
@@ -284,7 +290,7 @@ document.fonts.ready.then(function(){
     }
     setChars(words[0]);
     var wi = 0, busy = false;
-    setInterval(function(){
+    function swapWord(){
       if(busy) return; busy = true;
       wi = (wi+1) % words.length;
       gsap.to(rot.querySelectorAll('.rc'),{
@@ -297,7 +303,11 @@ document.fonts.ready.then(function(){
               onComplete:function(){ busy = false; } });
         }
       });
-    }, 3400);
+    }
+    rot._swap = swapWord;
+    /* si le héros mobile a son carrousel d'illustrations, c'est lui qui donne le tempo */
+    var synced = rot.closest('.hero-m') && document.querySelector('.hero-m .hero-cycle');
+    if(!synced) setInterval(swapWord, 3400);
   });
 
   /* ---------- 6. CARTE MOODY — entrée en profondeur ---------- */
