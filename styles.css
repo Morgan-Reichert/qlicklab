@@ -664,10 +664,15 @@ form.shake{animation:shake .4s}
   /* — bascule héros — */
   .hero{display:none!important}
   .hero-m{display:block;position:relative;min-height:100vh;min-height:100svh;overflow:hidden}
-  .hero-m::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+  .hero-m::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:
     radial-gradient(60% 36% at 12% 4%,rgba(166,47,189,.10),transparent 60%),
-    radial-gradient(50% 30% at 92% 8%,rgba(249,115,22,.09),transparent 60%)}
-  .hero-m-inner{position:relative;display:flex;flex-direction:column;min-height:100svh;
+    radial-gradient(50% 30% at 92% 8%,rgba(249,115,22,.09),transparent 60%),
+    radial-gradient(70% 34% at 50% 56%,rgba(166,47,189,.12),transparent 62%),
+    radial-gradient(46% 24% at 62% 50%,rgba(249,115,22,.09),transparent 60%)}
+  /* zone beige ancrée en bas : l'illustration et les boutons vivent dessus */
+  .hero-m::after{content:"";position:absolute;left:-14%;right:-14%;bottom:-4%;height:52%;
+    background:#F6ECDF;border-radius:48% 52% 0 0/30% 38% 0 0;transform:rotate(-2.2deg);z-index:0}
+  .hero-m-inner{position:relative;z-index:2;display:flex;flex-direction:column;min-height:100svh;
     padding:96px 22px max(18px,calc(env(safe-area-inset-bottom) + 14px))}
   .hero-m-copy{text-align:left}
   .eyebrow-m{display:inline-flex;align-items:center;gap:9px;font-family:'Satoshi',sans-serif;font-weight:600;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
@@ -675,7 +680,8 @@ form.shake{animation:shake .4s}
   .hero-m h1{font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(31px,8.8vw,42px);line-height:1.08;letter-spacing:-.02em;color:var(--ink);margin:12px 0 0;
     text-shadow:0 16px 34px rgba(124,31,146,.16)}
   .hero-m p{color:var(--muted);font-size:15px;line-height:1.55;margin:10px 0 0;max-width:38ch}
-  .hero-svg{flex:1 1 auto;min-height:150px;width:100%;max-width:430px;margin:4px auto;display:block}
+  .hero-svg{flex:1 1 auto;min-height:150px;width:100%;max-width:460px;margin:4px auto;display:block}
+  .rotw{white-space:nowrap;text-align:center}
   .hero-m-actions{display:flex;gap:10px;flex:none}
   .hero-m-actions .btn{flex:1;justify-content:center;padding:14px 12px;font-size:14.5px;white-space:nowrap}
   .hero-m-actions .btn-ghost{background:rgba(255,255,255,.42);backdrop-filter:blur(12px);border-color:rgba(223,206,233,.65)}

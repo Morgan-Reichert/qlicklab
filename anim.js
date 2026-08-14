@@ -85,11 +85,19 @@ document.fonts.ready.then(function(){
       gsap.fromTo(el,{ y:-4, opacity:0 },{ y:26, opacity:1, duration:1.1, ease:'power1.in', repeat:-1, repeatDelay:.5, delay:i*.55,
         onRepeat:function(){ gsap.set(el,{opacity:0}); } });
     });
-    /* clignement des yeux du robot */
-    q('.eyes',svg).forEach(function(el){
-      gsap.timeline({ repeat:-1, repeatDelay:2.8 })
+    /* clignement des yeux (robot, personnages) */
+    q('.eyes',svg).forEach(function(el,i){
+      gsap.timeline({ repeat:-1, repeatDelay:2.8+i*.7 })
         .to(el,{ scaleY:.1, transformOrigin:'50% 50%', duration:.07 })
         .to(el,{ scaleY:1, duration:.09 });
+    });
+    /* battement de cœur */
+    q('.beat',svg).forEach(function(el){
+      gsap.timeline({ repeat:-1, repeatDelay:.55 })
+        .to(el,{ scale:1.14, transformOrigin:'50% 50%', duration:.14, ease:'power2.out' })
+        .to(el,{ scale:1, duration:.16, ease:'power2.in' })
+        .to(el,{ scale:1.09, duration:.12, ease:'power2.out' })
+        .to(el,{ scale:1, duration:.2, ease:'power2.in' });
     });
     /* traits de circuits & arcs de soleil qui se dessinent au scroll */
     var draws=q('.cir path[pathLength],.arc path[pathLength]',svg);
@@ -121,6 +129,29 @@ document.fonts.ready.then(function(){
       { y:0, opacity:1, duration:.9, ease:'power3.out', stagger:.12, delay:.2, clearProps:'opacity,transform' });
     gsap.to('.hero-m-inner',{ yPercent:10, opacity:.35, ease:'none',
       scrollTrigger:{ trigger:hm, start:'top top', end:'bottom top', scrub:.5 } });
+
+    /* mot tournant : une force / un atout / une fierté */
+    var rot = hm.querySelector('.rotw');
+    if(rot){
+      var words = ['une force','un atout','une fierté'];
+      /* largeur stabilisée sur le mot le plus large pour éviter les sauts */
+      var probe = rot.cloneNode(false);
+      probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap';
+      rot.parentNode.appendChild(probe);
+      var wmax = 0;
+      words.forEach(function(w){ probe.textContent = w; wmax = Math.max(wmax, probe.offsetWidth); });
+      probe.remove();
+      rot.style.display = 'inline-block';
+      rot.style.minWidth = wmax + 'px';
+      var wi = 0;
+      setInterval(function(){
+        wi = (wi+1) % words.length;
+        gsap.to(rot,{ opacity:0, y:-9, duration:.28, ease:'power2.in', onComplete:function(){
+          rot.textContent = words[wi];
+          gsap.fromTo(rot,{ opacity:0, y:10 },{ opacity:1, y:0, duration:.38, ease:'power2.out' });
+        }});
+      }, 3200);
+    }
   }
 
   /* ---------- 6. CARTE MOODY — entrée en profondeur ---------- */
