@@ -421,3 +421,15 @@ document.fonts.ready.then(function(){
     });
   }
 })();
+
+/* carte Moody : points en accordéons (mobile) */
+(function(){
+  if(!window.matchMedia('(max-width:768px)').matches) return;
+  document.querySelectorAll('.mfeat-head').forEach(function(h){
+    h.addEventListener('click', function(){
+      var li = h.closest('.mfeat');
+      var open = li.classList.toggle('open');
+      h.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+})();

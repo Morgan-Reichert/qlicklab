@@ -620,9 +620,14 @@ form.shake{animation:shake .4s}
 .moody-logo{height:40px;width:auto;margin-bottom:20px}
 .moody-tagline{font-family:'Clash Display',sans-serif;font-weight:500;font-size:22px;line-height:1.32;color:var(--ink);margin-bottom:26px}
 .moody-feats{list-style:none;display:flex;flex-direction:column;gap:15px;margin-bottom:26px}
-.moody-feats li{display:flex;gap:13px;align-items:flex-start;font-size:14.5px;color:var(--text);line-height:1.5}
+.moody-feats li{font-size:14.5px;color:var(--text);line-height:1.5}
 .moody-feats li b{color:var(--ink)}
 .moody-feats .fi{width:36px;height:36px;border-radius:10px;background:#E1F6EA;display:grid;place-items:center;flex:none}
+.mfeat-head{display:flex;gap:13px;align-items:center;width:100%;text-align:left;background:none;border:none;
+  font:inherit;color:inherit;padding:0;cursor:default}
+.mfeat-head b{flex:1;font-size:14.5px}
+.mfeat-car{display:none;color:var(--muted-2);flex:none;transition:transform .3s var(--ease)}
+.mfeat-body p{margin:6px 0 0 49px;font-size:13.5px;color:var(--muted);line-height:1.55}
 .moody-cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
 .btn-moody,.btn-moody-ghost{display:inline-flex;align-items:center;gap:9px;font-family:'Satoshi',sans-serif;font-weight:600;font-size:14.5px;padding:13px 19px;border-radius:12px;transition:transform .3s var(--ease),background .3s,border-color .3s;cursor:pointer}
 .btn-moody{background:#00B860;color:#fff;border:none}
@@ -790,6 +795,16 @@ form.shake{animation:shake .4s}
   footer .f-top .f-col a{display:none;padding:7px 4px;font-size:13.5px}
   footer .f-top .f-col.open a{display:block}
   footer .f-bottom{flex-direction:column;gap:14px;text-align:center;align-items:center;margin-top:20px}
+  /* carte Moody : points en accordéons compacts */
+  .moody-feats{gap:4px}
+  .mfeat{border-bottom:1px solid #EAF3ED;padding:4px 0 6px}
+  .mfeat:last-child{border-bottom:none}
+  .mfeat-head{cursor:pointer;padding:5px 0}
+  .mfeat-car{display:block}
+  .mfeat.open .mfeat-car{transform:rotate(180deg)}
+  .mfeat-body{max-height:0;overflow:hidden;opacity:0;transition:max-height .4s var(--ease),opacity .3s}
+  .mfeat.open .mfeat-body{max-height:200px;opacity:1}
+  .mfeat-body p{margin-left:49px;margin-bottom:8px}
   /* le bouton flottant « Proposer un projet » n'apparaît plus sur l'écran en mobile (il est dans le menu) */
   .fab{display:none!important}
 
