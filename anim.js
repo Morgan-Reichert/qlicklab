@@ -187,11 +187,20 @@ document.fonts.ready.then(function(){
         if(d.chars.length)   tl.to(d.chars,{ opacity:1, duration:.01, ease:'none', stagger:.012 },.25);
       }
 
-      /* (l'aimantation est gérée par le snap global de sections, qui connaît les 4 étapes de la pile) */
+      /* aimantation propre à la pile : jamais plus d'une carte par geste */
+      var snapIdx = 0;
       var poltl = gsap.timeline({
         scrollTrigger:{
           trigger:polboard, start:'top 108px', end:'+=250%', pin:true, scrub:.55, anticipatePin:1,
-          onEnter:function(){ playIntro(0); }
+          onEnter:function(){ playIntro(0); },
+          snap:{
+            snapTo:function(v){
+              var t = Math.round(v * 3);
+              return Math.max(snapIdx - 1, Math.min(snapIdx + 1, t)) / 3;
+            },
+            onComplete:function(self){ snapIdx = Math.round(self.progress * 3); },
+            duration:{min:.3,max:.7}, ease:'power3.out', delay:.05
+          }
         }
       });
       window._pileST = poltl.scrollTrigger;
@@ -367,23 +376,19 @@ document.fonts.ready.then(function(){
   ScrollTrigger.create({
     start:0, end:'max',
     snap:{
-      snapTo:function(v, self){
+      /* aimantation DOUCE : le scroll reste libre ; si on s'arrête près d'un début
+         de section (moins d'un tiers d'écran), la page s'y cale. Jamais de reprise
+         de contrôle ailleurs. La zone de la pile est gérée par sa propre aimantation. */
+      snapTo:function(v){
         if(!snapStops.length) return v;
         var max = ScrollTrigger.maxScroll(window);
         var y = v * max;
         var vh = window.innerHeight;
-        var delta = y - snapStops[settledIdx];
-        /* saut volontaire (ancre, bouton haut de page) : cale sur l'arrêt le plus proche */
-        if(Math.abs(delta) > 2.6 * vh) return snapStops[nearestStopIdx(y)] / max;
-        /* micro-mouvement : on reste sur place */
-        if(Math.abs(delta) < 40) return snapStops[settledIdx] / max;
-        /* geste normal : l'arrêt SUIVANT dans le sens du scroll */
-        var dir = delta > 0 ? 1 : -1;
-        var target = Math.max(0, Math.min(snapStops.length - 1, settledIdx + dir));
-        return snapStops[target] / max;
+        if(window._pileST && y > window._pileST.start - 10 && y < window._pileST.end + 10) return v;
+        var s = snapStops[nearestStopIdx(y)];
+        return (Math.abs(s - y) < vh * .32) ? s / max : v;
       },
-      onComplete:function(self){ settledIdx = nearestStopIdx(self.scroll()); },
-      duration:{min:.35,max:.85}, delay:.08, ease:'power3.out'
+      duration:{min:.3,max:.6}, delay:.12, ease:'power2.out'
     }
   });
 
