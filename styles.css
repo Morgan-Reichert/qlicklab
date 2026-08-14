@@ -755,6 +755,14 @@ form.shake{animation:shake .4s}
   .moody-card.folded .moody-tagline{font-size:22px}
 }
 
+/* ============ SCROLLYTELLING (GSAP/SplitType) ============ */
+/* lignes découpées : chaque ligne masque ses mots pendant la révélation */
+.line{overflow:hidden;display:block}
+.word{will-change:transform}
+.chap-visual img,.hero-frame,.moody-illus,.hero-m-bg img{will-change:transform}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+
 /* ============ LOT UX/UI ============ */
 /* 1 — section active dans la nav */
 .nav-links .nav-top.current,.nav-links .nav-plain.current,.nav-links .nav-plain.active{color:var(--purple-deep);background:var(--purple-soft)}

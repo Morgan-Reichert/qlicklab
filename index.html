@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500,400&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=13">
+<link rel="stylesheet" href="styles.css?v=14">
 </head>
 <body class="home">
 <div id="preloader">
@@ -590,6 +590,11 @@ document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
   if(svg)svg.addEventListener('click',()=>{document.querySelectorAll('.eu-svg2 .ctry.active').forEach(a=>a.classList.remove('active'));render(null);});
 })();
 </script>
-<script src="shared.js?v=13"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script src="vendor/split-type.min.js"></script>
+<script src="shared.js?v=14"></script>
+<script src="anim.js?v=1"></script>
 </body>
 </html>
