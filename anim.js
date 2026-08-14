@@ -70,6 +70,20 @@ document.fonts.ready.then(function(){
         scrollTrigger:{ trigger:img.closest('.chapter')||img, start:'top bottom', end:'bottom top', scrub:.6 } });
   });
 
+  /* ---------- 3pré. HÉROS desktop : cloner le carrousel d'illustrations du mobile
+     (avant l'init des scènes pour que le clone hérite des animations de vie) ---------- */
+  if(window.matchMedia('(min-width:769px)').matches){
+    var hsceneD = document.querySelector('.hero-scene');
+    var msrcD = document.querySelector('.hero-m .hero-cycle');
+    if(hsceneD && msrcD){
+      var oldSvgD = hsceneD.querySelector('svg');
+      if(oldSvgD) oldSvgD.remove();
+      var dcyc = msrcD.cloneNode(true);
+      dcyc.setAttribute('data-cycle-desktop','');
+      hsceneD.appendChild(dcyc);
+    }
+  }
+
   /* ---------- 3bis. SCÈNES SVG — vie interne des illustrations ---------- */
   q('.chap-svg').forEach(function(svg){
     /* éléments flottants (compas, pages, arrosoir, éclats…) */
@@ -199,6 +213,48 @@ document.fonts.ready.then(function(){
     }
   }
 
+  /* ---------- moteur du carrousel dessiné : trace -> encre -> vit -> s'efface ----------
+     getRot() fournit le mot tournant à synchroniser (change à chaque nouvelle illustration) */
+  function initDrawCycle(cyc, getRot){
+    var csvgs = q('.hero-svg', cyc);
+    if(!csvgs.length) return;
+    var cdata = csvgs.map(function(svg){
+      var strokes = [], fills = [];
+      q('path,circle,rect,ellipse', svg).forEach(function(el){
+        if(el.hasAttribute('stroke-dasharray')) return;
+        var hasStroke = el.getAttribute('stroke') || el.closest('g[stroke]');
+        try{
+          if(hasStroke && el.getTotalLength){
+            var L = el.getTotalLength();
+            if(L > 0){ el._len = L; el.style.strokeDasharray = L; el.style.strokeDashoffset = L; strokes.push(el); }
+          }
+        }catch(e){}
+        var f = el.getAttribute('fill');
+        if(f && f !== 'none') fills.push(el);
+      });
+      gsap.set(svg,{ autoAlpha:0 });
+      gsap.set(fills,{ fillOpacity:0 });
+      return { svg:svg, strokes:strokes, fills:fills };
+    });
+    var ci = 0, cfirst = true;
+    (function cycleNext(){
+      var d = cdata[ci];
+      if(!cfirst){
+        var r = getRot && getRot();
+        if(r && r._swap) r._swap();
+      }
+      cfirst = false;
+      gsap.timeline({ onComplete:function(){ ci = (ci+1) % cdata.length; cycleNext(); } })
+        .set(d.svg,{ autoAlpha:1 })
+        .to(d.strokes,{ strokeDashoffset:0, duration:1.05, ease:'power2.inOut', stagger:.03 },0)
+        .to(d.fills,{ fillOpacity:1, duration:.55, ease:'power1.out', stagger:.018 },.75)
+        .to({},{ duration:4.2 })
+        .to(d.fills,{ fillOpacity:0, duration:.4, ease:'power1.in' },'>')
+        .to(d.strokes,{ strokeDashoffset:function(i,el){ return el._len; }, duration:.65, ease:'power2.in', stagger:.012 },'<')
+        .set(d.svg,{ autoAlpha:0 });
+    })();
+  }
+
   /* ---------- 4. HÉROS desktop — parallaxe de sortie ---------- */
   var hf = document.querySelector('.hero-frame');
   if(hf){
@@ -220,48 +276,14 @@ document.fonts.ready.then(function(){
     var mc = hm.querySelector('.hero-mcard');
     if(mc){ gsap.to(mc,{ y:-6, duration:2.6, ease:'sine.inOut', yoyo:true, repeat:-1, delay:1.7 }); }
 
-    /* carrousel dessiné : chaque illustration se trace, vit, s'efface, place à la suivante */
+    /* carrousel dessiné du héros mobile */
     var cyc = hm.querySelector('.hero-cycle');
-    if(cyc){
-      var csvgs = q('.hero-svg', cyc);
-      var cdata = csvgs.map(function(svg){
-        var strokes = [], fills = [];
-        q('path,circle,rect,ellipse', svg).forEach(function(el){
-          if(el.hasAttribute('stroke-dasharray')) return;
-          var hasStroke = el.getAttribute('stroke') || el.closest('g[stroke]');
-          try{
-            if(hasStroke && el.getTotalLength){
-              var L = el.getTotalLength();
-              if(L > 0){ el._len = L; el.style.strokeDasharray = L; el.style.strokeDashoffset = L; strokes.push(el); }
-            }
-          }catch(e){}
-          var f = el.getAttribute('fill');
-          if(f && f !== 'none') fills.push(el);
-        });
-        gsap.set(svg,{ autoAlpha:0 });
-        gsap.set(fills,{ fillOpacity:0 });
-        return { svg:svg, strokes:strokes, fills:fills };
-      });
-      var ci = 0, cfirst = true;
-      (function cycleNext(){
-        var d = cdata[ci];
-        /* le mot tournant change en même temps que l'illustration */
-        if(!cfirst){
-          var r = hm.querySelector('.rotw');
-          if(r && r._swap) r._swap();
-        }
-        cfirst = false;
-        gsap.timeline({ onComplete:function(){ ci = (ci+1) % cdata.length; cycleNext(); } })
-          .set(d.svg,{ autoAlpha:1 })
-          .to(d.strokes,{ strokeDashoffset:0, duration:1.05, ease:'power2.inOut', stagger:.03 },0)
-          .to(d.fills,{ fillOpacity:1, duration:.55, ease:'power1.out', stagger:.018 },.75)
-          .to({},{ duration:4.2 })
-          .to(d.fills,{ fillOpacity:0, duration:.4, ease:'power1.in' },'>')
-          .to(d.strokes,{ strokeDashoffset:function(i,el){ return el._len; }, duration:.65, ease:'power2.in', stagger:.012 },'<')
-          .set(d.svg,{ autoAlpha:0 });
-      })();
-    }
+    if(cyc) initDrawCycle(cyc, function(){ return hm.querySelector('.rotw'); });
   }
+
+  /* carrousel dessiné du héros desktop (clone injecté en 3pré) */
+  var dcycEl = document.querySelector('.hero-scene .hero-cycle');
+  if(dcycEl) initDrawCycle(dcycEl, function(){ return document.querySelector('.hero-copy .rotw'); });
 
   /* mot tournant : une force / un atout / une fierté (héros desktop + mobile)
      — cascade lettre à lettre avec bascule 3D */
@@ -305,8 +327,9 @@ document.fonts.ready.then(function(){
       });
     }
     rot._swap = swapWord;
-    /* si le héros mobile a son carrousel d'illustrations, c'est lui qui donne le tempo */
-    var synced = rot.closest('.hero-m') && document.querySelector('.hero-m .hero-cycle');
+    /* si un carrousel d'illustrations existe pour ce héros, c'est lui qui donne le tempo */
+    var synced = (rot.closest('.hero-m') && document.querySelector('.hero-m .hero-cycle'))
+              || (rot.closest('.hero-copy') && document.querySelector('.hero-scene .hero-cycle'));
     if(!synced) setInterval(swapWord, 3400);
   });
 

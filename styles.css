@@ -105,6 +105,10 @@ header.scrolled .nav{padding-top:8px;padding-bottom:8px;box-shadow:0 14px 40px -
   radial-gradient(52% 46% at 50% 46%,rgba(166,47,189,.17),transparent 65%),
   radial-gradient(42% 38% at 66% 60%,rgba(249,115,22,.14),transparent 62%)}
 .hero-scene svg{position:relative;z-index:1;width:100%;height:auto;filter:drop-shadow(0 26px 44px rgba(124,31,146,.15))}
+/* carrousel dessiné côté desktop (clone du mobile injecté par anim.js) */
+.hero-scene .hero-cycle{position:relative;width:min(100%,480px);margin:0 auto}
+.hero-scene .hero-cycle .hero-svg{width:100%;margin:0;display:block}
+.hero-scene .hero-cycle .hero-svg+.hero-svg{position:absolute;inset:0;opacity:0}
 /* pastille du héros desktop (le reste du site garde l'eyebrow classique) */
 .hero-copy .eyebrow{background:rgba(255,255,255,.62);border:1px solid var(--border);border-radius:100px;
   padding:9px 16px;text-transform:none;letter-spacing:.02em;font-size:13.5px;color:var(--text);
@@ -321,7 +325,7 @@ footer{background:var(--bg-2);color:var(--muted);padding:70px 0 32px;border-top:
 @media(max-width:560px){
   .stats-grid,.feat-grid,.certs-list,.f-top{grid-template-columns:1fr}
   .slide-copy{padding:34px 28px}
-  .cta-person{display:none}
+  .cta-person{display:block;width:216px;margin:18px auto 0}
   .hero{padding:132px 0 60px}
 }
 @media(max-width:900px){
