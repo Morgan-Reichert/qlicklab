@@ -685,7 +685,24 @@ form.shake{animation:shake .4s}
   .hero-m h1{font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(31px,8.8vw,42px);line-height:1.08;letter-spacing:-.02em;color:var(--ink);margin:12px 0 0;
     text-shadow:0 16px 34px rgba(124,31,146,.16)}
   .hero-m p{color:var(--muted);font-size:15px;line-height:1.55;margin:10px 0 0;max-width:38ch}
-  .hero-svg{flex:1 1 auto;min-height:150px;width:100%;max-width:460px;margin:0 auto 12px;display:block}
+  .hero-svg{flex:0 0 auto;width:100%;max-width:440px;margin:0 auto 12px;display:block}
+  /* cheminement des valeurs : courbe pointillée + jalons */
+  .hero-path{position:relative;flex:1 1 auto;min-height:118px;z-index:2;margin:4px 0 -8px}
+  .hero-path>svg:first-child{position:absolute;inset:0;width:100%;height:100%}
+  .vp{stroke-dasharray:1 12;animation:vflow 15s linear infinite;opacity:.75}
+  @keyframes vflow{to{stroke-dashoffset:-320}}
+  .vnode{position:absolute;display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:11.5px;color:var(--text);
+    background:rgba(255,255,255,.72);border:1px solid var(--border);border-radius:100px;padding:7px 13px;
+    box-shadow:0 10px 26px -16px rgba(34,19,39,.35);backdrop-filter:blur(8px);
+    animation:vflo 4.6s ease-in-out infinite}
+  .vnode::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--grad)}
+  @keyframes vflo{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 7px))}}
+  .vnode.v1{left:16%;top:8%;rotate:-2deg}
+  .vnode.v2{left:79%;top:33%;rotate:1.6deg;animation-delay:-1.6s}
+  .vnode.v3{left:31%;top:70%;rotate:-1.2deg;animation-delay:-3.1s}
+  .vspark{position:absolute;animation:vflo 4s ease-in-out infinite}
+  .vspark.s1{left:55%;top:12%;animation-delay:-.8s}
+  .vspark.s2{left:62%;top:64%;animation-delay:-2.4s}
   /* mini-carte Moody flottante dans la zone claire */
   .hero-mcard{display:flex;align-items:center;gap:12px;max-width:330px;width:100%;margin:16px auto 0;
     background:rgba(255,255,255,.72);backdrop-filter:blur(14px) saturate(1.3);border:1px solid var(--border);
