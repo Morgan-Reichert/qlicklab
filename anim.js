@@ -113,13 +113,68 @@ document.fonts.ready.then(function(){
     });
   });
 
-  /* ---------- 3ter. DOMAINES mobile — le scroll s'aimante sur chaque post-it ---------- */
+  /* ---------- 3ter. DOMAINES mobile — pile de post-its rythmée ---------- */
   if(window.matchMedia('(max-width:768px)').matches){
     var polcards = q('.feat-board .polcard');
     if(polcards.length > 1){
+      /* course exacte : la section libère le scroll quand la dernière carte touche la pile */
+      var lastCard = polcards[polcards.length-1];
+      function polTail(){
+        lastCard.style.marginBottom = Math.max(180, window.innerHeight - 92 - lastCard.offsetHeight - 26) + 'px';
+      }
+      polTail();
+      window.addEventListener('resize', function(){ polTail(); ScrollTrigger.refresh(); });
+
+      /* aimantation : jamais plus d'une carte par geste de scroll */
+      var snapIdx = 0, nSeg = polcards.length - 1;
       ScrollTrigger.create({
-        trigger:'.feat-board', start:'top 55%', end:'bottom 95%',
-        snap:{ snapTo:1/(polcards.length-1), duration:{min:.25,max:.65}, ease:'power3.out', delay:.08 }
+        trigger:'.feat-board', start:'top 55%', end:'bottom bottom',
+        snap:{
+          snapTo:function(v){
+            var t = Math.round(v * nSeg);
+            t = Math.max(snapIdx - 1, Math.min(snapIdx + 1, t));
+            snapIdx = t;
+            return t / nSeg;
+          },
+          duration:{min:.3,max:.7}, ease:'power3.out', delay:.05
+        }
+      });
+
+      /* apparition : le dessin se trace, puis s'encre ; le texte s'écrit */
+      polcards.forEach(function(card){
+        var svg = card.querySelector('.pol-svg');
+        var strokes = [], fills = [];
+        if(svg){
+          q('path,circle,rect', svg).forEach(function(el){
+            if(el === svg.firstElementChild) return;            /* fond beige */
+            if(el.hasAttribute('pathLength') || el.hasAttribute('stroke-dasharray')) return; /* déjà animés/pointillés */
+            var hasStroke = el.getAttribute('stroke') || el.closest('g[stroke]');
+            try{
+              if(hasStroke && el.getTotalLength){
+                var L = el.getTotalLength();
+                if(L > 0){ el.style.strokeDasharray = L; el.style.strokeDashoffset = L; strokes.push(el); }
+              }
+            }catch(e){}
+            var f = el.getAttribute('fill');
+            if(f && f !== 'none') fills.push(el);
+          });
+          gsap.set(fills,{ fillOpacity:0 });
+        }
+        var chars = [];
+        q('h3,p', card).forEach(function(t){
+          var txt = t.textContent; t.textContent = '';
+          txt.split('').forEach(function(ch){
+            var s = document.createElement('span');
+            s.textContent = ch; s.style.opacity = 0;
+            t.appendChild(s); chars.push(s);
+          });
+        });
+        ScrollTrigger.create({ trigger:card, start:'top 92%', once:true, onEnter:function(){
+          var tl = gsap.timeline();
+          if(strokes.length) tl.to(strokes,{ strokeDashoffset:0, duration:.75, ease:'power2.inOut', stagger:.035 },0);
+          if(fills.length)   tl.to(fills,{ fillOpacity:1, duration:.5, ease:'power1.out', stagger:.02 },.5);
+          if(chars.length)   tl.to(chars,{ opacity:1, duration:.01, ease:'none', stagger:.012 },.25);
+        }});
       });
     }
   }

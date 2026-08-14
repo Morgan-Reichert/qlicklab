@@ -873,8 +873,8 @@ form.shake{animation:shake .4s}
   /* pile de post-its : chaque carte se colle en haut, la suivante vient se poser dessus */
   .feat-board{display:block;padding:6px 0 4px}
   .polcard{position:sticky;top:92px;width:min(88vw,350px);margin:0 auto 34vh;padding:12px 12px 18px}
-  /* course calibrée : la dernière carte se pose pile sur le sommet, puis le scroll est libéré */
-  .polcard:last-child{margin-bottom:calc(100svh - 452px)}
+  /* course de la dernière carte calibrée en JS (anim.js) ; repli approximatif ici */
+  .polcard:last-child{margin-bottom:40vh}
   .feat-blob{display:none}
   .polcard img{height:172px}
   .polcard h3{font-size:18.5px;margin-top:12px}
