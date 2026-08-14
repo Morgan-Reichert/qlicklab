@@ -589,12 +589,12 @@ form.shake{animation:shake .4s}
 .btn-moody-ghost:hover{border-color:#00B860;transform:translateY(-2px)}
 .moody-price{font-size:13px;color:var(--muted)}
 .moody-price b{color:#00994F}
-.moody-right{background:radial-gradient(130% 100% at 50% -10%,#0AC96C,#008B47);display:grid;place-items:center;padding:54px 24px;position:relative;overflow:hidden}
+.moody-right{background:radial-gradient(130% 100% at 50% -10%,#0AC96C,#008B47);display:grid;place-items:center;padding:44px 24px;position:relative;overflow:hidden}
 .moody-right::before{content:"";position:absolute;width:360px;height:360px;border-radius:50%;background:rgba(255,255,255,.10);bottom:-150px;left:-110px}
 .moody-right::after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.08);top:-100px;right:-80px}
 .phone{position:relative;z-index:1;width:276px;background:#0c1f16;border-radius:46px;padding:7px;box-shadow:0 44px 74px -22px rgba(0,45,22,.5),inset 0 0 0 1.5px rgba(255,255,255,.07)}
 .phone .island{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:86px;height:22px;background:#04120b;border-radius:20px;z-index:3}
-.phone .scr{background:#EAF4EC;border-radius:40px;padding:38px 16px 66px;position:relative;font-family:'Satoshi',sans-serif;color:#17251D;min-height:530px}
+.phone .scr{background:#EAF4EC;border-radius:40px;padding:30px 15px 0;position:relative;font-family:'Satoshi',sans-serif;color:#17251D;height:496px;overflow:hidden}
 .ph-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
 .ph-logo{height:23px;width:auto}
 .ph-icons{display:flex;gap:8px}
@@ -604,7 +604,7 @@ form.shake{animation:shake .4s}
 .ph-greet b{display:block;font-family:'Clash Display',sans-serif;font-weight:600;font-size:18px;color:#17251D;line-height:1.12;margin-top:3px}
 .ph-weather{position:absolute;top:0;right:0;display:inline-flex;align-items:center;gap:5px;background:#fff;border-radius:100px;padding:7px 11px;font-weight:700;font-size:12px;box-shadow:0 5px 12px -7px rgba(0,40,20,.3);color:#17251D}
 .ph-weather svg{color:#039A55}
-.ph-w{display:flex;flex-direction:column;gap:12px}
+.ph-w{display:flex;flex-direction:column;gap:11px}
 .ph-b{background:#fff;border-radius:18px;padding:14px 15px;box-shadow:0 12px 30px -18px rgba(0,50,25,.2)}
 .ph-med-top{display:flex;align-items:center;gap:7px;font-family:'Clash Display',sans-serif;font-weight:600;font-size:12.5px}
 .ph-med-top .n{margin-left:auto;color:#9DB0A4;font-size:11px;font-weight:600}
