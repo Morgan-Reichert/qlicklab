@@ -130,6 +130,10 @@ document.fonts.ready.then(function(){
     gsap.to('.hero-m-inner',{ yPercent:10, opacity:.35, ease:'none',
       scrollTrigger:{ trigger:hm, start:'top top', end:'bottom top', scrub:.5 } });
 
+    /* mini-carte Moody : flottement doux après l'entrée */
+    var mc = hm.querySelector('.hero-mcard');
+    if(mc){ gsap.to(mc,{ y:-6, duration:2.6, ease:'sine.inOut', yoyo:true, repeat:-1, delay:1.7 }); }
+
     /* mot tournant : une force / un atout / une fierté */
     var rot = hm.querySelector('.rotw');
     if(rot){
