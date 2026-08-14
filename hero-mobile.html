@@ -83,6 +83,94 @@ h1,h2,h3{font-family:'Clash Display',sans-serif;color:var(--ink);letter-spacing:
 .c .mlead{color:rgba(255,255,255,.82)}
 .c .mbtn-p{background:#fff;color:var(--ink)}
 
+/* D — dégradé doux */
+.scr.d{background:linear-gradient(165deg,#F6E7FB 0%,#FCEEDD 100%)}
+.scr.d::before{display:none}
+.d .blob{position:absolute;width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,rgba(166,47,189,.4),transparent 70%);filter:blur(34px);top:-50px;right:-46px;z-index:0}
+.d h1{font-size:33px;font-weight:500;margin-top:16px}
+
+/* E — sombre premium */
+.scr.e{background:#160D1C}
+.scr.e::before{background:radial-gradient(60% 40% at 18% 6%,rgba(166,47,189,.4),transparent 60%),radial-gradient(50% 35% at 95% 12%,rgba(249,115,22,.24),transparent 60%)}
+.e .mnav img{filter:brightness(0) invert(1)}
+.e .mnav .brg span{background:#fff}
+.e .eyebrow{color:#C9BBD6}
+.e h1{color:#fff;font-size:32px;font-weight:600;margin-top:16px}
+.e .grad{background:linear-gradient(115deg,#E98BFF,#FFB877);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.e .mlead{color:rgba(255,255,255,.72)}
+.e .mbtn-p{background:#fff;color:var(--ink)}
+.e .mbtn-g{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
+
+/* F — preuve chiffrée */
+.f h1{font-size:31px;font-weight:600;margin-top:16px}
+.f .stats{display:flex;gap:9px;margin:20px 0}
+.f .stat{flex:1;background:#fff;border:1px solid var(--border);border-radius:14px;padding:13px 8px;text-align:center;box-shadow:0 8px 20px -14px rgba(34,19,39,.2)}
+.f .stat .n{font-family:'Clash Display';font-weight:600;font-size:22px;color:var(--ink);line-height:1}
+.f .stat .n i{font-style:normal;font-size:13px}
+.f .stat small{display:block;font-size:9px;color:var(--muted);margin-top:5px;line-height:1.25}
+
+/* G — médaillon */
+.g{text-align:center}
+.g .eyebrow{justify-content:center}
+.g h1{font-size:30px;font-weight:600;margin-top:14px}
+.g .med{width:186px;height:186px;border-radius:50%;margin:18px auto 20px;background:radial-gradient(130% 110% at 50% -10%,#0AC96C,#008B47);display:grid;place-items:center;overflow:hidden;box-shadow:0 28px 48px -22px rgba(0,60,30,.55)}
+.g .med img{width:150px}
+
+/* H — carte flottante */
+.scr.h{background:linear-gradient(160deg,#EFE3F6,#FBEEDF)}
+.scr.h::before{display:none}
+.h .card{background:#fff;border-radius:22px;padding:24px 20px;margin-top:10px;box-shadow:0 34px 64px -30px rgba(34,19,39,.4);border:1px solid var(--border)}
+.h h1{font-size:29px;font-weight:600;margin-top:12px}
+
+/* I — mockup Moody */
+.i h1{font-size:28px;font-weight:600;margin-top:14px}
+.i .mini{margin-top:18px;background:#EAF4EC;border-radius:20px;padding:15px;box-shadow:0 26px 46px -26px rgba(0,60,30,.45)}
+.i .moodc{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:13px}
+.i .gauge{position:relative;width:52px;height:52px;flex:none}
+.i .gauge b{position:absolute;inset:0;display:grid;place-items:center;font-family:'Clash Display';font-weight:700;font-size:15px;color:#17251D}
+.i .lab small{color:#7CA08B;font-size:9px;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.i .lab b{display:block;font-family:'Clash Display';font-size:14px;color:#17251D;margin-top:2px}
+.i .chk{width:26px;height:26px;border-radius:8px;background:#00B860;display:grid;place-items:center;margin-left:auto}
+
+/* J — manifeste */
+.j .mbody{padding:58px 22px}
+.j .quote{font-family:'Clash Display';font-weight:500;font-size:29px;line-height:1.22;color:var(--ink)}
+.j .quote .grad{color:var(--purple-deep)}
+.j .attr{margin-top:22px;font-size:13px;color:var(--muted);font-weight:600}
+.j .attr::before{content:"";display:inline-block;width:22px;height:1.5px;background:var(--grad);vertical-align:middle;margin-right:9px}
+
+/* K — immersif coloré */
+.scr.k{background:var(--purple-deep)}
+.k .cimg{position:absolute;inset:0;z-index:0}
+.k .cimg img{width:100%;height:100%;object-fit:cover;opacity:.9}
+.k .cimg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(124,31,146,.2),rgba(124,31,146,0) 32%,rgba(124,31,146,.72) 64%,var(--purple-deep) 100%)}
+.k .mnav img{filter:brightness(0) invert(1)}
+.k .mnav .brg span{background:#fff}
+.k .cbody{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:24px 20px 30px}
+.k .eyebrow{color:#F3DEFB}.k .eyebrow::before{background:#fff}
+.k h1{color:#fff;font-size:31px;font-weight:600;margin-top:12px}
+.k .mlead{color:rgba(255,255,255,.85)}
+.k .mbtn-p{background:#fff;color:var(--purple-deep)}
+
+/* L — bento mini */
+.l h1{font-size:28px;font-weight:600;margin-top:14px}
+.l .bento{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.l .bt{border-radius:16px;border:1px solid var(--border);background:#fff;padding:14px;min-height:90px;box-shadow:0 10px 24px -18px rgba(34,19,39,.2)}
+.l .bt.green{background:radial-gradient(130% 110% at 50% -10%,#0AC96C,#008B47);border:none;display:grid;place-items:center;padding:8px}
+.l .bt.green img{width:100%}
+.l .bt.ink{background:var(--ink);color:#fff}
+.l .bt .n{font-family:'Clash Display';font-weight:600;font-size:23px;color:var(--ink)}
+.l .bt small{font-size:11px;color:var(--muted);display:block;margin-top:5px;line-height:1.3}
+.l .bt.ink b{font-family:'Clash Display';font-size:13px}
+.l .bt.ink small{color:rgba(255,255,255,.62)}
+.l .bt .ic{width:32px;height:32px;border-radius:9px;background:var(--purple-soft);display:grid;place-items:center;color:var(--purple-deep);margin-bottom:8px}
+
+/* M — monogramme */
+.m .mbody{padding:66px 22px;text-align:center}
+.m img.mono{width:94px;height:94px;margin:0 auto 22px}
+.m .eyebrow{justify-content:center}
+.m h1{font-size:30px;font-weight:600;margin-top:14px}
+
 @media(max-width:520px){.guide .g2{font-size:12px}.stage{gap:30px}}
 </style>
 </head>
@@ -144,6 +232,164 @@ h1,h2,h3{font-family:'Clash Display',sans-serif;color:var(--ink);letter-spacing:
         <h1>La différence est une <span class="grad">force</span>.</h1>
         <p class="mlead">L'humain au centre, l'IA responsable en soutien.</p>
         <a class="mbtn mbtn-p">Découvrir Moody</a>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION D -->
+  <div class="col">
+    <div class="opt-head"><div class="n">D</div><h3>Dégradé doux</h3><p>Fond dégradé violet→orange léger, texte sombre. La couleur de marque dès l'ouverture.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr d"><span class="blob"></span>
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="mbody">
+        <span class="eyebrow">Studio tech · à impact</span>
+        <h1>La différence est une <span class="under">force</span>.</h1>
+        <p class="mlead">Un studio qui ne construit que ce qui compte. Première app : Moody, la santé mentale 100 % privée.</p>
+        <a class="mbtn mbtn-p">Découvrir Moody</a>
+        <a class="mbtn mbtn-g">Notre vision</a>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION E -->
+  <div class="col">
+    <div class="opt-head"><div class="n">E</div><h3>Sombre premium</h3><p>Fond nuit, titre en dégradé lumineux. Mode « night », très haut de gamme.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr e">
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="mbody">
+        <span class="eyebrow">Notre première app · Moody</span>
+        <h1>La santé mentale,<br/><span class="grad">privée par défaut</span>.</h1>
+        <p class="mlead">Un journal d'humeur qui ne quitte jamais votre téléphone. Zéro serveur cloud.</p>
+        <a class="mbtn mbtn-p">Découvrir Moody</a>
+        <a class="mbtn mbtn-g">Le studio</a>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION F -->
+  <div class="col">
+    <div class="opt-head"><div class="n">F</div><h3>Preuve chiffrée</h3><p>Le titre, puis trois chiffres qui rassurent (1 app, 0 serveur, coûts). Crédible.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr f">
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="mbody">
+        <span class="eyebrow">Studio tech · à impact</span>
+        <h1>Ne bâtir que ce qui <span class="grad">compte</span>.</h1>
+        <div class="stats">
+          <div class="stat"><div class="n">1</div><small>app lancée · Moody</small></div>
+          <div class="stat"><div class="n">0</div><small>serveur cloud</small></div>
+          <div class="stat"><div class="n">136<i>$</i></div><small>coûts / an</small></div>
+        </div>
+        <a class="mbtn mbtn-p">Découvrir Moody</a>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION G -->
+  <div class="col">
+    <div class="opt-head"><div class="n">G</div><h3>Médaillon</h3><p>L'illustration Moody dans un cercle vert, centrée. Doux, chaleureux, humain.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr g">
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="mbody">
+        <span class="eyebrow">Notre première app · Moody</span>
+        <h1>La santé mentale, en douceur.</h1>
+        <div class="med"><img src="assets/moody-illus.webp" alt="Moody"></div>
+        <a class="mbtn mbtn-p">Découvrir Moody</a>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION H -->
+  <div class="col">
+    <div class="opt-head"><div class="n">H</div><h3>Carte flottante</h3><p>Le héros posé dans une carte blanche qui flotte sur un fond teinté. Aéré, élégant.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr h">
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="mbody">
+        <div class="card">
+          <span class="eyebrow">Studio tech · à impact</span>
+          <h1>La différence est une <span class="grad">force</span>.</h1>
+          <p class="mlead">On ne construit que ce qui compte. À commencer par Moody.</p>
+          <a class="mbtn mbtn-p">Découvrir Moody</a>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION I -->
+  <div class="col">
+    <div class="opt-head"><div class="n">I</div><h3>Aperçu produit</h3><p>Un vrai bout d'écran Moody (humeur du jour) sous le titre. Montre l'app tout de suite.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr i">
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="mbody">
+        <span class="eyebrow">Notre première app · Moody</span>
+        <h1>Votre humeur, au calme.</h1>
+        <div class="mini">
+          <div class="moodc">
+            <div class="gauge"><svg width="52" height="52" viewBox="0 0 58 58"><circle cx="29" cy="29" r="22" fill="#fff" stroke="#EAF4EC" stroke-width="6"/><circle cx="29" cy="29" r="22" fill="none" stroke="#00B860" stroke-width="6" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="41" transform="rotate(-90 29 29)"/></svg><b>7.0</b></div>
+            <div class="lab"><small>Ton humeur du jour</small><b>Plutôt bien</b></div>
+            <span class="chk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4 10-11" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+        <a class="mbtn mbtn-p" style="margin-top:18px">Découvrir Moody</a>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION J -->
+  <div class="col">
+    <div class="opt-head"><div class="n">J</div><h3>Manifeste</h3><p>Une phrase forte, façon citation. Pas d'image : la conviction porte tout.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr j">
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="mbody">
+        <p class="quote">« Une société ne vaut que par la place qu'elle donne à ses <span class="grad">différences</span>. »</p>
+        <p class="attr">QlickLab — studio tech européen</p>
+        <a class="mbtn mbtn-p" style="margin-top:26px">Découvrir Moody</a>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION K -->
+  <div class="col">
+    <div class="opt-head"><div class="n">K</div><h3>Immersif coloré</h3><p>Comme l'immersif, mais le dégradé fond vers le violet de la marque. Plus signé.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr k">
+      <div class="cimg"><img src="assets/st-difference.webp" alt=""></div>
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="cbody">
+        <span class="eyebrow">Studio tech · à impact</span>
+        <h1>La différence est une <span class="grad">force</span>.</h1>
+        <p class="mlead">Des produits qui changent vraiment les choses.</p>
+        <a class="mbtn mbtn-p">Découvrir Moody</a>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION L -->
+  <div class="col">
+    <div class="opt-head"><div class="n">L</div><h3>Bento mini</h3><p>Titre + une petite grille de tuiles (illustration, chiffre, privé, IA). Riche, dense.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr l">
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="mbody">
+        <span class="eyebrow">Studio tech · à impact</span>
+        <h1>Ne bâtir que ce qui <span class="grad">compte</span>.</h1>
+        <div class="bento">
+          <div class="bt green"><img src="assets/moody-illus.webp" alt="Moody"></div>
+          <div class="bt"><div class="n">0</div><small>serveur cloud, 100 % local</small></div>
+          <div class="bt ink"><b>IA embarquée</b><small>coût cloud 0 $</small></div>
+          <div class="bt"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><small>Privé par défaut</small></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION M -->
+  <div class="col">
+    <div class="opt-head"><div class="n">M</div><h3>Monogramme</h3><p>Le logo QlickLab en grand, puis la signature. Marque avant tout, ultra épuré.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr m">
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="mbody">
+        <img class="mono" src="assets/icon-duo.png" alt="QlickLab">
+        <span class="eyebrow">Studio tech européen</span>
+        <h1>La différence,<br/><span class="grad">outillée</span>.</h1>
+        <a class="mbtn mbtn-p" style="margin-top:22px">Découvrir Moody</a>
       </div>
     </div></div>
   </div>
