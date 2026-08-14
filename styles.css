@@ -862,6 +862,7 @@ form.shake{animation:shake .4s}
 .polcard:nth-child(5){rotate:2.4deg;translate:0 -4px}
 .polcard:hover{rotate:0deg;translate:0 -6px;box-shadow:0 32px 56px -26px rgba(34,19,39,.6);z-index:3}
 .polcard img{height:132px;width:100%;object-fit:cover;border-radius:4px;display:block}
+.polcard .pol-svg{display:block;width:100%;height:auto;border-radius:4px}
 .polcard h3{font-size:17.5px;margin:12px 0 4px}
 .polcard p{font-size:12.5px;color:var(--muted);line-height:1.5}
 .polcard .tape{position:absolute;top:-11px;left:50%;width:78px;height:23px;z-index:2;
