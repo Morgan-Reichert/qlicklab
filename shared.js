@@ -154,6 +154,8 @@ document.addEventListener('click',function(e){
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   card.querySelectorAll('img[loading="lazy"]').forEach(function(im){im.loading='eager';});
   var start=card.offsetHeight;
+  var mr=card.querySelector('.moody-right');
+  var r1=mr?mr.getBoundingClientRect():null;
   var folded=card.classList.toggle('folded');
   btn.setAttribute('aria-expanded',String(!folded));
   if(reduce)return;
@@ -163,7 +165,21 @@ document.addEventListener('click',function(e){
   card.getBoundingClientRect();
   card.style.transition='height .55s cubic-bezier(.22,1,.36,1)';
   card.style.height=end+'px';
-  var done=function(){card.style.height='';card.style.transition='';card.dataset.animating='';card.removeEventListener('transitionend',done);};
+  /* FLIP : la zone verte glisse de son ancienne position vers la nouvelle */
+  if(mr&&r1&&r1.width>0){
+    var r2=mr.getBoundingClientRect();
+    if(r2.width>0){
+      var dx=r1.left-r2.left, dy=r1.top-r2.top, sx=r1.width/r2.width, sy=r1.height/r2.height;
+      mr.style.transformOrigin='top left';
+      mr.style.transform='translate('+dx+'px,'+dy+'px) scale('+sx+','+sy+')';
+      mr.getBoundingClientRect();
+      mr.style.transition='transform .55s cubic-bezier(.22,1,.36,1)';
+      mr.style.transform='';
+    }
+  }
+  var done=function(){card.style.height='';card.style.transition='';card.dataset.animating='';
+    if(mr){mr.style.transition='';mr.style.transform='';mr.style.transformOrigin='';}
+    card.removeEventListener('transitionend',done);};
   card.addEventListener('transitionend',done);
   setTimeout(done,650);
 });
