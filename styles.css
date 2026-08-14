@@ -666,13 +666,13 @@ form.shake{animation:shake .4s}
   .hero-m{display:flex;position:relative;min-height:88vh;min-height:92svh;align-items:flex-end;overflow:hidden;isolation:isolate}
   .hero-m-bg{position:absolute;inset:0;z-index:-1}
   .hero-m-bg img{width:100%;height:100%;object-fit:cover;object-position:top center}
-  .hero-m-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,9,24,0) 42%,rgba(22,9,24,.34) 63%,rgba(22,9,24,.86) 100%)}
-  .hero-m-inner{position:relative;z-index:1;width:100%;padding:0 22px 46px;color:#fff}
-  .eyebrow-m{display:inline-flex;align-items:center;gap:9px;font-family:'Satoshi',sans-serif;font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F3DEFB}
+  .hero-m-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,9,24,0) 30%,rgba(22,9,24,.45) 48%,rgba(22,9,24,.82) 68%,#160D1C 100%)}
+  .hero-m-inner{position:relative;z-index:1;width:100%;padding:0 22px 44px;color:#fff}
+  .eyebrow-m{display:inline-flex;align-items:center;gap:9px;font-family:'Satoshi',sans-serif;font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F6E2FC;text-shadow:0 1px 10px rgba(0,0,0,.5)}
   .eyebrow-m::before{content:"";width:16px;height:2px;background:#fff;border-radius:2px}
-  .hero-m h1{color:#fff;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(30px,8.6vw,44px);line-height:1.06;letter-spacing:-.02em;margin:14px 0 0}
-  .hero-m h1 .grad-text{background:linear-gradient(115deg,#E98BFF 0%,#FFB877 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
-  .hero-m p{color:rgba(255,255,255,.9);font-size:15.5px;line-height:1.6;margin:13px 0 22px;max-width:36ch}
+  .hero-m h1{color:#fff;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(30px,8.6vw,44px);line-height:1.06;letter-spacing:-.02em;margin:14px 0 0;text-shadow:0 2px 18px rgba(0,0,0,.5)}
+  .hero-m h1 .grad-text{background:linear-gradient(115deg,#F0A0FF 0%,#FFC08A 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .hero-m p{color:rgba(255,255,255,.94);font-size:15.5px;line-height:1.6;margin:13px 0 22px;max-width:36ch;text-shadow:0 1px 12px rgba(0,0,0,.5)}
   .hero-m-actions{display:flex;flex-direction:column;gap:11px}
   .hero-m-actions .btn{width:100%;justify-content:center;padding:15px 24px}
   .btn-white{background:#fff;color:var(--ink)}
