@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Section domaines • 10 variantes • QlickLab</title>
+<link rel="icon" href="assets/icon-duo.png?v=2" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#FCFBFD;--ink:#160D1C;--text:#2C2233;--muted:#6E6479;--muted-2:#9A90A8;--border:#ECE0F2;--border-2:#DFCEE9;
+--purple:#A62FBD;--purple-deep:#7C1F92;--orange:#F97316;--beige:#F6ECDF;--beige-2:#EFDFC9;
+--grad:linear-gradient(115deg,#A62FBD,#F97316);--ease:cubic-bezier(.22,1,.36,1);--r:18px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Satoshi',system-ui,sans-serif;color:var(--text);background:#EEE8F3;-webkit-font-smoothing:antialiased;line-height:1.5}
+img{display:block;max-width:100%}
+h1,h2,h3,h4{font-family:'Clash Display',sans-serif;color:var(--ink);letter-spacing:-.02em;line-height:1.1}
+.guide{position:sticky;top:0;z-index:80;background:var(--ink);color:#fff;padding:14px 22px;text-align:center;font-size:14px;font-weight:500}
+.guide .g2{display:block;color:#C9BBD6;font-size:12.5px;margin-top:3px}
+.stage{display:flex;flex-direction:column;gap:52px;align-items:center;padding:44px 18px 90px;max-width:1120px;margin:0 auto}
+.block{width:100%}
+.opt-head{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;padding:0 6px}
+.opt-head .n{flex:none;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--grad);color:#fff;font-family:'Clash Display';font-weight:600;font-size:14px;align-self:center}
+.opt-head h3{font-size:19px}.opt-head p{font-size:13px;color:var(--muted)}
+.frame{position:relative;border-radius:22px;overflow:hidden;background:var(--bg);box-shadow:0 30px 60px -30px rgba(30,15,40,.35);border:1px solid #E5DAEC;padding:44px 40px}
+.ic{display:grid;place-items:center;width:44px;height:44px;border-radius:13px;background:#fff;border:1px solid var(--border);box-shadow:0 10px 22px -14px rgba(34,19,39,.4)}
+.tt{font-size:19px;font-weight:600;margin-bottom:6px}
+.tx{font-size:13.5px;color:var(--muted)}
+
+/* 1 • liste éditoriale numérotée */
+.d1 .row{display:grid;grid-template-columns:86px 1fr 150px;gap:26px;align-items:center;padding:22px 4px;border-bottom:1px solid var(--border)}
+.d1 .row:last-child{border-bottom:none}
+.d1 .num{font-family:'Clash Display';font-size:44px;font-weight:600;color:transparent;-webkit-text-stroke:1.5px var(--border-2)}
+.d1 .row:hover .num{-webkit-text-stroke:1.5px var(--purple)}
+.d1 .im{width:150px;height:92px;object-fit:cover;border-radius:14px}
+/* 2 • bandeaux alternés */
+.d2 .row{display:flex;gap:30px;align-items:center;padding:26px 30px;border-radius:20px}
+.d2 .row:nth-child(even){background:var(--beige);flex-direction:row-reverse}
+.d2 .im{width:170px;height:120px;object-fit:cover;border-radius:50%/42%;flex:none}
+/* 3 • bento asymétrique */
+.d3{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:auto auto;gap:16px}
+.d3 .cell{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.d3 .cell .p{padding:18px 20px}
+.d3 .big{grid-row:1/3}
+.d3 .big .im{height:220px;object-fit:cover;width:100%}
+.d3 .cell:not(.big){flex-direction:row;align-items:center}
+.d3 .cell:not(.big) .im{width:110px;height:100%;object-fit:cover;flex:none}
+/* 4 • accordéon latéral */
+.d4{display:grid;grid-template-columns:.9fr 1.1fr;gap:34px;align-items:stretch}
+.d4 .item{padding:16px 18px;border-left:3px solid var(--border);cursor:default}
+.d4 .item.on{border-left-color:var(--orange);background:linear-gradient(90deg,rgba(249,115,22,.06),transparent)}
+.d4 .item h4{font-size:17px}
+.d4 .item p{font-size:12.5px;color:var(--muted);margin-top:4px;display:none}
+.d4 .item.on p{display:block}
+.d4 .panel{position:relative;border-radius:20px;background:var(--beige);display:grid;place-items:center;padding:24px}
+.d4 .panel img{max-height:250px;border-radius:14px}
+/* 5 • chemin pointillé */
+.d5{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-top:26px}
+.d5::before{content:"";position:absolute;top:72px;left:6%;right:6%;height:3px;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 8' preserveAspectRatio='none'%3E%3Cpath d='M0 4C60 -2 120 9 200 4 280 -1 340 8 400 3' fill='none' stroke='%23A62FBD' stroke-width='2.4' stroke-dasharray='1 9' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%}
+.d5 .st{text-align:center}
+.d5 .med{width:96px;height:96px;border-radius:50%;object-fit:cover;margin:0 auto 14px;border:4px solid #fff;box-shadow:0 14px 30px -18px rgba(34,19,39,.5);position:relative;z-index:1}
+/* 6 • polaroids moodboard */
+.d6{position:relative;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:30px 0 14px}
+.d6::before{content:"";position:absolute;inset:8% 4%;z-index:0;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' preserveAspectRatio='none'%3E%3Cpath d='M150 8C210 -4 276 26 290 84 302 136 280 178 226 192 176 204 84 200 46 168 12 138 4 90 26 54 48 20 96 18 150 8Z' fill='%23F6ECDF'/%3E%3C/svg%3E") no-repeat center/100% 100%}
+.d6 .pol{position:relative;z-index:1;width:222px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 10px 14px;box-shadow:0 20px 40px -24px rgba(34,19,39,.45)}
+.d6 .pol .im{height:120px;width:100%;object-fit:cover;border-radius:4px}
+.d6 .pol:nth-child(2){rotate:-2.6deg;top:6px}.d6 .pol:nth-child(3){rotate:1.8deg;top:-8px}
+.d6 .pol:nth-child(4){rotate:-1.4deg;top:10px}.d6 .pol:nth-child(5){rotate:2.4deg;top:-4px}
+.d6 .pin{position:absolute;top:-9px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:var(--grad);box-shadow:0 4px 8px rgba(0,0,0,.25)}
+.d6 .tt{font-size:15.5px;margin-top:10px}.d6 .tx{font-size:11.5px}
+/* 7 • icône-first minimal */
+.d7{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:30px;padding:10px 4px}
+.d7 .ic7{width:58px;height:58px;border-radius:18px;background:var(--grad);display:grid;place-items:center;margin-bottom:14px;box-shadow:0 14px 28px -14px rgba(166,47,189,.55)}
+.d7 .ic7 svg path,.d7 .ic7 svg circle{stroke:#fff!important}
+/* 8 • méga-titre latéral + 2x2 */
+.d8{display:grid;grid-template-columns:.75fr 1.25fr;gap:38px;align-items:center}
+.d8 .mega{font-size:40px;font-weight:600}
+.d8 .mega em{font-family:Georgia,serif;font-style:italic;color:var(--purple-deep)}
+.d8 .side p{margin-top:12px;font-size:13.5px;color:var(--muted)}
+.d8 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.d8 .c{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.d8 .c .im{height:74px;width:100%;object-fit:cover}
+.d8 .c .p{padding:14px 16px}
+.d8 .c .tt{font-size:15.5px}.d8 .c .tx{font-size:11.5px}
+/* 9 • cartes chevauchantes */
+.d9{display:flex;flex-direction:column}
+.d9 .c{display:flex;gap:24px;align-items:center;background:#fff;border:1px solid var(--border);border-radius:18px;padding:18px 26px 18px 18px;box-shadow:0 18px 38px -26px rgba(34,19,39,.4);width:88%}
+.d9 .c+.c{margin-top:-14px}
+.d9 .c:nth-child(1){align-self:flex-start}.d9 .c:nth-child(2){align-self:flex-end;z-index:1}
+.d9 .c:nth-child(3){align-self:flex-start;z-index:2}.d9 .c:nth-child(4){align-self:flex-end;z-index:3}
+.d9 .im{width:120px;height:84px;object-fit:cover;border-radius:12px 40% 40% 12px/12px 50% 50% 12px;flex:none;background:var(--beige)}
+/* 10 • fresque continue */
+.d10 .band{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:26px 18px 18px;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120' preserveAspectRatio='none'%3E%3Cpath d='M0 22C40 10 80 26 130 18 180 10 230 28 285 20 330 14 370 24 400 16L400 104C355 116 310 100 260 110 210 120 160 98 105 110 62 119 30 104 0 112Z' fill='%23F6ECDF'/%3E%3C/svg%3E") no-repeat center/100% 100%}
+.d10 .band img{height:130px;width:100%;object-fit:contain;mix-blend-mode:multiply}
+.d10 .legends{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:16px;text-align:center}
+.d10 .tt{font-size:16px}
+.d10 .tx{font-size:12px}
+</style>
+</head>
+<body>
+<div class="guide"><b>Section « Nos domaines » • 10 mises en page.</b><span class="g2">Réponds « <b>domaine 1</b> » … « <b>domaine 10</b> » et je l'applique sur le site.</span></div>
+<div class="stage" id="stage"></div>
+
+<script>
+var ITEMS=[
+ {img:'assets/dom-sante.webp?v=3',t:'Santé & prévention',x:'Suivi des maladies chroniques, prévention, aide au diagnostic • sans jamais remplacer le soignant.',
+  ic:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 20s-7-4.3-7-9a4 4 0 017-2.6A4 4 0 0119 11c0 4.7-7 9-7 9z" stroke="#A62FBD" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 12h2l1.5-3 1.5 5 1-2h2" stroke="#F97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'},
+ {img:'assets/dom-education.webp?v=3',t:'Éducation & savoir',x:'Tuteurs IA, lutte contre le décrochage, accès au savoir pour tous • gratuit là où il le faut.',
+  ic:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 7l9-3 9 3-9 3-9-3z" stroke="#A62FBD" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 10v4c0 1.3 2.2 2.5 5 2.5s5-1.2 5-2.5v-4" stroke="#F97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'},
+ {img:'assets/dom-inclusion.webp',t:'Inclusion & social',x:'Accessibilité, insertion, lutte contre l\'isolement • pensés avec les personnes concernées.',
+  ic:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="4.6" r="1.9" stroke="#A62FBD" stroke-width="1.8"/><path d="M5 9h14M12 9v6M8.5 20l3.5-5 3.5 5" stroke="#F97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'},
+ {img:'assets/dom-environnement.webp?v=3',t:'Environnement & climat',x:'Sobriété énergétique et données environnementales, à l\'échelle du territoire.',
+  ic:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 20c0-8 6-13 14-13 0 8-6 13-14 13z" stroke="#A62FBD" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 16c2-3 5-5 8-6" stroke="#F97316" stroke-width="1.8" stroke-linecap="round"/></svg>'}
+];
+var V=[
+ {t:'Liste éditoriale numérotée',d:'Des lignes pleine largeur, numéro au contour, petite image à droite. Sobre, lisible, très “studio”.',
+  r:function(){return '<div class="d1">'+ITEMS.map(function(it,i){return '<div class="row"><span class="num">0'+(i+1)+'</span><div><div class="tt">'+it.t+'</div><div class="tx">'+it.x+'</div></div><img class="im" src="'+it.img+'"/></div>';}).join('')+'</div>';}},
+ {t:'Bandeaux alternés',d:'Une bande par domaine, image en médaillon, fond beige un rang sur deux, sens de lecture alterné.',
+  r:function(){return '<div class="d2">'+ITEMS.map(function(it){return '<div class="row"><img class="im" src="'+it.img+'"/><div><div class="tt">'+it.t+'</div><div class="tx">'+it.x+'</div></div></div>';}).join('')+'</div>';}},
+ {t:'Bento asymétrique',d:'La santé (votre terrain phare) en grande carte, les trois autres compactes en rangées. Hiérarchie assumée.',
+  r:function(){var b=ITEMS[0],r=ITEMS.slice(1);return '<div class="d3"><div class="cell big"><img class="im" src="'+b.img+'"/><div class="p"><div class="tt">'+b.t+'</div><div class="tx">'+b.x+'</div></div></div>'+r.map(function(it){return '<div class="cell"><img class="im" src="'+it.img+'"/><div class="p"><div class="tt" style="font-size:16px">'+it.t+'</div><div class="tx" style="font-size:12px">'+it.x+'</div></div></div>';}).join('')+'</div>';}},
+ {t:'Accordéon latéral',d:'Titres empilés à gauche (le domaine actif s\'ouvre), grande illustration à droite qui change. Interactif et compact.',
+  r:function(){return '<div class="d4"><div>'+ITEMS.map(function(it,i){return '<div class="item'+(i===0?' on':'')+'"><h4>'+it.t+'</h4><p>'+it.x+'</p></div>';}).join('')+'</div><div class="panel"><img src="'+ITEMS[0].img+'"/></div></div>';}},
+ {t:'Chemin pointillé',d:'Les 4 domaines en étapes sur la courbe pointillée du héros — médaillons ronds, textes dessous. Cohérent avec votre identité.',
+  r:function(){return '<div class="d5">'+ITEMS.map(function(it){return '<div class="st"><img class="med" src="'+it.img+'"/><div class="tt" style="font-size:16px">'+it.t+'</div><div class="tx" style="font-size:12px">'+it.x+'</div></div>';}).join('')+'</div>';}},
+ {t:'Polaroids épinglés',d:'Cartes photo légèrement pivotées, punaise dégradée, grande tache beige derrière. Le plus fait-main.',
+  r:function(){return '<div class="d6"><span></span>'+ITEMS.map(function(it){return '<div class="pol"><span class="pin"></span><img class="im" src="'+it.img+'"/><div class="tt">'+it.t+'</div><div class="tx">'+it.x+'</div></div>';}).join('')+'</div>';}},
+ {t:'Icône-first minimal',d:'Plus d\'images du tout : pastilles dégradées + textes. Radicalement épuré, la section respire.',
+  r:function(){return '<div class="d7">'+ITEMS.map(function(it){return '<div><div class="ic7">'+it.ic+'</div><div class="tt" style="font-size:17px">'+it.t+'</div><div class="tx" style="font-size:12.5px">'+it.x+'</div></div>';}).join('')+'</div>';}},
+ {t:'Méga-titre latéral + 2×2',d:'“Nos terrains” en très grand à gauche avec l\'intro, grille compacte 2×2 à droite. Équilibre édito/practico.',
+  r:function(){return '<div class="d8"><div class="side"><div class="mega">Nos <em>terrains</em> d\'action.</div><p>On détecte des besoins réels, puis on conçoit des startups pour y répondre.</p></div><div class="grid">'+ITEMS.map(function(it){return '<div class="c"><img class="im" src="'+it.img+'"/><div class="p"><div class="tt">'+it.t+'</div><div class="tx">'+it.x+'</div></div></div>';}).join('')+'</div></div>';}},
+ {t:'Cartes chevauchantes',d:'Cartes horizontales en zigzag qui se chevauchent légèrement — un rythme visuel, presque un escalier.',
+  r:function(){return '<div class="d9">'+ITEMS.map(function(it){return '<div class="c"><img class="im" src="'+it.img+'"/><div><div class="tt">'+it.t+'</div><div class="tx">'+it.x+'</div></div></div>';}).join('')+'</div>';}},
+ {t:'Fresque continue',d:'Une seule bande beige organique où les 4 illustrations cohabitent sans cadres (fondues dans le beige), légendes dessous.',
+  r:function(){return '<div class="d10"><div class="band">'+ITEMS.map(function(it){return '<img src="'+it.img+'"/>';}).join('')+'</div><div class="legends">'+ITEMS.map(function(it){return '<div><div class="tt">'+it.t+'</div><div class="tx">'+it.x+'</div></div>';}).join('')+'</div></div>';}}
+];
+var stage=document.getElementById('stage');
+V.forEach(function(v,i){
+  var b=document.createElement('div');b.className='block';
+  b.innerHTML='<div class="opt-head"><span class="n">'+(i+1)+'</span><div><h3>'+v.t+'</h3><p>'+v.d+'</p></div></div><div class="frame">'+v.r()+'</div>';
+  stage.appendChild(b);
+});
+</script>
+</body>
+</html>
