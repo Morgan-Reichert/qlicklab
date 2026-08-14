@@ -171,6 +171,17 @@ h1,h2,h3{font-family:'Clash Display',sans-serif;color:var(--ink);letter-spacing:
 .m .eyebrow{justify-content:center}
 .m h1{font-size:30px;font-weight:600;margin-top:14px}
 
+/* N / O — illustration portrait plein écran, texte sur le bas clair */
+.scr.illu{background:#FCFBFD}
+.scr.illu::before{display:none}
+.illu .bgi{position:absolute;inset:0;z-index:0}
+.illu .bgi img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.illu .mnav{padding-top:34px}
+.illu .obody{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 22px 30px}
+.illu h1{font-size:30px;font-weight:600;margin-top:10px}
+.illu .mlead{margin:12px 0 18px}
+.scr.illu.moody{background:#F6F1E9}
+
 @media(max-width:520px){.guide .g2{font-size:12px}.stage{gap:30px}}
 </style>
 </head>
@@ -390,6 +401,36 @@ h1,h2,h3{font-family:'Clash Display',sans-serif;color:var(--ink);letter-spacing:
         <span class="eyebrow">Studio tech européen</span>
         <h1>La différence,<br/><span class="grad">outillée</span>.</h1>
         <a class="mbtn mbtn-p" style="margin-top:22px">Découvrir Moody</a>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION N -->
+  <div class="col">
+    <div class="opt-head"><div class="n">N</div><h3>Illustration marque (nouvelle)</h3><p>Illustration verticale sur-mesure (violet/orange), le texte se pose sur le bas clair. Éditorial et signé.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr illu">
+      <div class="bgi"><img src="assets/hero-m-brand.webp" alt=""></div>
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="obody">
+        <span class="eyebrow">Studio tech · à impact</span>
+        <h1>La différence est une <span class="grad">force</span>.</h1>
+        <p class="mlead">On ne construit que ce qui compte. À commencer par Moody.</p>
+        <a class="mbtn mbtn-p">Découvrir Moody</a>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION O -->
+  <div class="col">
+    <div class="opt-head"><div class="n">O</div><h3>Illustration Moody (nouvelle)</h3><p>Scène douce et verte faite pour le vertical, texte sur le bas. Chaleureux, centré sur l'app.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr illu moody">
+      <div class="bgi"><img src="assets/hero-m-moody.webp" alt=""></div>
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="obody">
+        <span class="eyebrow">Notre première app · Moody</span>
+        <h1>Votre humeur, en <span class="grad">douceur</span>.</h1>
+        <p class="mlead">Le suivi de santé mentale 100 % privé, qui reste sur votre téléphone.</p>
+        <a class="mbtn mbtn-p">Découvrir Moody</a>
       </div>
     </div></div>
   </div>
