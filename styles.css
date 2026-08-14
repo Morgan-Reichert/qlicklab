@@ -876,6 +876,9 @@ form.shake{animation:shake .4s}
   /* course de la dernière carte calibrée en JS (anim.js) ; repli approximatif ici */
   .polcard:last-child{margin-bottom:40vh}
   .feat-blob{display:none}
+  /* mode épinglé (activé par anim.js) : toutes les cartes superposées au même endroit */
+  .feat-board.stacked{padding:0}
+  .feat-board.stacked .polcard{position:absolute;top:0;left:50%;margin:0;rotate:0deg;translate:none}
   .polcard img{height:172px}
   .polcard h3{font-size:18.5px;margin-top:12px}
   .polcard p{font-size:13px}

@@ -113,41 +113,34 @@ document.fonts.ready.then(function(){
     });
   });
 
-  /* ---------- 3ter. DOMAINES mobile — pile de post-its rythmée ---------- */
+  /* ---------- 3ter. DOMAINES mobile — pile épinglée : les cartes volent
+     depuis 4 directions et se superposent exactement au même endroit ---------- */
   if(window.matchMedia('(max-width:768px)').matches){
+    var polboard = document.querySelector('.feat-board');
     var polcards = q('.feat-board .polcard');
-    if(polcards.length > 1){
-      /* course exacte : la section libère le scroll quand la dernière carte touche la pile */
-      var lastCard = polcards[polcards.length-1];
-      function polTail(){
-        lastCard.style.marginBottom = Math.max(180, window.innerHeight - 92 - lastCard.offsetHeight - 26) + 'px';
+    if(polboard && polcards.length === 4){
+      polboard.classList.add('stacked');
+      polcards.forEach(function(c){ c.classList.add('in'); });   /* neutralise data-reveal */
+      gsap.set(polcards,{ xPercent:-50 });
+      gsap.set(polcards[0],{ rotation:-2 });
+
+      /* la hauteur du plateau = la plus haute carte */
+      function sizeBoard(){
+        var h = 0;
+        polcards.forEach(function(c){ h = Math.max(h, c.offsetHeight); });
+        polboard.style.height = h + 'px';
       }
-      polTail();
-      window.addEventListener('resize', function(){ polTail(); ScrollTrigger.refresh(); });
+      sizeBoard();
+      window.addEventListener('resize', function(){ sizeBoard(); ScrollTrigger.refresh(); });
 
-      /* aimantation : jamais plus d'une carte par geste de scroll */
-      var snapIdx = 0, nSeg = polcards.length - 1;
-      ScrollTrigger.create({
-        trigger:'.feat-board', start:'top 55%', end:'bottom bottom',
-        snap:{
-          snapTo:function(v){
-            var t = Math.round(v * nSeg);
-            t = Math.max(snapIdx - 1, Math.min(snapIdx + 1, t));
-            snapIdx = t;
-            return t / nSeg;
-          },
-          duration:{min:.3,max:.7}, ease:'power3.out', delay:.05
-        }
-      });
-
-      /* apparition : le dessin se trace, puis s'encre ; le texte s'écrit */
-      polcards.forEach(function(card){
+      /* préparation du "ça se dessine / ça s'écrit" */
+      var intro = polcards.map(function(card){
         var svg = card.querySelector('.pol-svg');
         var strokes = [], fills = [];
         if(svg){
           q('path,circle,rect', svg).forEach(function(el){
             if(el === svg.firstElementChild) return;            /* fond beige */
-            if(el.hasAttribute('pathLength') || el.hasAttribute('stroke-dasharray')) return; /* déjà animés/pointillés */
+            if(el.hasAttribute('pathLength') || el.hasAttribute('stroke-dasharray')) return;
             var hasStroke = el.getAttribute('stroke') || el.closest('g[stroke]');
             try{
               if(hasStroke && el.getTotalLength){
@@ -169,13 +162,40 @@ document.fonts.ready.then(function(){
             t.appendChild(s); chars.push(s);
           });
         });
-        ScrollTrigger.create({ trigger:card, start:'top 92%', once:true, onEnter:function(){
-          var tl = gsap.timeline();
-          if(strokes.length) tl.to(strokes,{ strokeDashoffset:0, duration:.75, ease:'power2.inOut', stagger:.035 },0);
-          if(fills.length)   tl.to(fills,{ fillOpacity:1, duration:.5, ease:'power1.out', stagger:.02 },.5);
-          if(chars.length)   tl.to(chars,{ opacity:1, duration:.01, ease:'none', stagger:.012 },.25);
-        }});
+        return { strokes:strokes, fills:fills, chars:chars, played:false };
       });
+      function playIntro(i){
+        var d = intro[i];
+        if(!d || d.played) return; d.played = true;
+        var tl = gsap.timeline();
+        if(d.strokes.length) tl.to(d.strokes,{ strokeDashoffset:0, duration:.75, ease:'power2.inOut', stagger:.035 },0);
+        if(d.fills.length)   tl.to(d.fills,{ fillOpacity:1, duration:.5, ease:'power1.out', stagger:.02 },.5);
+        if(d.chars.length)   tl.to(d.chars,{ opacity:1, duration:.01, ease:'none', stagger:.012 },.25);
+      }
+
+      /* aimantation : jamais plus d'une carte par geste */
+      var snapIdx = 0;
+      var poltl = gsap.timeline({
+        scrollTrigger:{
+          trigger:polboard, start:'top 108px', end:'+=250%', pin:true, scrub:.55, anticipatePin:1,
+          onEnter:function(){ playIntro(0); },
+          snap:{
+            snapTo:function(v){
+              var t = Math.round(v * 3);
+              return Math.max(snapIdx - 1, Math.min(snapIdx + 1, t)) / 3;
+            },
+            onComplete:function(self){ snapIdx = Math.round(self.progress * 3); },
+            duration:{min:.3,max:.7}, ease:'power3.out', delay:.05
+          }
+        }
+      });
+      /* 2e carte : de la gauche · 3e : de la droite · 4e : d'en dessous */
+      poltl.call(function(){ playIntro(1); },null,0)
+        .fromTo(polcards[1],{ x:'-125vw', rotation:-26 },{ x:0, rotation:-2.2, duration:1, ease:'power2.out' },0)
+        .call(function(){ playIntro(2); },null,1)
+        .fromTo(polcards[2],{ x:'125vw', rotation:24 },{ x:0, rotation:1.8, duration:1, ease:'power2.out' },1)
+        .call(function(){ playIntro(3); },null,2)
+        .fromTo(polcards[3],{ y:'115vh', rotation:-16 },{ y:0, rotation:2.4, duration:1, ease:'power2.out' },2);
     }
   }
 
