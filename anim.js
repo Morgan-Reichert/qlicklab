@@ -388,3 +388,36 @@ document.fonts.ready.then(function(){
     if(h) h.addEventListener('click',function(){ col.classList.toggle('open'); });
   });
 })();
+
+/* carte contact : dépliage mobile + copie du mail */
+(function(){
+  var unfold = document.querySelector('.cta-unfold');
+  if(unfold){
+    unfold.addEventListener('click', function(){
+      var box = unfold.closest('.cta-box');
+      var open = box.classList.toggle('open');
+      unfold.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  var copy = document.querySelector('.cta-copy');
+  if(copy){
+    copy.addEventListener('click', function(){
+      var mail = copy.getAttribute('data-mail') || '';
+      var label = copy.querySelector('span');
+      function done(ok){
+        if(!label) return;
+        var old = label.textContent;
+        label.textContent = ok ? 'Copié ✓' : mail;
+        setTimeout(function(){ label.textContent = old; }, 1600);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(mail).then(function(){ done(true); }, function(){ done(false); });
+      }else{
+        var ta = document.createElement('textarea');
+        ta.value = mail; document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); done(true); }catch(e){ done(false); }
+        ta.remove();
+      }
+    });
+  }
+})();
