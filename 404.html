@@ -13,8 +13,8 @@ body{font-family:'Satoshi',system-ui,sans-serif;background:#FAF6FC;color:#221327
 body::before{content:"";position:fixed;inset:0;z-index:-1;background:
   radial-gradient(45% 40% at 15% 10%,rgba(166,47,189,.14),transparent 60%),
   radial-gradient(40% 35% at 88% 90%,rgba(249,115,22,.12),transparent 60%)}
-.ap{width:110px;height:110px;margin:0 auto 28px;animation:spin 22s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+.ap{width:110px;height:110px;margin:0 auto 28px;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(.94)}50%{transform:scale(1.06)}}
 h1{font-family:'Clash Display';font-size:clamp(64px,14vw,120px);line-height:1;
   background:linear-gradient(115deg,#A62FBD,#F97316);-webkit-background-clip:text;background-clip:text;color:transparent}
 h2{font-family:'Clash Display';font-weight:500;font-size:clamp(22px,4vw,30px);margin:6px 0 12px}
@@ -27,10 +27,7 @@ a.btn:hover{transform:translateY(-2px)}
 </head>
 <body>
 <div>
-  <svg class="ap" viewBox="0 0 200 200" fill="none">
-    <path d="M100 100 L100 12 A88 88 0 0 1 176 56 Z" fill="#A62FBD"/><path d="M100 100 L176 56 A88 88 0 0 1 176 144 Z" fill="#F97316"/><path d="M100 100 L176 144 A88 88 0 0 1 100 188 Z" fill="#A62FBD"/><path d="M100 100 L100 188 A88 88 0 0 1 24 144 Z" fill="#F97316"/><path d="M100 100 L24 144 A88 88 0 0 1 24 56 Z" fill="#A62FBD"/><path d="M100 100 L24 56 A88 88 0 0 1 100 12 Z" fill="#F97316"/>
-    <circle cx="100" cy="100" r="38" fill="#FAF6FC"/>
-  </svg>
+  <img class="ap" src="assets/icon-duo.png?v=2" alt="" style="animation:pulse 2.4s ease-in-out infinite"/>
   <h1>404</h1>
   <h2>Cette page a disparu de notre objectif.</h2>
   <p>Le lien est peut-être cassé, ou la page a été déplacée. Revenons à l'essentiel.</p>
