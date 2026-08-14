@@ -107,11 +107,11 @@ document.querySelectorAll('a').forEach(function(a){
   var DEST=[
     ['Accueil','index.html','Page'],['Nos projets','projets.html','Page'],["L'équipe",'equipe.html','Page'],
     ['À propos','apropos.html','Page'],['Carrières','carrieres.html','Page'],['Contact','contact.html','Page'],
-    ['Étude de cas · Carelin','cas-carelin.html','Page'],['Mentions légales','legal.html','Page'],
+    ['Étude de cas · Moody','cas-carelin.html','Page'],['Mentions légales','legal.html','Page'],
     ['Notre philosophie','index.html#philosophie','Section'],["La place de l'IA",'index.html#ia','Section'],
     ['Notre vision','index.html#vision','Section'],['Nos startups','index.html#startups','Section'],
-    ['Impact en chiffres','index.html#impact','Section'],['Présence en Europe','index.html#europe','Section'],
-    ['Certifications','index.html#certifications','Section'],['FAQ','index.html#faq','Section']
+    
+    ['Confidentialité','index.html#certifications','Section'],['FAQ','index.html#faq','Section']
   ];
   var el=document.createElement('div'); el.className='cmdk';
   el.innerHTML='<div class="cmdk-bg"></div><div class="cmdk-box"><input type="text" placeholder="Rechercher une page ou une section…" aria-label="Recherche"><ul></ul></div>';
