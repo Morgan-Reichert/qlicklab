@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Héros mobile — 3 options — QlickLab</title>
+<link rel="icon" href="assets/icon-duo.png" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#FCFBFD;--bg-2:#F6F2FA;--surface:#FFFFFF;--border:#ECE0F2;--border-2:#DFCEE9;
+  --ink:#160D1C;--text:#2C2233;--muted:#6E6479;--muted-2:#9A90A8;
+  --purple:#A62FBD;--purple-deep:#7C1F92;--purple-soft:#F4E5F8;--orange:#F97316;
+  --grad:linear-gradient(115deg,#A62FBD 0%,#F97316 100%);--ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Satoshi',system-ui,sans-serif;color:var(--text);background:#F3EEF7;-webkit-font-smoothing:antialiased;line-height:1.55}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:'Clash Display',sans-serif;color:var(--ink);letter-spacing:-.02em;line-height:1.05}
+
+.guide{background:var(--ink);color:#fff;padding:16px 22px;text-align:center;font-size:14px;font-weight:500}
+.guide b{color:#fff}
+.guide .g2{display:block;color:#C9BBD6;font-size:12.5px;margin-top:4px}
+
+.stage{display:flex;flex-wrap:wrap;gap:38px;justify-content:center;align-items:flex-start;padding:46px 20px 70px}
+.col{width:330px;max-width:100%}
+.opt-head{text-align:center;margin-bottom:18px}
+.opt-head .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--grad);color:#fff;font-family:'Clash Display';font-weight:600;font-size:14px;margin-bottom:9px}
+.opt-head h3{font-size:19px}
+.opt-head p{font-size:13px;color:var(--muted);margin-top:5px;padding:0 6px}
+
+/* phone frame */
+.phone{position:relative;width:330px;max-width:100%;background:#0c0912;border-radius:46px;padding:9px;box-shadow:0 46px 80px -30px rgba(34,19,39,.5)}
+.phone .island{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:92px;height:24px;background:#000;border-radius:20px;z-index:9}
+.scr{position:relative;background:var(--bg);border-radius:38px;overflow:hidden;height:620px}
+.scr::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(60% 40% at 15% 6%,rgba(166,47,189,.12),transparent 60%),
+  radial-gradient(55% 35% at 92% 10%,rgba(249,115,22,.1),transparent 60%)}
+.mnav{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:34px 18px 0}
+.mnav img{height:22px;width:auto}
+.mnav .brg{display:flex;flex-direction:column;gap:4px}
+.mnav .brg span{width:20px;height:2px;background:var(--ink);border-radius:2px}
+.mbody{position:relative;z-index:2;padding:26px 20px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
+.eyebrow::before{content:"";width:14px;height:2px;background:var(--grad)}
+.mlead{color:var(--muted);font-size:14px;line-height:1.6;margin:14px 0 20px}
+.mbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14.5px;padding:14px 22px;border-radius:12px}
+.mbtn-p{background:var(--ink);color:#fff;width:100%}
+.mbtn-g{background:#fff;color:var(--ink);border:1.5px solid var(--border-2);width:100%;margin-top:10px}
+.grad{color:var(--purple-deep)}
+.under{position:relative;white-space:nowrap}
+.under::after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:.13em;background:var(--grad);border-radius:3px}
+
+/* OPTION A — éditorial compact */
+.a h1{font-size:34px;font-weight:500;margin-top:16px}
+.a .chiprow{display:flex;gap:8px;overflow-x:auto;margin-top:22px;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.a .chip{flex:none;display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--text);background:#fff;border:1px solid var(--border);border-radius:100px;padding:8px 13px;box-shadow:0 6px 16px -12px rgba(34,19,39,.25)}
+.a .chip .d{width:7px;height:7px;border-radius:50%;background:var(--grad)}
+.a .chip b{color:#00934C}
+
+/* OPTION B — produit vert */
+.b h1{font-size:30px;font-weight:600;margin-top:14px}
+.b .green{margin-top:20px;border-radius:24px;padding:22px 18px 20px;background:radial-gradient(130% 110% at 50% -10%,#0AC96C,#008B47);position:relative;overflow:hidden}
+.b .green::before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.1);bottom:-100px;left:-70px}
+.b .green img{position:relative;z-index:1;width:100%;max-width:220px;margin:0 auto;filter:drop-shadow(0 18px 26px rgba(0,50,26,.35))}
+.b .green .st{position:relative;z-index:1;display:flex;gap:9px;margin-top:14px}
+.b .bs{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;background:#fff;color:#0d2c1d;border-radius:11px;padding:9px 8px}
+.b .bs b{font-family:'Clash Display';font-weight:600;font-size:12.5px}
+
+/* OPTION C — immersif */
+.c .scr{background:#120814}
+.c .cimg{position:absolute;inset:0;z-index:0}
+.c .cimg img{width:100%;height:100%;object-fit:cover;opacity:.92}
+.c .cimg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,8,20,.25),rgba(18,8,20,0) 30%,rgba(18,8,20,.6) 62%,#120814 100%)}
+.c .mnav img{filter:brightness(0) invert(1)}
+.c .mnav .brg span{background:#fff}
+.c .cbody{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:24px 20px 30px}
+.c .eyebrow{color:#EAD9F2}.c .eyebrow::before{background:#fff}
+.c h1{color:#fff;font-size:32px;font-weight:600;margin-top:12px}
+.c .grad{background:linear-gradient(115deg,#E98BFF,#FFB877);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.c .mlead{color:rgba(255,255,255,.82)}
+.c .mbtn-p{background:#fff;color:var(--ink)}
+
+@media(max-width:520px){.guide .g2{font-size:12px}.stage{gap:30px}}
+</style>
+</head>
+<body>
+<div class="guide">
+  <b>Héros mobile — 3 options (le desktop ne change pas).</b>
+  <span class="g2">Réponds-moi « <b>mobile A</b> », « <b>mobile B</b> » ou « <b>mobile C</b> » et je l'applique + je refais toute la version mobile autour.</span>
+</div>
+
+<div class="stage">
+
+  <!-- OPTION A -->
+  <div class="col">
+    <div class="opt-head"><div class="n">A</div><h3>Éditorial compact</h3><p>Titre net, zéro image lourde, une rangée de points forts qui défile. Rapide et haut de gamme.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr a">
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="mbody">
+        <span class="eyebrow">Studio tech · à impact</span>
+        <h1>La différence est une <span class="under">force</span>.</h1>
+        <p class="mlead">Un studio qui ne construit que ce qui compte. Première app bien réelle : Moody, le suivi de santé mentale 100 % privé.</p>
+        <a class="mbtn mbtn-p">Découvrir Moody</a>
+        <a class="mbtn mbtn-g">Notre vision</a>
+        <div class="chiprow">
+          <span class="chip"><span class="d"></span>100 % privé</span>
+          <span class="chip"><span class="d"></span>IA embarquée</span>
+          <span class="chip"><span class="d"></span>Local-first</span>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="col">
+    <div class="opt-head"><div class="n">B</div><h3>Produit vert</h3><p>Le titre, puis tout de suite la card Moody (illustration + téléchargement). Concret, orienté action.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr b">
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="mbody">
+        <span class="eyebrow">Notre première app · Moody</span>
+        <h1>La santé mentale, <span class="grad">privée par défaut</span>.</h1>
+        <div class="green">
+          <img src="assets/moody-illus.webp" alt="Moody">
+          <div class="st">
+            <a class="bs"><svg width="15" height="15" viewBox="0 0 24 24" fill="#0d2c1d"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.9-.8-3-.8-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-1 2.8-2.1c.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-1-2.5-3.7z"/></svg><b>App Store</b></a>
+            <a class="bs"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 3l14 9-14 9z" fill="#0d2c1d"/></svg><b>Google Play</b></a>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="col">
+    <div class="opt-head"><div class="n">C</div><h3>Immersif</h3><p>Image plein écran, dégradé qui fond vers le bas, titre en blanc par-dessus. Le plus spectaculaire.</p></div>
+    <div class="phone"><span class="island"></span><div class="scr c">
+      <div class="cimg"><img src="assets/st-difference.webp" alt=""></div>
+      <div class="mnav"><img src="assets/wordmark-duo.webp" alt="QlickLab"><span class="brg"><span></span><span></span><span></span></span></div>
+      <div class="cbody">
+        <span class="eyebrow">Studio tech · à impact</span>
+        <h1>La différence est une <span class="grad">force</span>.</h1>
+        <p class="mlead">L'humain au centre, l'IA responsable en soutien.</p>
+        <a class="mbtn mbtn-p">Découvrir Moody</a>
+      </div>
+    </div></div>
+  </div>
+
+</div>
+</body>
+</html>
