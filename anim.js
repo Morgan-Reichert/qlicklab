@@ -220,6 +220,41 @@ document.fonts.ready.then(function(){
     var mc = hm.querySelector('.hero-mcard');
     if(mc){ gsap.to(mc,{ y:-6, duration:2.6, ease:'sine.inOut', yoyo:true, repeat:-1, delay:1.7 }); }
 
+    /* carrousel dessiné : chaque illustration se trace, vit, s'efface, place à la suivante */
+    var cyc = hm.querySelector('.hero-cycle');
+    if(cyc){
+      var csvgs = q('.hero-svg', cyc);
+      var cdata = csvgs.map(function(svg){
+        var strokes = [], fills = [];
+        q('path,circle,rect,ellipse', svg).forEach(function(el){
+          if(el.hasAttribute('stroke-dasharray')) return;
+          var hasStroke = el.getAttribute('stroke') || el.closest('g[stroke]');
+          try{
+            if(hasStroke && el.getTotalLength){
+              var L = el.getTotalLength();
+              if(L > 0){ el._len = L; el.style.strokeDasharray = L; el.style.strokeDashoffset = L; strokes.push(el); }
+            }
+          }catch(e){}
+          var f = el.getAttribute('fill');
+          if(f && f !== 'none') fills.push(el);
+        });
+        gsap.set(svg,{ autoAlpha:0 });
+        gsap.set(fills,{ fillOpacity:0 });
+        return { svg:svg, strokes:strokes, fills:fills };
+      });
+      var ci = 0;
+      (function cycleNext(){
+        var d = cdata[ci];
+        gsap.timeline({ onComplete:function(){ ci = (ci+1) % cdata.length; cycleNext(); } })
+          .set(d.svg,{ autoAlpha:1 })
+          .to(d.strokes,{ strokeDashoffset:0, duration:1.05, ease:'power2.inOut', stagger:.03 },0)
+          .to(d.fills,{ fillOpacity:1, duration:.55, ease:'power1.out', stagger:.018 },.75)
+          .to({},{ duration:4.2 })
+          .to(d.fills,{ fillOpacity:0, duration:.4, ease:'power1.in' },'>')
+          .to(d.strokes,{ strokeDashoffset:function(i,el){ return el._len; }, duration:.65, ease:'power2.in', stagger:.012 },'<')
+          .set(d.svg,{ autoAlpha:0 });
+      })();
+    }
   }
 
   /* mot tournant : une force / un atout / une fierté (héros desktop + mobile)
