@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Domaines façon polaroid • 10 versions • QlickLab</title>
+<link rel="icon" href="assets/icon-duo.png?v=2" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#FCFBFD;--ink:#160D1C;--text:#2C2233;--muted:#6E6479;--muted-2:#9A90A8;--border:#ECE0F2;--border-2:#DFCEE9;
+--purple:#A62FBD;--purple-deep:#7C1F92;--orange:#F97316;--beige:#F6ECDF;--beige-2:#EFDFC9;
+--grad:linear-gradient(115deg,#A62FBD,#F97316);--ease:cubic-bezier(.22,1,.36,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Satoshi',system-ui,sans-serif;color:var(--text);background:#EEE8F3;-webkit-font-smoothing:antialiased;line-height:1.5}
+img{display:block;max-width:100%}
+h1,h3{font-family:'Clash Display',sans-serif;color:var(--ink);letter-spacing:-.02em;line-height:1.1}
+.guide{position:sticky;top:0;z-index:80;background:var(--ink);color:#fff;padding:14px 22px;text-align:center;font-size:14px;font-weight:500}
+.guide .g2{display:block;color:#C9BBD6;font-size:12.5px;margin-top:3px}
+.stage{display:flex;flex-direction:column;gap:52px;align-items:center;padding:44px 18px 90px;max-width:1120px;margin:0 auto}
+.block{width:100%}
+.opt-head{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;padding:0 6px}
+.opt-head .n{flex:none;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--grad);color:#fff;font-family:'Clash Display';font-weight:600;font-size:14px;align-self:center}
+.opt-head h3{font-size:19px}.opt-head p{font-size:13px;color:var(--muted)}
+.frame{position:relative;border-radius:22px;overflow:hidden;background:var(--bg);box-shadow:0 30px 60px -30px rgba(30,15,40,.35);border:1px solid #E5DAEC;padding:48px 36px}
+.board{position:relative;display:flex;justify-content:center;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.pol{position:relative;z-index:1;width:224px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 10px 14px;
+ box-shadow:0 22px 42px -24px rgba(34,19,39,.5)}
+.pol .im{height:122px;width:100%;object-fit:cover;border-radius:4px}
+.pol .tt{font-family:'Clash Display';font-size:15.5px;font-weight:600;color:var(--ink);margin-top:10px}
+.pol .tx{font-size:11.5px;color:var(--muted)}
+.blob{position:absolute;inset:6% 3%;z-index:0;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' preserveAspectRatio='none'%3E%3Cpath d='M150 8C210 -4 276 26 290 84 302 136 280 178 226 192 176 204 84 200 46 168 12 138 4 90 26 54 48 20 96 18 150 8Z' fill='%23F6ECDF'/%3E%3C/svg%3E") no-repeat center/100% 100%}
+.r1{rotate:-2.6deg;top:6px}.r2{rotate:1.8deg;top:-8px}.r3{rotate:-1.4deg;top:10px}.r4{rotate:2.4deg;top:-4px}
+@keyframes sway{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1.2deg)}}
+
+/* P1 : punaise + ficelle dégradée */
+.p1 .pin{position:absolute;top:-9px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:var(--grad);box-shadow:0 4px 8px rgba(0,0,0,.28)}
+.p1 .pin::after{content:"";position:absolute;top:3px;left:3px;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.55)}
+.p1 svg.string{position:absolute;top:18px;left:4%;right:4%;width:92%;height:60px;z-index:2;pointer-events:none}
+/* P2 : scotch washi */
+.p2 .tape{position:absolute;top:-10px;left:50%;width:74px;height:22px;background:rgba(166,47,189,.32);transform:translateX(-50%) rotate(-4deg);backdrop-filter:blur(1px);border-left:1px dashed rgba(255,255,255,.6);border-right:1px dashed rgba(255,255,255,.6)}
+.p2 .pol:nth-child(odd) .tape{background:rgba(249,115,22,.32);transform:translateX(-50%) rotate(3deg)}
+/* P3 : annotations manuscrites */
+.p3 .note{position:absolute;font-family:'Caveat',cursive;font-size:19px;color:var(--purple-deep);z-index:3;pointer-events:none}
+.p3 .note svg{display:inline;vertical-align:middle}
+/* P4 : corde à linge */
+.p4 .board{padding-top:44px}
+.p4 .wire{position:absolute;top:26px;left:2%;right:2%;height:40px;z-index:0;pointer-events:none}
+.p4 .pol{transform-origin:50% -22px;animation:sway 5.5s ease-in-out infinite}
+.p4 .pol:nth-child(3){animation-delay:-1.8s}.p4 .pol:nth-child(4){animation-delay:-3.2s}.p4 .pol:nth-child(5){animation-delay:-4.4s}
+.p4 .clip{position:absolute;top:-22px;left:50%;transform:translateX(-50%);width:14px;height:26px;background:linear-gradient(#EFDFC9,#D9C4A6);border-radius:4px 4px 2px 2px;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+/* P5 : éventail */
+.p5 .board{min-height:300px;align-items:center;padding-top:8px}
+.p5 .pol{margin:0 -34px;transform-origin:50% 130%;transition:transform .4s var(--ease)}
+.p5 .pol:nth-child(2){transform:rotate(-9deg)}.p5 .pol:nth-child(3){transform:rotate(-3deg);z-index:2}
+.p5 .pol:nth-child(4){transform:rotate(3deg);z-index:3}.p5 .pol:nth-child(5){transform:rotate(9deg);z-index:4}
+.p5 .pol:hover{transform:rotate(0) translateY(-16px);z-index:9}
+/* P6 : jetées sur table */
+.p6 .board{min-height:320px;display:block}
+.p6 .pol{position:absolute}
+.p6 .pol:nth-child(2){left:6%;top:24px;rotate:-5deg}
+.p6 .pol:nth-child(3){left:30%;top:74px;rotate:2.5deg;z-index:2}
+.p6 .pol:nth-child(4){left:54%;top:14px;rotate:-1.8deg;z-index:3}
+.p6 .pol:nth-child(5){left:74%;top:88px;rotate:4deg;z-index:4}
+/* P7 : légende feutre + tampon */
+.p7 .tt{font-family:'Caveat',cursive;font-size:23px;font-weight:600;margin-top:8px}
+.p7 .stamp{position:absolute;top:16px;right:12px;font-family:'Clash Display';font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);border:1.6px solid var(--orange);border-radius:6px;padding:3px 7px;rotate:8deg;opacity:.85;background:rgba(255,255,255,.7)}
+/* P8 : carnet à spirale */
+.p8 .book{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:0;background:#FBF6EC;border-radius:14px;box-shadow:0 30px 60px -30px rgba(34,19,39,.5);border:1px solid var(--border-2);max-width:860px;margin:0 auto}
+.p8 .page{padding:30px 26px;display:flex;flex-direction:column;gap:18px}
+.p8 .page:first-child{border-right:2px dashed var(--border-2)}
+.p8 .spiral{position:absolute;left:50%;top:10px;bottom:10px;transform:translateX(-50%);display:flex;flex-direction:column;justify-content:space-around;z-index:2}
+.p8 .spiral i{width:22px;height:10px;border:2.4px solid #B9A88F;border-radius:6px;background:#FBF6EC}
+.p8 .pol{width:100%;display:flex;gap:14px;align-items:center;padding:10px}
+.p8 .pol .im{width:110px;height:78px;flex:none}
+/* P9 : timbres dentelés */
+.p9 .pol{border:none;border-radius:0;padding:12px;background:#fff;
+ -webkit-mask:radial-gradient(circle at 6px 6px,transparent 4.4px,#000 4.6px);
+ -webkit-mask-size:12px 12px;-webkit-mask-position:-6px -6px;
+ mask:radial-gradient(circle at 6px 6px,transparent 4.4px,#000 4.6px);mask-size:12px 12px;mask-position:-6px -6px;
+ box-shadow:none;outline:1px solid var(--border)}
+.p9 .pol-w{position:relative;z-index:1;filter:drop-shadow(0 18px 30px rgba(34,19,39,.25))}
+.p9 .postmark{position:absolute;z-index:2;top:-14px;right:-12px;width:58px;height:58px;border:2px solid rgba(124,31,146,.5);border-radius:50%;display:grid;place-items:center;font-family:'Clash Display';font-size:8px;font-weight:600;letter-spacing:.08em;color:rgba(124,31,146,.65);rotate:-12deg;background:rgba(255,255,255,.15)}
+/* P10 : galerie au fil */
+.p10 .hang{position:relative;z-index:1;text-align:center}
+.p10 .nail{width:10px;height:10px;border-radius:50%;background:#B9A88F;margin:0 auto 2px;box-shadow:inset 0 -2px 3px rgba(0,0,0,.25)}
+.p10 svg.tri{display:block;margin:0 auto -6px;height:44px}
+.p10 .pol{border-radius:4px;border:6px solid #fff;outline:1.6px solid var(--border-2);padding:0}
+.p10 .pol .cap{padding:8px 10px 10px}
+.p10 .h2{margin-top:34px}.p10 .h4{margin-top:26px}
+</style>
+</head>
+<body>
+<div class="guide"><b>Domaines façon polaroid • 10 versions améliorées de la n°6.</b><span class="g2">Réponds « <b>polaroid 1</b> » … « <b>polaroid 10</b> » et je l'applique sur le site.</span></div>
+<div class="stage" id="stage"></div>
+
+<script>
+var ITEMS=[
+ {img:'assets/dom-sante.webp?v=3',t:'Santé & prévention',x:'Suivi des maladies chroniques, prévention, aide au diagnostic.'},
+ {img:'assets/dom-education.webp?v=3',t:'Éducation & savoir',x:'Tuteurs IA, accès au savoir pour tous, gratuit là où il le faut.'},
+ {img:'assets/dom-inclusion.webp',t:'Inclusion & social',x:'Accessibilité, insertion • pensés avec les personnes concernées.'},
+ {img:'assets/dom-environnement.webp?v=3',t:'Environnement & climat',x:'Sobriété énergétique et données environnementales.'}
+];
+function pols(extra,cap){
+  return ITEMS.map(function(it,i){
+    return '<div class="pol r'+(i+1)+'">'+(extra?extra(it,i):'')+'<img class="im" src="'+it.img+'"/>'+(cap?cap(it,i):'<div class="tt">'+it.t+'</div><div class="tx">'+it.x+'</div>')+'</div>';
+  }).join('');
+}
+var V=[
+ {c:'p1',t:'Punaises + ficelle',d:'Les punaises dégradées reliées par une ficelle qui pend entre les cartes, façon enquête/mur d\'inspiration.',
+  r:function(){return '<div class="board"><span class="blob"></span><svg class="string" viewBox="0 0 800 60" fill="none" preserveAspectRatio="none"><path d="M100 8 C 180 54 260 50 300 12 C 360 58 460 54 500 10 C 560 56 660 52 700 12" stroke="url(%23sg)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="sg" x1="0" x2="800" gradientUnits="userSpaceOnUse"><stop stop-color="%23A62FBD"/><stop offset="1" stop-color="%23F97316"/></linearGradient></defs></svg>'+pols(function(){return '<span class="pin"></span>';})+'</div>';}},
+ {c:'p2',t:'Scotch washi',d:'Un morceau de scotch translucide violet ou orange en travers du haut de chaque carte. Plus doux que la punaise.',
+  r:function(){return '<div class="board"><span class="blob"></span>'+pols(function(){return '<span class="tape"></span>';})+'</div>';}},
+ {c:'p3',t:'Annotations feutre',d:'Le moodboard annoté à la main : flèches griffonnées et petits mots (« notre 1er terrain ! », « avec les concernés ») entre les cartes.',
+  r:function(){return '<div class="board"><span class="blob"></span><span class="note" style="top:-8px;left:12%">notre 1er terrain !<br/><svg width="40" height="26" viewBox="0 0 40 26" fill="none"><path d="M6 2c8 12 18 18 30 18m0 0-8-5m8 5-7 4" stroke="%23A62FBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="note" style="bottom:-4px;right:10%"><svg width="38" height="24" viewBox="0 0 38 24" fill="none"><path d="M34 22C24 12 16 6 2 6m0 0 7-4M2 6l8 4" stroke="%23F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> pensé avec les concernés</span>'+pols(function(){return '<span class="pin" style="position:absolute;top:-9px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:var(--grad);box-shadow:0 4px 8px rgba(0,0,0,.28)"></span>';})+'</div>';}},
+ {c:'p4',t:'Corde à linge',d:'Les cartes suspendues à un fil avec des pinces à linge en bois, et elles se balancent doucement.',
+  r:function(){return '<div class="board"><span class="blob"></span><svg class="wire" viewBox="0 0 900 40" fill="none" preserveAspectRatio="none"><path d="M0 6 C 220 34 680 34 900 6" stroke="%239A90A8" stroke-width="2.4"/></svg>'+pols(function(){return '<span class="clip"></span>';})+'</div>';}},
+ {c:'p5',t:'Éventail',d:'Les 4 cartes resserrées en éventail comme une main de cartes à jouer ; celle qu\'on survole se redresse.',
+  r:function(){return '<div class="board"><span class="blob"></span>'+pols()+'</div>';}},
+ {c:'p6',t:'Jetées sur la table',d:'Composition libre : les cartes se chevauchent à des hauteurs différentes, comme posées à la va-vite après un atelier.',
+  r:function(){return '<div class="board"><span class="blob"></span>'+pols()+'</div>';}},
+ {c:'p7',t:'Légendes au feutre + tampon',d:'Titres écrits à la main au feutre, tampon « TERRAIN 01…04 » incliné sur la photo. Très carnet de bord.',
+  r:function(){return '<div class="board"><span class="blob"></span>'+ITEMS.map(function(it,i){return '<div class="pol r'+(i+1)+'"><span class="stamp">Terrain 0'+(i+1)+'</span><img class="im" src="'+it.img+'"/><div class="tt">'+it.t+'</div><div class="tx">'+it.x+'</div></div>';}).join('')+'</div>';}},
+ {c:'p8',t:'Carnet à spirale',d:'Le moodboard devient un carnet ouvert : deux pages, spirale centrale, deux domaines collés par page.',
+  r:function(){return '<div style="position:relative"><span class="blob"></span><div class="book"><div class="spiral">'+'<i></i>'.repeat(7)+'</div><div class="page">'+ITEMS.slice(0,2).map(function(it){return '<div class="pol" style="rotate:-1deg"><img class="im" src="'+it.img+'"/><div><div class="tt">'+it.t+'</div><div class="tx">'+it.x+'</div></div></div>';}).join('')+'</div><div class="page">'+ITEMS.slice(2).map(function(it){return '<div class="pol" style="rotate:1.2deg"><img class="im" src="'+it.img+'"/><div><div class="tt">'+it.t+'</div><div class="tx">'+it.x+'</div></div></div>';}).join('')+'</div></div></div>';}},
+ {c:'p9',t:'Timbres-poste',d:'Bords dentelés de timbre et cachet postal « QlickLab • Europe » : vos terrains comme des destinations.',
+  r:function(){return '<div class="board"><span class="blob"></span>'+ITEMS.map(function(it,i){return '<div class="pol-w r'+(i+1)+'"><span class="postmark">QLICKLAB<br/>EUROPE</span><div class="pol"><img class="im" src="'+it.img+'"/><div class="tt">'+it.t+'</div><div class="tx">'+it.x+'</div></div></div>';}).join('')+'</div>';}},
+ {c:'p10',t:'Galerie accrochée',d:'Cadres blancs fins suspendus à des clous par un fil apparent, à des hauteurs alternées. Le plus « exposition ».',
+  r:function(){return '<div class="board"><span class="blob"></span>'+ITEMS.map(function(it,i){return '<div class="hang '+(i%2?'h2':'h4')+'"><div class="nail"></div><svg class="tri" viewBox="0 0 120 44" width="120"><path d="M60 2 8 44M60 2l52 42" stroke="%239A90A8" stroke-width="1.6" fill="none"/></svg><div class="pol" style="rotate:'+(i%2? '1.6':'-1.8')+'deg"><img class="im" src="'+it.img+'"/><div class="cap"><div class="tt">'+it.t+'</div><div class="tx">'+it.x+'</div></div></div></div>';}).join('')+'</div>';}}
+];
+var stage=document.getElementById('stage');
+V.forEach(function(v,i){
+  var b=document.createElement('div');b.className='block';
+  b.innerHTML='<div class="opt-head"><span class="n">'+(i+1)+'</span><div><h3>'+v.t+'</h3><p>'+v.d+'</p></div></div><div class="frame '+v.c+'">'+v.r()+'</div>';
+  stage.appendChild(b);
+});
+</script>
+</body>
+</html>
