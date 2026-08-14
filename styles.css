@@ -663,28 +663,20 @@ form.shake{animation:shake .4s}
 @media(max-width:768px){
   /* — bascule héros — */
   .hero{display:none!important}
-  .hero-m{display:flex;position:relative;min-height:100vh;min-height:100svh;align-items:flex-end;overflow:hidden;isolation:isolate}
-  .hero-m-bg{position:absolute;inset:0;z-index:-1}
-  .hero-m-bg img{width:100%;height:100%;object-fit:cover;object-position:top center}
-  .hero-m-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,9,24,0) 30%,rgba(22,9,24,.45) 48%,rgba(22,9,24,.82) 68%,#160D1C 100%)}
-  .hero-m-inner{position:relative;z-index:1;width:100%;padding:0 22px max(40px,calc(env(safe-area-inset-bottom) + 26px));color:#fff}
-  .eyebrow-m{display:inline-flex;align-items:center;gap:9px;font-family:'Satoshi',sans-serif;font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F6E2FC;text-shadow:0 1px 10px rgba(0,0,0,.5)}
-  .eyebrow-m::before{content:"";width:16px;height:2px;background:#fff;border-radius:2px}
-  .hero-m h1{color:#fff;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(30px,8.6vw,44px);line-height:1.06;letter-spacing:-.02em;margin:14px 0 0;text-shadow:0 2px 18px rgba(0,0,0,.5)}
-  .hero-m h1 .grad-text{background:linear-gradient(115deg,#F0A0FF 0%,#FFC08A 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
-  .hero-m p{color:rgba(255,255,255,.94);font-size:15.5px;line-height:1.6;margin:13px 0 22px;max-width:36ch;text-shadow:0 1px 12px rgba(0,0,0,.5)}
-  .hero-m-actions{display:flex;flex-direction:column;gap:11px}
-  .hero-m-actions .btn{width:100%;justify-content:center;padding:15px 24px}
-  .btn-white{background:#fff;color:var(--ink)}
-  .btn-white:hover{background:#fff;transform:translateY(-2px)}
-  .btn-ghost-w{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.42);backdrop-filter:blur(6px)}
-  .btn-ghost-w:hover{background:rgba(255,255,255,.16);border-color:#fff;color:#fff;transform:translateY(-2px)}
-
-  /* — nav transparente au-dessus du héros (accueil), logo agrandi — */
-  body.home:not(.menu-open) header:not(.scrolled) .nav{background:transparent;border-color:transparent;box-shadow:none;backdrop-filter:none}
-  body.home:not(.menu-open) header:not(.scrolled) .brand img{filter:brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0,0,0,.4));height:36px}
-  body.home:not(.menu-open) header:not(.scrolled) .burger{background:rgba(16,8,18,.34);border-color:rgba(255,255,255,.36)}
-  body.home:not(.menu-open) header:not(.scrolled) .burger span{background:#fff}
+  .hero-m{display:block;position:relative;min-height:100vh;min-height:100svh;overflow:hidden}
+  .hero-m::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+    radial-gradient(60% 36% at 12% 4%,rgba(166,47,189,.10),transparent 60%),
+    radial-gradient(50% 30% at 92% 8%,rgba(249,115,22,.09),transparent 60%)}
+  .hero-m-inner{position:relative;display:flex;flex-direction:column;min-height:100svh;
+    padding:96px 22px max(18px,calc(env(safe-area-inset-bottom) + 14px))}
+  .hero-m-copy{text-align:left}
+  .eyebrow-m{display:inline-flex;align-items:center;gap:9px;font-family:'Satoshi',sans-serif;font-weight:600;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
+  .eyebrow-m::before{content:"";width:15px;height:2px;background:var(--grad);border-radius:2px}
+  .hero-m h1{font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(29px,8.2vw,40px);line-height:1.06;letter-spacing:-.02em;color:var(--ink);margin:12px 0 0}
+  .hero-m p{color:var(--muted);font-size:15px;line-height:1.55;margin:10px 0 0;max-width:38ch}
+  .hero-svg{flex:1 1 auto;min-height:150px;width:100%;max-width:430px;margin:4px auto;display:block}
+  .hero-m-actions{display:flex;gap:10px;flex:none}
+  .hero-m-actions .btn{flex:1;justify-content:center;padding:14px 12px;font-size:14.5px;white-space:nowrap}
   /* le bouton flottant « Proposer un projet » n'apparaît plus sur l'écran en mobile (il est dans le menu) */
   .fab{display:none!important}
 
@@ -706,9 +698,10 @@ form.shake{animation:shake .4s}
   .marquee-wrap{margin:0}
 }
 @media(max-width:420px){
-  .hero-m-inner{padding-bottom:40px}
-  .hero-m h1{font-size:31px}
-  .hero-m p{font-size:14.5px;margin-bottom:18px}
+  .hero-m-inner{padding-top:88px}
+  .hero-m h1{font-size:28px}
+  .hero-m p{font-size:14px}
+  .hero-m-actions .btn{padding:13px 10px;font-size:14px}
 }
 /* hamburger en bulle translucide (mobile) */
 @media(max-width:980px){

@@ -114,12 +114,13 @@ document.fonts.ready.then(function(){
       scrollTrigger:{ trigger:'.hero', start:'top top', end:'bottom top', scrub:.5 } });
   }
 
-  /* ---------- 5. HÉROS mobile — zoom lent + parallaxe ---------- */
-  var hmbg = document.querySelector('.hero-m-bg img');
-  if(hmbg && getComputedStyle(document.querySelector('.hero-m')).display !== 'none'){
-    gsap.fromTo(hmbg,{ scale:1.14 },{ scale:1.02, yPercent:8, ease:'none',
-      scrollTrigger:{ trigger:'.hero-m', start:'top top', end:'bottom top', scrub:.5 } });
-    gsap.from('.hero-m-inner > *',{ y:26, opacity:0, duration:.9, ease:'power3.out', stagger:.1, delay:.25 });
+  /* ---------- 5. HÉROS mobile — entrée en cascade + sortie parallaxe ---------- */
+  var hm = document.querySelector('.hero-m');
+  if(hm && getComputedStyle(hm).display !== 'none'){
+    gsap.fromTo('.hero-m-inner > *',{ y:26, opacity:0 },
+      { y:0, opacity:1, duration:.9, ease:'power3.out', stagger:.12, delay:.2, clearProps:'opacity,transform' });
+    gsap.to('.hero-m-inner',{ yPercent:10, opacity:.35, ease:'none',
+      scrollTrigger:{ trigger:hm, start:'top top', end:'bottom top', scrub:.5 } });
   }
 
   /* ---------- 6. CARTE MOODY — entrée en profondeur ---------- */
