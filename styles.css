@@ -94,6 +94,11 @@ header.scrolled .nav{padding-top:8px;padding-bottom:8px;box-shadow:0 14px 40px -
 .hero-visual{position:relative;opacity:0;animation:fadeUp 1s var(--ease) .5s forwards}
 .hero-frame{position:relative}
 .hero-frame img{width:100%;display:block;animation:floaty 8s ease-in-out infinite}
+/* ruban beige diagonal pleine largeur : l'identité du héros desktop */
+.hero{position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;left:-5%;right:-5%;top:38%;height:52%;transform:rotate(-7deg);
+  z-index:1;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 160' preserveAspectRatio='none'%3E%3Cpath d='M0 34C48 20 92 40 142 30 192 20 240 42 292 32 336 24 372 36 400 28L400 128C356 140 320 122 272 132 224 142 176 120 128 132 84 142 40 126 0 138Z' fill='%23F6ECDF'/%3E%3C/svg%3E") no-repeat center/100% 100%}
+.hero .wrap{position:relative;z-index:2}
 /* scène dessinée du héros + halo violet/orange */
 .hero-scene{position:relative}
 .hero-scene::before{content:"";position:absolute;inset:-14% -10%;z-index:0;pointer-events:none;background:
@@ -105,7 +110,10 @@ header.scrolled .nav{padding-top:8px;padding-bottom:8px;box-shadow:0 14px 40px -
   padding:9px 16px;text-transform:none;letter-spacing:.02em;font-size:13.5px;color:var(--text);
   box-shadow:0 8px 22px -16px rgba(34,19,39,.3);backdrop-filter:blur(8px)}
 .hero-copy .eyebrow::before{width:7px;height:7px;border-radius:50%;background:var(--grad)}
-.rotw{white-space:nowrap;display:inline-block;text-align:center}
+.rotw{white-space:nowrap;display:inline-block;text-align:center;perspective:420px}
+/* lettres du mot tournant : couleur pleine (le clip dégradé ne traverse pas les spans) */
+.rotw .rc{display:inline-block;color:var(--purple-deep);-webkit-text-fill-color:var(--purple-deep);
+  transform-style:preserve-3d;backface-visibility:hidden;will-change:transform}
 .hero-badge{position:absolute;left:0;bottom:6px;display:flex;align-items:center;gap:12px;
   background:#fff;border:1px solid var(--border);border-radius:16px;padding:13px 17px;box-shadow:var(--shadow);animation:floaty 6s ease-in-out infinite}
 .hero-badge .ic{width:40px;height:40px;border-radius:12px;background:var(--purple-soft);display:grid;place-items:center;flex:none}
@@ -791,6 +799,9 @@ form.shake{animation:shake .4s}
 
 /* ===== Carte Moody dépliante ===== */
 .moody-toggle{display:inline-flex;align-items:center;gap:9px;margin-top:2px;background:#00B860;color:#fff;border:none;border-radius:12px;padding:12px 20px;font-family:'Satoshi',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;transition:transform .3s var(--ease),background .3s var(--ease)}
+/* carte dépliée : le bouton Replier descend en fin de colonne, après le prix */
+.moody-card:not(.folded) .moody-left{display:flex;flex-direction:column;align-items:flex-start}
+.moody-card:not(.folded) .moody-toggle{order:99;margin-top:20px}
 .moody-toggle:hover{background:#00994F;transform:translateY(-2px)}
 .moody-toggle svg{transition:transform .35s var(--ease)}
 .moody-card:not(.folded) .moody-toggle svg{transform:rotate(180deg)}

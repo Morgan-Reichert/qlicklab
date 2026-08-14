@@ -136,7 +136,8 @@ document.fonts.ready.then(function(){
 
   }
 
-  /* mot tournant : une force / un atout / une fierté (héros desktop + mobile) */
+  /* mot tournant : une force / un atout / une fierté (héros desktop + mobile)
+     — cascade lettre à lettre avec bascule 3D */
   document.querySelectorAll('.rotw').forEach(function(rot){
     if(!rot.offsetParent) return; /* invisible sur ce format */
     var words = ['une force','un atout','une fierté'];
@@ -149,14 +150,33 @@ document.fonts.ready.then(function(){
     probe.remove();
     rot.style.display = 'inline-block';
     rot.style.minWidth = wmax + 'px';
-    var wi = 0;
+
+    function setChars(word){
+      rot.textContent = '';
+      word.split('').forEach(function(ch){
+        var s = document.createElement('span');
+        s.className = 'rc';
+        s.textContent = ch === ' ' ? ' ' : ch;
+        rot.appendChild(s);
+      });
+      return rot.querySelectorAll('.rc');
+    }
+    setChars(words[0]);
+    var wi = 0, busy = false;
     setInterval(function(){
+      if(busy) return; busy = true;
       wi = (wi+1) % words.length;
-      gsap.to(rot,{ opacity:0, y:-9, duration:.28, ease:'power2.in', onComplete:function(){
-        rot.textContent = words[wi];
-        gsap.fromTo(rot,{ opacity:0, y:10 },{ opacity:1, y:0, duration:.38, ease:'power2.out' });
-      }});
-    }, 3200);
+      gsap.to(rot.querySelectorAll('.rc'),{
+        y:-16, opacity:0, rotateX:75, duration:.3, stagger:.028, ease:'power2.in',
+        onComplete:function(){
+          var chars = setChars(words[wi]);
+          gsap.fromTo(chars,
+            { y:18, opacity:0, rotateX:-75 },
+            { y:0, opacity:1, rotateX:0, duration:.5, stagger:.04, ease:'back.out(1.7)',
+              onComplete:function(){ busy = false; } });
+        }
+      });
+    }, 3400);
   });
 
   /* ---------- 6. CARTE MOODY — entrée en profondeur ---------- */
