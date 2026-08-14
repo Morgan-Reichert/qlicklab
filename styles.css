@@ -672,11 +672,16 @@ form.shake{animation:shake .4s}
   .hero-m-copy{text-align:left}
   .eyebrow-m{display:inline-flex;align-items:center;gap:9px;font-family:'Satoshi',sans-serif;font-weight:600;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
   .eyebrow-m::before{content:"";width:15px;height:2px;background:var(--grad);border-radius:2px}
-  .hero-m h1{font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(29px,8.2vw,40px);line-height:1.06;letter-spacing:-.02em;color:var(--ink);margin:12px 0 0}
+  .hero-m h1{font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(31px,8.8vw,42px);line-height:1.08;letter-spacing:-.02em;color:var(--ink);margin:12px 0 0;
+    text-shadow:0 16px 34px rgba(124,31,146,.16)}
   .hero-m p{color:var(--muted);font-size:15px;line-height:1.55;margin:10px 0 0;max-width:38ch}
   .hero-svg{flex:1 1 auto;min-height:150px;width:100%;max-width:430px;margin:4px auto;display:block}
   .hero-m-actions{display:flex;gap:10px;flex:none}
   .hero-m-actions .btn{flex:1;justify-content:center;padding:14px 12px;font-size:14.5px;white-space:nowrap}
+  .hero-m-actions .btn-ghost{background:rgba(255,255,255,.42);backdrop-filter:blur(12px);border-color:rgba(223,206,233,.65)}
+  /* touche éditoriale : sections alignées à gauche sur mobile */
+  .sec-head{text-align:left;margin-left:0;margin-right:0}
+  .certs-head{text-align:left}
   /* le bouton flottant « Proposer un projet » n'apparaît plus sur l'écran en mobile (il est dans le menu) */
   .fab{display:none!important}
 
@@ -703,11 +708,17 @@ form.shake{animation:shake .4s}
   .hero-m p{font-size:14px}
   .hero-m-actions .btn{padding:13px 10px;font-size:14px}
 }
-/* hamburger en bulle translucide (mobile) */
+/* hamburger épuré (mobile) — sans contour */
 @media(max-width:980px){
   .burger{width:44px;height:44px;padding:0;gap:5px;align-items:center;justify-content:center;
-    border-radius:12px;background:rgba(22,13,28,.05);border:1px solid var(--border-2);
-    backdrop-filter:blur(8px);transition:background .3s var(--ease),border-color .3s}
+    border-radius:12px;background:transparent;border:none;
+    transition:background .3s var(--ease)}
+  .burger:active{background:rgba(22,13,28,.06)}
+  /* nav pilule plus étroite et plus translucide */
+  .nav{width:calc(100% - 84px);margin:14px auto;padding:7px 8px 7px 16px;
+    background:rgba(255,255,255,.42);backdrop-filter:blur(18px) saturate(1.5);
+    border-color:rgba(255,255,255,.55)}
+  header.scrolled .nav{background:rgba(255,255,255,.6);box-shadow:0 10px 30px -18px rgba(124,31,146,.35)}
 }
 /* CTA « Proposer un projet » en bas du menu déroulant */
 .mobile-menu .mm-cta{margin-top:24px;display:inline-flex;align-items:center;gap:9px;
@@ -751,6 +762,21 @@ form.shake{animation:shake .4s}
 /* ============ SCROLLYTELLING (GSAP/SplitType) ============ */
 /* illustrations SVG natives des chapitres */
 .chap-visual .chap-svg{width:100%;max-width:520px;height:auto;filter:drop-shadow(0 24px 40px rgba(124,31,146,.16))}
+
+/* ============ TOUCHES DESIGNER (anti-générique) ============ */
+/* mot-clé en profondeur : écho en contour derrière + trait brossé dessous */
+.wdepth{position:relative;display:inline-block;z-index:0}
+.wdepth::before{content:attr(data-w);position:absolute;left:.07em;top:.1em;z-index:-1;color:transparent;
+  -webkit-text-stroke:1.6px rgba(166,47,189,.30)}
+.wdepth::after{content:"";position:absolute;left:-3%;right:-5%;bottom:-.06em;height:.2em;z-index:-2;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'%3E%3Cpath d='M3 10C30 4 60 3 117 7' fill='none' stroke='%23F97316' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+  transform:rotate(-1.2deg)}
+/* les visuels de chapitres ne sont plus posés parfaitement droits */
+.chapter .chap-visual{rotate:-1.3deg}
+.chapter.flip .chap-visual{rotate:1.3deg}
+/* chips légèrement inclinées, façon stickers */
+.moody-folded-extra .mchip{transform:rotate(-1.4deg)}
+.moody-folded-extra .mchip:nth-child(even){transform:rotate(1.1deg)}
 
 /* lignes découpées : chaque ligne masque ses mots pendant la révélation */
 .line{overflow:hidden;display:block}
