@@ -243,7 +243,7 @@ header.scrolled .nav{padding-top:8px;padding-bottom:8px;box-shadow:0 14px 40px -
 .cta-box p{font-size:18px;color:rgba(255,255,255,.9);max-width:560px;margin:0 0 28px}
 .cta-box .btn-primary{background:#fff;color:var(--purple-deep)}
 .cta-box .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
-.cta-person{flex:none;align-self:flex-end;width:284px;margin:0 6px -56px 0;position:relative;z-index:1;
+.cta-person{flex:none;align-self:center;width:320px;margin:0 6px 0 0;position:relative;z-index:1;
   -webkit-mask:linear-gradient(180deg,#000 70%,transparent 95%);mask:linear-gradient(180deg,#000 70%,transparent 95%);
   filter:drop-shadow(0 20px 40px rgba(0,0,0,.22))}
 .cta-ap{position:absolute;opacity:.16;width:420px;z-index:0}
@@ -295,7 +295,7 @@ footer{background:var(--bg-2);color:var(--muted);padding:70px 0 32px;border-top:
   .cta-box{flex-direction:column;text-align:center;padding:52px 28px}
   .cta-box p{margin-left:auto;margin-right:auto}
   .cta-box .hero-actions{justify-content:center}
-  .cta-person{width:230px;margin:6px 0 -52px}
+  .cta-person{width:250px;margin:6px 0 0}
   .f-top{grid-template-columns:1fr 1fr}
 }
 @media(max-width:560px){
@@ -756,6 +756,9 @@ form.shake{animation:shake .4s}
 }
 
 /* ============ SCROLLYTELLING (GSAP/SplitType) ============ */
+/* illustrations SVG natives des chapitres */
+.chap-visual .chap-svg{width:100%;max-width:520px;height:auto;filter:drop-shadow(0 24px 40px rgba(124,31,146,.16))}
+
 /* lignes découpées : chaque ligne masque ses mots pendant la révélation */
 .line{overflow:hidden;display:block}
 .word{will-change:transform}

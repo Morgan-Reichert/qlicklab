@@ -50,21 +50,59 @@ document.fonts.ready.then(function(){
   }
 
   /* ---------- 2. PARAGRAPHES & CTA des chapitres — fondu décalé ---------- */
+  /* NB : fromTo + clearProps partout — certains éléments sont aussi gérés par
+     le système data-reveal (opacité 0 au chargement) : un gsap.from y capturerait
+     une valeur d'arrivée nulle et les laisserait invisibles. */
   q('.chapter').forEach(function(ch){
     var items = q('p,.pull,.btn',ch).slice(0,4);
     if(!items.length) return;
-    gsap.from(items,{
-      y:26, opacity:0, duration:.8, ease:'power3.out', stagger:.09,
+    gsap.fromTo(items,{ y:26, opacity:0 },{
+      y:0, opacity:1, duration:.8, ease:'power3.out', stagger:.09, clearProps:'opacity,transform',
       scrollTrigger:{ trigger:ch, start:'top 74%', once:true }
     });
   });
 
   /* ---------- 3. PARALLAXE — visuels de chapitre ---------- */
-  q('.chap-visual img').forEach(function(img){
+  q('.chap-visual img,.chap-visual svg').forEach(function(img){
     gsap.fromTo(img,
       { yPercent:9, scale:.95 },
       { yPercent:-9, scale:1, ease:'none',
         scrollTrigger:{ trigger:img.closest('.chapter')||img, start:'top bottom', end:'bottom top', scrub:.6 } });
+  });
+
+  /* ---------- 3bis. SCÈNES SVG — vie interne des illustrations ---------- */
+  q('.chap-svg').forEach(function(svg){
+    /* éléments flottants (compas, pages, arrosoir, éclats…) */
+    q('.flo',svg).forEach(function(el,i){
+      gsap.to(el,{ y:-(8+(i%3)*3), duration:2.4+(i%4)*.5, ease:'sine.inOut', yoyo:true, repeat:-1, delay:i*.3 });
+    });
+    /* aiguille de boussole qui oscille */
+    q('.needle',svg).forEach(function(el){
+      gsap.to(el,{ rotation:16, transformOrigin:'50% 50%', duration:1.6, ease:'sine.inOut', yoyo:true, repeat:-1 });
+    });
+    /* gouttes d'arrosoir */
+    q('.drop',svg).forEach(function(el,i){
+      gsap.fromTo(el,{ y:-4, opacity:0 },{ y:26, opacity:1, duration:1.1, ease:'power1.in', repeat:-1, repeatDelay:.5, delay:i*.55,
+        onRepeat:function(){ gsap.set(el,{opacity:0}); } });
+    });
+    /* clignement des yeux du robot */
+    q('.eyes',svg).forEach(function(el){
+      gsap.timeline({ repeat:-1, repeatDelay:2.8 })
+        .to(el,{ scaleY:.1, transformOrigin:'50% 50%', duration:.07 })
+        .to(el,{ scaleY:1, duration:.09 });
+    });
+    /* traits de circuits & arcs de soleil qui se dessinent au scroll */
+    var draws=q('.cir path[pathLength],.arc path[pathLength]',svg);
+    if(draws.length){
+      gsap.set(draws,{ strokeDasharray:1, strokeDashoffset:1 });
+      gsap.to(draws,{ strokeDashoffset:0, duration:1.1, ease:'power2.out', stagger:.18,
+        scrollTrigger:{ trigger:svg, start:'top 78%', once:true } });
+    }
+    /* chemin en pointillés (vision) */
+    q('.path-dash',svg).forEach(function(el){
+      gsap.from(el,{ opacity:0, duration:1.4, ease:'power2.out',
+        scrollTrigger:{ trigger:svg, start:'top 74%', once:true } });
+    });
   });
 
   /* ---------- 4. HÉROS desktop — parallaxe de sortie ---------- */
@@ -86,7 +124,7 @@ document.fonts.ready.then(function(){
 
   /* ---------- 6. CARTE MOODY — entrée en profondeur ---------- */
   q('.moody-card').forEach(function(card){
-    gsap.from(card,{ y:56, opacity:0, scale:.975, duration:1, ease:'power3.out',
+    gsap.fromTo(card,{ y:56, opacity:0, scale:.975 },{ y:0, opacity:1, scale:1, duration:1, ease:'power3.out', clearProps:'opacity,transform',
       scrollTrigger:{ trigger:card, start:'top 82%', once:true } });
   });
   var mi = document.querySelector('.moody-illus');
@@ -113,15 +151,15 @@ document.fonts.ready.then(function(){
   q('.feat-grid,.proj-grid,.team-grid,.certs-list,.price-grid,.steps').forEach(function(grid){
     var kids = Array.prototype.slice.call(grid.children);
     if(kids.length<2) return;
-    gsap.from(kids,{ y:34, opacity:0, duration:.75, ease:'power3.out', stagger:.07,
-      scrollTrigger:{ trigger:grid, start:'top 82%', once:true } });
+    gsap.fromTo(kids,{ y:34, opacity:0 },{ y:0, opacity:1, duration:.75, ease:'power3.out', stagger:.07, clearProps:'opacity,transform',
+      scrollTrigger:{ trigger:grid, start:'top 85%', once:true } });
   });
 
   /* ---------- 9. CTA final — zoom doux ---------- */
   var cta = document.querySelector('.cta-box');
   if(cta){
-    gsap.from(cta,{ scale:.94, opacity:0, duration:1, ease:'power3.out',
-      scrollTrigger:{ trigger:cta, start:'top 80%', once:true } });
+    gsap.fromTo(cta,{ scale:.94, opacity:0 },{ scale:1, opacity:1, duration:1, ease:'power3.out', clearProps:'opacity,transform',
+      scrollTrigger:{ trigger:cta, start:'top 85%', once:true } });
   }
 
   window.addEventListener('load', function(){ ScrollTrigger.refresh(); });
