@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>5 héros au choix — QlickLab</title>
+<link rel="icon" href="assets/icon-duo.png" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#FCFBFD;--bg-2:#F6F2FA;--surface:#FFFFFF;--border:#ECE0F2;--border-2:#DFCEE9;
+  --ink:#160D1C;--text:#2C2233;--muted:#6E6479;--muted-2:#9A90A8;
+  --purple:#A62FBD;--purple-deep:#7C1F92;--purple-soft:#F4E5F8;--orange:#F97316;
+  --grad:linear-gradient(115deg,#A62FBD 0%,#F97316 100%);
+  --ease:cubic-bezier(.22,1,.36,1);--maxw:1180px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Satoshi',system-ui,sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.6}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:'Clash Display',sans-serif;color:var(--ink);letter-spacing:-.02em;line-height:1.04}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px}
+
+/* top guide bar */
+.guide{position:sticky;top:0;z-index:80;background:var(--ink);color:#fff;padding:13px 22px;text-align:center;font-size:13.5px;font-weight:500}
+.guide b{color:#fff}
+.guide .g2{display:block;color:#C9BBD6;font-size:12px;margin-top:3px}
+
+/* section chrome */
+.hero-sec{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;border-bottom:1px solid var(--border)}
+.badge{position:absolute;top:26px;left:30px;z-index:20;display:inline-flex;align-items:center;gap:9px;
+  font-family:'Clash Display',sans-serif;font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 15px;border-radius:100px;background:#fff;border:1px solid var(--border);color:var(--purple-deep);box-shadow:0 8px 24px -14px rgba(124,31,146,.4)}
+.badge i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;font-size:11px}
+.pick{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:20}
+.pick button{font-family:'Satoshi';font-weight:600;font-size:14px;padding:12px 24px;border-radius:100px;border:none;cursor:pointer;
+  background:var(--ink);color:#fff;box-shadow:0 14px 30px -14px rgba(34,19,39,.5);transition:transform .3s var(--ease)}
+.pick button:hover{transform:translateY(-2px)}
+
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
+.eyebrow::before{content:"";width:16px;height:2px;background:var(--grad)}
+.lead{color:var(--muted);font-size:18px;line-height:1.7;margin:22px 0 32px;max-width:52ch}
+.cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:'Satoshi';font-weight:600;font-size:15.5px;padding:15px 27px;border-radius:12px;cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s,background .3s,border-color .3s,color .3s}
+.btn svg{transition:transform .3s}.btn:hover svg{transform:translateX(4px)}
+.btn-p{background:var(--ink);color:#fff;box-shadow:0 14px 30px -14px rgba(34,19,39,.4)}
+.btn-p:hover{background:#2A2233;transform:translateY(-2px)}
+.btn-g{background:#fff;color:var(--ink);border:1.5px solid var(--border-2)}
+.btn-g:hover{border-color:var(--purple);color:var(--purple-deep);transform:translateY(-2px)}
+.grad{color:var(--purple-deep)}
+.under{position:relative;white-space:nowrap}
+.under::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.14em;background:var(--grad);border-radius:3px;opacity:.9}
+
+/* ============ HERO 1 — Éditorial centré ============ */
+#h1 .wrap{text-align:center;padding-top:90px;padding-bottom:70px}
+#h1{background:
+  radial-gradient(50% 45% at 20% 8%,rgba(166,47,189,.09),transparent 60%),
+  radial-gradient(45% 40% at 85% 12%,rgba(249,115,22,.08),transparent 60%),var(--bg)}
+#h1 h1{font-weight:500;font-size:clamp(40px,6.2vw,80px);margin:26px auto 0;max-width:16ch}
+#h1 .lead{margin-left:auto;margin-right:auto;text-align:center;font-size:19px;max-width:56ch}
+#h1 .cta{justify-content:center}
+#h1 .trust{margin-top:56px;display:flex;flex-direction:column;align-items:center;gap:16px}
+#h1 .trust small{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2);font-weight:600}
+#h1 .chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+#h1 .chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text);background:#fff;border:1px solid var(--border);border-radius:100px;padding:9px 16px;box-shadow:0 6px 18px -12px rgba(34,19,39,.2)}
+#h1 .chip b{color:#00934C}
+.dotg{width:8px;height:8px;border-radius:50%;background:var(--grad)}
+
+/* ============ HERO 2 — Split produit (Moody) ============ */
+#h2{background:var(--bg)}
+#h2 .grid{display:grid;grid-template-columns:1.02fr .98fr;gap:54px;align-items:center;width:100%;padding:90px 0 70px}
+#h2 h1{font-size:clamp(38px,5vw,62px);font-weight:600;margin:22px 0 0}
+#h2 .prodwrap{position:relative}
+#h2 .prod{position:relative;border-radius:30px;padding:38px 30px 34px;background:radial-gradient(130% 110% at 50% -10%,#0AC96C,#008B47);
+  box-shadow:0 50px 90px -40px rgba(0,80,40,.6);overflow:hidden;display:flex;flex-direction:column;align-items:center}
+#h2 .prod::before{content:"";position:absolute;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.1);bottom:-140px;left:-100px}
+#h2 .prod img.illus{position:relative;z-index:1;width:100%;max-width:330px;filter:drop-shadow(0 24px 36px rgba(0,50,26,.35))}
+#h2 .prod .cap{position:relative;z-index:1;color:#EAFBF1;font-size:13.5px;text-align:center;margin-top:12px;max-width:280px}
+#h2 .store{position:relative;z-index:1;display:flex;gap:11px;margin-top:20px;flex-wrap:wrap;justify-content:center}
+#h2 .bs{display:inline-flex;align-items:center;gap:9px;background:#fff;color:#0d2c1d;border-radius:13px;padding:9px 15px;box-shadow:0 14px 26px -14px rgba(0,45,22,.55)}
+#h2 .bs span{display:flex;flex-direction:column;line-height:1.05;text-align:left}
+#h2 .bs small{font-size:8px;letter-spacing:.02em;text-transform:uppercase;color:#6f8a7c;font-weight:700}
+#h2 .bs b{font-family:'Clash Display';font-weight:600;font-size:13.5px}
+#h2 .float{position:absolute;top:14px;right:-10px;z-index:2;background:#fff;border-radius:14px;padding:11px 15px;box-shadow:0 20px 40px -18px rgba(34,19,39,.3);display:flex;align-items:center;gap:10px}
+#h2 .float .g{width:34px;height:34px;border-radius:9px;background:#E1F6EA;display:grid;place-items:center;color:#00934C}
+#h2 .float b{font-family:'Clash Display';font-size:13px;color:var(--ink);display:block}
+#h2 .float small{font-size:10.5px;color:var(--muted)}
+
+/* ============ HERO 3 — Plein écran immersif ============ */
+#h3{background:#120814}
+#h3 .bgimg{position:absolute;inset:0;z-index:0}
+#h3 .bgimg img{width:100%;height:100%;object-fit:cover;opacity:.9}
+#h3 .bgimg::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(18,8,20,.35) 0%,rgba(18,8,20,0) 26%,rgba(18,8,20,.55) 68%,var(--bg) 100%),
+  radial-gradient(60% 50% at 15% 20%,rgba(166,47,189,.4),transparent 60%)}
+#h3 .wrap{position:relative;z-index:2;padding-bottom:100px;padding-top:120px;align-self:flex-end;width:100%}
+#h3 .eyebrow{color:#EAD9F2}
+#h3 .eyebrow::before{background:#fff}
+#h3 h1{color:#fff;font-weight:600;font-size:clamp(40px,6vw,78px);max-width:16ch;text-shadow:0 4px 30px rgba(0,0,0,.3)}
+#h3 .lead{color:rgba(255,255,255,.82);max-width:50ch;font-size:19px}
+#h3 .btn-g{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.4);backdrop-filter:blur(6px)}
+#h3 .btn-g:hover{background:rgba(255,255,255,.18);border-color:#fff;color:#fff}
+#h3 .grad{color:#fff;background:linear-gradient(115deg,#E98BFF,#FFB877);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#h3 .badge{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff;backdrop-filter:blur(8px)}
+
+/* ============ HERO 4 — Typographique bold + kinetic ============ */
+#h4{background:
+  radial-gradient(60% 60% at 50% 120%,rgba(166,47,189,.1),transparent 60%),var(--bg)}
+#h4 .wrap{text-align:center;padding-top:96px;padding-bottom:80px;position:relative}
+#h4 h1{font-weight:600;font-size:clamp(46px,9vw,140px);line-height:.92;letter-spacing:-.035em;margin:0 auto}
+#h4 h1 .l2{display:block}
+#h4 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#h4 .sub{max-width:56ch;margin:30px auto 34px;color:var(--muted);font-size:19px}
+#h4 .cta{justify-content:center}
+#h4 .orbit{position:absolute;inset:0;pointer-events:none;z-index:1}
+#h4 .fchip{position:absolute;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text);
+  background:#fff;border:1px solid var(--border);border-radius:100px;padding:9px 15px;box-shadow:0 14px 30px -16px rgba(34,19,39,.28);animation:bob 5s ease-in-out infinite}
+#h4 .fchip .d{width:7px;height:7px;border-radius:50%;background:var(--grad)}
+#h4 .fchip.c1{top:16%;left:6%;animation-delay:0s}
+#h4 .fchip.c2{top:24%;right:7%;animation-delay:-1.4s}
+#h4 .fchip.c3{bottom:30%;left:9%;animation-delay:-2.6s}
+#h4 .fchip.c4{bottom:22%;right:8%;animation-delay:-3.6s}
+@keyframes bob{50%{transform:translateY(-14px)}}
+#h4 .content{position:relative;z-index:2}
+
+/* ============ HERO 5 — Bento ============ */
+#h5{background:var(--bg)}
+#h5 .grid{display:grid;grid-template-columns:1.05fr 1.15fr;gap:48px;align-items:center;width:100%;padding:96px 0 76px}
+#h5 h1{font-size:clamp(36px,4.6vw,58px);font-weight:600;margin:22px 0 0}
+#h5 .bento{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:118px;gap:14px}
+#h5 .b{border-radius:20px;border:1px solid var(--border);background:#fff;box-shadow:0 20px 44px -30px rgba(34,19,39,.22);overflow:hidden;position:relative;padding:18px}
+#h5 .b1{grid-column:span 4;grid-row:span 2;padding:0;background:radial-gradient(120% 110% at 50% -10%,#0AC96C,#008B47)}
+#h5 .b1 img{width:100%;height:100%;object-fit:contain;padding:16px}
+#h5 .b2{grid-column:span 2;background:linear-gradient(160deg,#fff,#F8F1FB)}
+#h5 .b2 .n{font-family:'Clash Display';font-size:34px;color:var(--ink);line-height:1}
+#h5 .b2 small{color:var(--muted);font-size:12px;display:block;margin-top:6px}
+#h5 .b3{grid-column:span 2;display:flex;flex-direction:column;justify-content:space-between}
+#h5 .b3 .ic{width:38px;height:38px;border-radius:11px;background:var(--purple-soft);display:grid;place-items:center;color:var(--purple-deep)}
+#h5 .b3 b{font-family:'Clash Display';font-size:14px;color:var(--ink)}
+#h5 .b3 small{color:var(--muted);font-size:11.5px}
+#h5 .b4{grid-column:span 3;background:var(--ink);color:#fff;display:flex;align-items:center;gap:12px}
+#h5 .b4 .ic{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.12);display:grid;place-items:center}
+#h5 .b4 b{font-family:'Clash Display';font-size:14px;display:block}
+#h5 .b4 small{color:rgba(255,255,255,.6);font-size:11.5px}
+#h5 .b5{grid-column:span 3;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#fff,#F6F2FA)}
+#h5 .b5 img{height:30px;width:auto}
+
+@media(max-width:900px){
+  .hero-sec{min-height:auto;padding:34px 0}
+  .badge{position:static;margin:0 30px 4px;display:inline-flex}
+  .pick{position:static;transform:none;margin:26px 30px 0;text-align:center}
+  #h2 .grid,#h5 .grid{grid-template-columns:1fr;gap:32px;padding:70px 0 30px}
+  #h2 .float{position:static;margin:0 auto 16px;width:max-content}
+  #h3 .wrap{padding-top:150px;padding-bottom:60px}
+  #h3 .bgimg img{opacity:.8}
+  #h4 .fchip{display:none}
+  #h5 .bento{grid-auto-rows:100px}
+  #h1 .wrap{padding-top:60px}
+}
+</style>
+</head>
+<body>
+<div class="guide">
+  <b>5 directions de héros — choisis-en une.</b>
+  <span class="g2">Réponds-moi simplement « <b>hero 1</b> » (ou 2, 3, 4, 5) et je l'applique au site + je refais toute la version mobile autour.</span>
+</div>
+
+<!-- ============ HERO 1 ============ -->
+<section class="hero-sec" id="h1">
+  <span class="badge"><i>1</i> Éditorial centré</span>
+  <div class="wrap">
+    <span class="eyebrow">Studio tech européen · À impact</span>
+    <h1>La différence n'est pas un problème.<br/>C'est une force à <span class="under">outiller</span>.</h1>
+    <p class="lead">Un studio qui ne construit que ce qui compte. Aujourd'hui, une première app bien réelle : Moody, le suivi de santé mentale 100 % privé.</p>
+    <div class="cta">
+      <a class="btn btn-p">Découvrir Moody <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="btn btn-g">Notre vision</a>
+    </div>
+    <div class="trust">
+      <small>Ce qui nous définit</small>
+      <div class="chips">
+        <span class="chip"><span class="dotg"></span>100 % privé, local-first</span>
+        <span class="chip"><span class="dotg"></span>IA embarquée</span>
+        <span class="chip"><span class="dotg"></span>Zéro serveur cloud</span>
+        <span class="chip">Conçu par un patient</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HERO 2 ============ -->
+<section class="hero-sec" id="h2">
+  <span class="badge"><i>2</i> Split produit</span>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <span class="eyebrow">Notre première app · Moody</span>
+        <h1>La santé mentale, <span class="grad">privée par défaut</span>.</h1>
+        <p class="lead">QlickLab bâtit des startups utiles. La première est déjà là : un journal d'humeur qui ne quitte jamais votre téléphone.</p>
+        <div class="cta">
+          <a class="btn btn-p">Découvrir Moody <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn btn-g">Le studio</a>
+        </div>
+      </div>
+      <div class="prodwrap">
+        <div class="float"><span class="g"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="#00934C" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="#00934C" stroke-width="1.8" stroke-linecap="round"/></svg></span><div><b>0 serveur cloud</b><small>chiffré, sur l'appareil</small></div></div>
+        <div class="prod">
+          <img class="illus" src="assets/moody-illus.webp" alt="Moody" />
+          <p class="cap">Un check-in humeur en quelques secondes, entièrement sur votre téléphone.</p>
+          <div class="store">
+            <a class="bs"><svg width="18" height="18" viewBox="0 0 24 24" fill="#0d2c1d"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.9-.8-3-.8-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-1 2.8-2.1c.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-1-2.5-3.7zM14.2 5.9c.6-.8 1-1.9.9-3-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.8-.9 2.9 1 .1 2-.5 2.7-1.3z"/></svg><span><small>Télécharger</small><b>App Store</b></span></a>
+            <a class="bs"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 3l14 9-14 9z" fill="#0d2c1d"/></svg><span><small>Disponible</small><b>Google Play</b></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HERO 3 ============ -->
+<section class="hero-sec" id="h3">
+  <span class="badge">3 · Immersif plein écran</span>
+  <div class="bgimg"><img src="assets/st-difference.webp" alt="" /></div>
+  <div class="wrap">
+    <span class="eyebrow">Studio tech européen · À impact</span>
+    <h1>La différence n'est pas un problème.<br/>C'est une <span class="grad">force</span>.</h1>
+    <p class="lead">On lance des produits qui changent vraiment les choses — l'humain au centre, l'IA responsable en soutien.</p>
+    <div class="cta">
+      <a class="btn btn-p">Découvrir Moody <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="btn btn-g">Notre vision</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HERO 4 ============ -->
+<section class="hero-sec" id="h4">
+  <span class="badge"><i>4</i> Typographique</span>
+  <div class="orbit">
+    <span class="fchip c1"><span class="d"></span>100 % privé</span>
+    <span class="fchip c2"><span class="d"></span>IA embarquée</span>
+    <span class="fchip c3"><span class="d"></span>Local-first</span>
+    <span class="fchip c4"><span class="d"></span>Export médical</span>
+  </div>
+  <div class="wrap content">
+    <span class="eyebrow" style="justify-content:center">Studio tech européen · À impact</span>
+    <h1 style="margin-top:22px">La différence <span class="l2">est une <span class="grad">force</span>.</span></h1>
+    <p class="sub">Un studio qui ne construit que ce qui compte. Première preuve : Moody, le suivi de santé mentale 100 % privé.</p>
+    <div class="cta">
+      <a class="btn btn-p">Découvrir Moody <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="btn btn-g">Le studio</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HERO 5 ============ -->
+<section class="hero-sec" id="h5">
+  <span class="badge"><i>5</i> Bento</span>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <span class="eyebrow">Studio tech européen · À impact</span>
+        <h1>Ne bâtir que<br/>ce qui <span class="grad">compte</span>.</h1>
+        <p class="lead">La différence comme boussole, l'éducation avant le code, l'IA au service de l'humain. Notre première app le prouve déjà.</p>
+        <div class="cta">
+          <a class="btn btn-p">Découvrir Moody <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn btn-g">Notre vision</a>
+        </div>
+      </div>
+      <div class="bento">
+        <div class="b b1"><img src="assets/moody-illus.webp" alt="Moody" /></div>
+        <div class="b b2"><div class="n">0</div><small>serveur cloud — 100 % local</small></div>
+        <div class="b b3"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><div><b>Privé par défaut</b><small>chiffré, sur l'appareil</small></div></div>
+        <div class="b b4"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff"><rect x="6" y="6" width="12" height="12" rx="2" stroke-width="1.8"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke-width="1.8" stroke-linecap="round"/></svg></span><div><b>IA embarquée</b><small>analyse instantanée, coût cloud 0 $</small></div></div>
+        <div class="b b5"><img src="assets/moody-green.webp" alt="Moody" /></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
