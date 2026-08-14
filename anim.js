@@ -290,7 +290,7 @@ document.fonts.ready.then(function(){
      — cascade lettre à lettre avec bascule 3D */
   document.querySelectorAll('.rotw').forEach(function(rot){
     if(!rot.offsetParent) return; /* invisible sur ce format */
-    var words = ['une force','un atout','une fierté'];
+    var words = window.ROT_WORDS || ['une force','un atout','une fierté'];
     /* largeur stabilisée sur le mot le plus large pour éviter les sauts */
     var probe = rot.cloneNode(false);
     probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap';
