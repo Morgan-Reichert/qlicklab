@@ -663,11 +663,11 @@ form.shake{animation:shake .4s}
 @media(max-width:768px){
   /* — bascule héros — */
   .hero{display:none!important}
-  .hero-m{display:flex;position:relative;min-height:88vh;min-height:92svh;align-items:flex-end;overflow:hidden;isolation:isolate}
+  .hero-m{display:flex;position:relative;min-height:100vh;min-height:100svh;align-items:flex-end;overflow:hidden;isolation:isolate}
   .hero-m-bg{position:absolute;inset:0;z-index:-1}
   .hero-m-bg img{width:100%;height:100%;object-fit:cover;object-position:top center}
   .hero-m-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,9,24,0) 30%,rgba(22,9,24,.45) 48%,rgba(22,9,24,.82) 68%,#160D1C 100%)}
-  .hero-m-inner{position:relative;z-index:1;width:100%;padding:0 22px 44px;color:#fff}
+  .hero-m-inner{position:relative;z-index:1;width:100%;padding:0 22px max(40px,calc(env(safe-area-inset-bottom) + 26px));color:#fff}
   .eyebrow-m{display:inline-flex;align-items:center;gap:9px;font-family:'Satoshi',sans-serif;font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F6E2FC;text-shadow:0 1px 10px rgba(0,0,0,.5)}
   .eyebrow-m::before{content:"";width:16px;height:2px;background:#fff;border-radius:2px}
   .hero-m h1{color:#fff;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(30px,8.6vw,44px);line-height:1.06;letter-spacing:-.02em;margin:14px 0 0;text-shadow:0 2px 18px rgba(0,0,0,.5)}
