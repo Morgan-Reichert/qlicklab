@@ -46,9 +46,9 @@ body.qlab{
   font-weight:600;letter-spacing:-.02em;line-height:1.15}
 .qlab h1{font-size:29px} .qlab h2{font-size:21px} .qlab h3{font-size:17px} .qlab h4{font-size:15px}
 .qlab p{margin:0 0 12px} .qlab p:last-child{margin-bottom:0}
-.qlab a{color:inherit;text-decoration:none}
+:where(.qlab a){color:inherit;text-decoration:none}
 .qlab img{max-width:100%;display:block}
-.qlab button{font:inherit;color:inherit}
+:where(.qlab button){font:inherit;color:inherit}
 .qlab ::selection{background:#111;color:#fff}
 .qlab :focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:6px}
 .qlab hr{border:0;border-top:1px solid var(--line);margin:22px 0}
@@ -134,14 +134,43 @@ body.qlab{
 .btn svg{width:16px;height:16px;flex:none}
 .btn:active{transform:translateY(1px)}
 .btn[disabled]{opacity:.45;pointer-events:none}
-.btn-primary{background:var(--ink);color:#fff;box-shadow:var(--sh-1)}
-.btn-primary:hover{background:#000;box-shadow:var(--sh-2)}
+.btn{font-family:inherit}
+.btn-primary{
+  color:#fff;
+  background-color:rgba(18,18,18,.86);
+  background-image:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,0) 48%);
+  border-color:rgba(255,255,255,.16);
+  backdrop-filter:blur(14px) saturate(165%);
+  -webkit-backdrop-filter:blur(14px) saturate(165%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),
+             0 1px 2px rgba(17,17,17,.10),
+             0 10px 24px -14px rgba(17,17,17,.45)}
+.btn-primary:hover{
+  background-color:rgba(8,8,8,.93);
+  border-color:rgba(255,255,255,.22);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.24),
+             0 2px 5px rgba(17,17,17,.13),
+             0 16px 32px -16px rgba(17,17,17,.52)}
+.btn-primary:active{background-color:rgba(0,0,0,.95)}
+/* Sans backdrop-filter, on retombe sur un aplat franc plutôt qu'un voile pâle. */
+@supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))){
+  .btn-primary{background-color:var(--ink)}
+}
 .btn-ghost{border-color:var(--line-2);color:var(--ink);background:var(--card)}
 .btn-ghost:hover{border-color:var(--ink);background:var(--card)}
 .btn-quiet{color:var(--ink-3)}
 .btn-quiet:hover{background:var(--paper-2);color:var(--ink)}
-.btn-accent{background:var(--accent);color:#fff}
-.btn-accent:hover{background:var(--accent-deep)}
+.btn-accent{color:#fff;
+  background-color:rgba(140,38,160,.88);
+  background-image:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,0) 48%);
+  border-color:rgba(255,255,255,.18);
+  backdrop-filter:blur(14px) saturate(165%);
+  -webkit-backdrop-filter:blur(14px) saturate(165%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 24px -14px rgba(124,31,146,.5)}
+.btn-accent:hover{background-color:rgba(112,25,131,.94)}
+@supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))){
+  .btn-accent{background-color:var(--accent-deep)}
+}
 .btn-danger{color:var(--bad);border-color:transparent}
 .btn-danger:hover{background:var(--bad-soft)}
 .btn-lg{padding:13px 22px;font-size:15px;border-radius:var(--r)}
