@@ -249,6 +249,14 @@ function api(fn, params) {
       var data = null; try { data = txt ? JSON.parse(txt) : null; } catch (e) { data = txt; }
       if (!r.ok) {
         var msg = (data && (data.message || data.hint || data.error)) || ('Erreur ' + r.status);
+        /* Le schéma n'est pas encore installé, ou l'API n'a pas rechargé son cache :
+           inutile d'infliger le message technique de PostgREST au visiteur. */
+        if ((data && data.code === 'PGRST202') || /schema cache|does not exist/i.test(msg)) {
+          msg = 'Le service est momentanément indisponible. Réessayez dans un instant, '
+              + 'ou écrivez-nous depuis la page Contact.';
+        } else if (r.status === 401 || r.status === 403) {
+          msg = 'Accès refusé par le serveur. Si cela persiste, prévenez-nous.';
+        }
         throw new Error(msg);
       }
       if (data && data.error) throw new Error(data.error);
