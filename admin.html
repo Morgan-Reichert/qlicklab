@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/icon-black.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="app.css?v=3" />
+<link rel="stylesheet" href="app.css?v=4" />
 <style>
   .rail-sub.admin{color:var(--accent-deep)}
   .codecell{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.14em;
@@ -59,8 +59,7 @@
 </div>
 
 <script src="qlab-config.js"></script>
-<script src="qlab-demo.js?v=2"></script>
-<script src="app.js?v=3"></script>
+<script src="app.js?v=4"></script>
 <script>
 (function () {
 var $ = QL.$, $$ = QL.$$, esc = QL.esc, ico = QL.ico, T = QL.token;
@@ -707,10 +706,10 @@ function vReglages() {
         + '<p class="small muted" style="margin-top:10px">Pour le modifier, mettez à jour la table <span class="mono">qb_promo</span> dans Supabase.</p></div>'
       + '<div class="card card-pad"><div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:10px">Backend</div>'
         + '<div class="row" style="gap:9px"><span class="badge ' + (QL.LIVE ? 'ok' : 'warn') + '">'
-        + (QL.LIVE ? 'Supabase connecté' : 'Mode démonstration') + '</span></div>'
+        + (QL.LIVE ? 'Supabase connecté' : 'Non configuré') + '</span></div>'
         + '<p class="small muted" style="margin-top:10px">' + (QL.LIVE
-          ? 'Les données sont stockées dans votre projet Supabase.'
-          : 'Les données restent dans ce navigateur. Renseignez <span class="mono">qlab-config.js</span> pour passer en production.') + '</p></div>'
+          ? 'Données hébergées dans votre projet Supabase, région eu-central-1 (Francfort).'
+          : 'Renseignez <span class="mono">qlab-config.js</span> pour brancher la base.') + '</p></div>'
     + '</div></div>';
 
   $('#saveS').onclick = function () {

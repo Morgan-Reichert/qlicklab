@@ -236,8 +236,9 @@ function logout() { var t = token(); if (t) api('qb_logout', { p_token:t }).catc
 /* -------------------------------------------------- 7. Appels backend ---- */
 function api(fn, params) {
   if (!LIVE) {
-    if (!root.QLAB_DEMO) return Promise.reject(new Error('Backend indisponible.'));
-    return root.QLAB_DEMO.call(fn, params || {});
+    if (root.QLAB_DEMO) return root.QLAB_DEMO.call(fn, params || {});
+    return Promise.reject(new Error(
+      'Le service n’est pas configuré. Vérifiez qlab-config.js.'));
   }
   return fetch(CFG.supabaseUrl.replace(/\/$/,'') + '/rest/v1/rpc/' + fn, {
     method:'POST',
@@ -275,8 +276,7 @@ function fp() {
 function demoFlag() {
   if (LIVE) return;
   var b = el('div', { class:'demo-flag' },
-    'Mode démonstration — les données restent dans ce navigateur. '
-    + 'Renseignez <span class="mono">qlab-config.js</span> pour brancher Supabase.');
+    'Service non configuré — renseignez <span class="mono">qlab-config.js</span>.');
   document.body.insertBefore(b, document.body.firstChild);
 }
 
