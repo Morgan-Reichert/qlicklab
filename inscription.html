@@ -9,7 +9,7 @@
 <link rel="icon" href="assets/icon-black.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="app.css?v=5" />
+<link rel="stylesheet" href="app.css?v=6" />
 <style>
   .auth-card{position:relative;overflow:hidden}
   .wiz{position:absolute;top:0;left:0;right:0;display:flex;gap:2px;z-index:2}
@@ -113,6 +113,7 @@
         <h1>Votre accès</h1>
         <p class="sub" style="text-align:left;margin:9px 0 24px">
           Un code à six chiffres remplacera identifiant et mot de passe.
+          Votre demande sera ensuite relue par notre équipe avant l’ouverture de l’espace.
         </p>
 
         <div class="field" style="margin-bottom:22px">
@@ -189,7 +190,7 @@
 </main>
 
 <script src="qlab-config.js"></script>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 <script>
 (function () {
   var $ = QL.$, $$ = QL.$$;
@@ -373,35 +374,33 @@
   function showDone(r) {
     $('#wizard').classList.add('hidden');
     var d = $('#done'); d.classList.remove('hidden');
-    var actif = r.status === 'actif';
     d.innerHTML =
       '<div class="center">'
-      + '<div style="width:56px;height:56px;border-radius:50%;background:' + (actif ? 'var(--ok-soft)' : 'var(--warn-soft)')
-      + ';color:' + (actif ? 'var(--ok)' : 'var(--warn)') + ';display:grid;place-items:center;margin:0 auto 18px">'
-      + QL.ico(actif ? 'check' : 'clock', 26) + '</div>'
-      + '<h1>' + (actif ? 'Votre dossier est ouvert' : 'Votre demande est enregistrée') + '</h1>'
+      + '<div style="width:56px;height:56px;border-radius:50%;background:var(--accent-soft);'
+      + 'color:var(--accent-deep);display:grid;place-items:center;margin:0 auto 18px">'
+      + QL.ico('clock', 26) + '</div>'
+      + '<h1>Votre demande est enregistrée</h1>'
       + '<p class="sub" style="margin-top:10px">'
-      + (actif
-          ? (r.chosen
-              ? 'Votre code est enregistré. Il remplace à lui seul identifiant et mot de passe : ne l’oubliez pas.'
-              : 'Voici votre code d’accès personnel. Notez-le : il remplace à lui seul identifiant et mot de passe.')
-          : 'Votre code d’accès vous sera transmis par ' + QL.esc(labelContact()) + ' dès réception des frais de dossier.')
+      + 'Notre équipe l’examine. Vous serez prévenu par ' + QL.esc(labelContact())
+      + ' dès qu’elle est validée — votre espace s’ouvrira alors entièrement.'
       + '</p></div>'
-      + (actif
-        ? '<div class="done-code"><div class="code-show">'
-          + r.code.split('').map(function (c) { return '<b>' + c + '</b>'; }).join('')
-          + '</div><button class="btn btn-ghost btn-sm" id="cpy">'
-          + QL.ico('copy') + '<span>Copier le code</span></button></div>'
-        : '<div class="note warn" style="margin:20px 0">' + QL.ico('info')
-          + '<span>' + QL.esc(r.payment_instructions || '') + '</span></div>')
-      + '<div class="note" style="margin-bottom:20px">' + QL.ico('info')
-      + '<span><b>Conservez ce code.</b> Il donne accès à l’ensemble de votre dossier. '
-      + 'Ne le partagez qu’avec les personnes de votre structure qui doivent suivre le projet. '
-      + 'En cas de perte, nous vous en générons un nouveau.</span></div>'
-      + '<div class="row" style="gap:10px">'
-      + (actif ? '<a class="btn btn-primary btn-lg grow center" href="connexion.html#client" style="justify-content:center">Accéder à mon espace</a>' : '')
-      + '<a class="btn btn-ghost btn-lg' + (actif ? '' : ' grow') + '" href="index.html" style="justify-content:center">Revenir au site</a></div>';
-    if (actif) $('#cpy').onclick = function () { QL.copier(r.code); };
+      + '<div class="done-code"><div class="code-show">'
+        + r.code.split('').map(function (c) { return '<b>' + c + '</b>'; }).join('')
+        + '</div><button class="btn btn-ghost btn-sm" id="cpy">'
+        + QL.ico('copy') + '<span>Copier le code</span></button></div>'
+      + '<div class="note" style="margin-bottom:14px">' + QL.ico('info')
+      + '<span><b>Conservez ce code.</b> '
+      + (r.chosen ? 'C’est celui que vous avez choisi. ' : 'Il a été tiré au hasard pour vous. ')
+      + 'Il remplace à lui seul identifiant et mot de passe. Dès maintenant, il vous permet '
+      + 'de suivre l’état de votre demande. En cas de perte, nous vous en générons un nouveau.</span></div>'
+      + (r.fee_status === 'offert' ? ''
+        : '<div class="note warn" style="margin-bottom:14px">' + QL.ico('euro')
+          + '<span><b>Frais de dossier : ' + QL.esc(QL.money(r.fee_amount)) + '.</b> '
+          + QL.esc(r.payment_instructions || '') + '</span></div>')
+      + '<div class="row" style="gap:10px;margin-top:20px">'
+      + '<a class="btn btn-primary btn-lg grow center" href="connexion.html#client" style="justify-content:center">Suivre ma demande</a>'
+      + '<a class="btn btn-ghost btn-lg" href="index.html" style="justify-content:center">Revenir au site</a></div>';
+    $('#cpy').onclick = function () { QL.copier(r.code); };
     window.scrollTo({ top:0, behavior:'smooth' });
   }
   function labelContact() {

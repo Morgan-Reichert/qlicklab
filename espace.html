@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/icon-black.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="app.css?v=5" />
+<link rel="stylesheet" href="app.css?v=6" />
 </head>
 <body class="qlab">
 
@@ -50,7 +50,7 @@
 </div>
 
 <script src="qlab-config.js"></script>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 <script>
 (function () {
 var $ = QL.$, $$ = QL.$$, esc = QL.esc, ico = QL.ico;
@@ -68,9 +68,10 @@ var VUES = [
 ];
 
 /* ------------------------------------------------------------- Menu ----- */
+function vues() { return D && D.gated ? VUES.filter(function (v) { return v.id === 'dossier'; }) : VUES; }
 function drawNav() {
   var cur = route();
-  $('#nav').innerHTML = VUES.map(function (v) {
+  $('#nav').innerHTML = vues().map(function (v) {
     var n = badgeCount(v.id);
     return '<a class="rail-link' + (v.id === cur ? ' on' : '') + '" href="#' + v.id + '">'
       + ico(v.icon) + '<span>' + esc(v.label) + '</span>'
@@ -85,17 +86,26 @@ function badgeCount(id) {
   if (id === 'documents') return D.documents.length;
   return 0;
 }
-function route() { var h = (location.hash || '').replace('#', '').split('/')[0]; 
-  return VUES.some(function (v) { return v.id === h; }) ? h : 'projet'; }
+function route() {
+  var h = (location.hash || '').replace('#', '').split('/')[0];
+  if (D && D.gated) return h === 'dossier' ? 'dossier' : 'attente';
+  return VUES.some(function (v) { return v.id === h; }) ? h : 'projet';
+}
 
 /* ------------------------------------------------------------ Chargement */
 function load() {
   return QL.api('qb_client_data', { p_token: QL.token() }).then(function (d) {
     D = d;
     $('#whoami').textContent = d.client.business_name;
-    var ph = QL.PHASES.filter(function (p) { return p.id === d.client.project_phase; })[0];
-    $('#phaseBadge').textContent = ph ? ph.label : '';
-    $('#phaseBadge').className = 'badge ' + (d.client.project_phase === 'livre' ? 'ok' : 'accent');
+    var st = d.client.account_status;
+    if (d.gated) {
+      $('#phaseBadge').textContent = ETATS[st] ? ETATS[st].badge : 'En attente';
+      $('#phaseBadge').className = 'badge ' + (ETATS[st] ? ETATS[st].tone : 'warn');
+    } else {
+      var ph = QL.PHASES.filter(function (p) { return p.id === d.client.project_phase; })[0];
+      $('#phaseBadge').textContent = ph ? ph.label : '';
+      $('#phaseBadge').className = 'badge ' + (d.client.project_phase === 'livre' ? 'ok' : 'accent');
+    }
     drawNav(); render();
   }).catch(function (e) {
     if (/session/i.test(e.message)) { QL.setSession(null); location.replace('connexion.html'); return; }
@@ -105,13 +115,91 @@ function load() {
 
 function render() {
   var v = route();
-  $('#ttl').textContent = (VUES.filter(function (x) { return x.id === v; })[0] || {}).label;
+  $('#ttl').textContent = v === 'attente' ? 'Votre demande'
+    : (VUES.filter(function (x) { return x.id === v; })[0] || {}).label;
   drawNav();
-  ({ projet:vProjet, suivi:vSuivi, formulaires:vForms, documents:vDocs,
-     liens:vLiens, dossier:vDossier })[v]();
+  ({ attente:vAttente, projet:vProjet, suivi:vSuivi, formulaires:vForms,
+     documents:vDocs, liens:vLiens, dossier:vDossier })[v]();
   window.scrollTo({ top:0 });
 }
 window.addEventListener('hashchange', render);
+
+/* ======================================================== Vue d'attente = */
+var ETATS = {
+  en_verification: { badge:'En vérification', tone:'warn',
+    titre:'En attente de vérification de votre demande',
+    texte:'Nous relisons les informations que vous avez transmises. '
+        + 'Dès que votre dossier est validé, votre espace s’ouvre entièrement : '
+        + 'suivi du projet, formulaires, documents et liens.',
+    etape:1 },
+  attente_paiement: { badge:'En attente de règlement', tone:'warn',
+    titre:'Votre demande est acceptée',
+    texte:'Il reste les frais de dossier à régler. Votre espace s’ouvrira à réception. '
+        + 'Si vous disposez d’un code d’exonération, signalez-le-nous.',
+    etape:2 },
+  refuse: { badge:'Non retenue', tone:'bad',
+    titre:'Votre demande n’a pas été retenue',
+    texte:'Nous n’avons pas donné suite à cette demande. '
+        + 'Écrivez-nous si vous souhaitez en discuter ou déposer un nouveau dossier.',
+    etape:-1 },
+  suspendu: { badge:'Suspendu', tone:'bad', titre:'Accès suspendu',
+    texte:'Cet accès est momentanément suspendu. Contactez-nous.', etape:-1 }
+};
+
+function vAttente() {
+  var c = D.client;
+  var e = ETATS[c.account_status] || ETATS.en_verification;
+  var refus = c.account_status === 'refuse' || c.account_status === 'suspendu';
+
+  var jalons = [
+    { b:'Demande déposée', s:'Le ' + QL.dateFull(c.created_at), etat:'done' },
+    { b:'Vérification par l’équipe', s:'En cours', etat: e.etape === 1 ? 'now' : 'done' },
+    { b:'Ouverture de l’espace', s:'Suivi, formulaires, documents',
+      etat: e.etape === 1 ? '' : (e.etape === 2 ? 'now' : '') }
+  ];
+  if (e.etape === 2) jalons[1].s = 'Terminée';
+
+  $('#page').innerHTML =
+    '<div class="gate"><div class="gate-card"><div class="gate-inner">'
+    + (refus ? '<div style="width:66px;height:66px;border-radius:50%;background:var(--bad-soft);'
+        + 'color:var(--bad);display:grid;place-items:center;margin:0 auto 24px">'
+        + ico('alert', 28) + '</div>'
+      : sablier())
+    + '<h1>' + esc(e.titre) + '</h1>'
+    + '<p>' + esc(e.texte) + '</p>'
+    + (c.review_note
+        ? '<div class="note ' + (refus ? 'bad' : '') + '" style="margin-top:20px;text-align:left">'
+          + ico('info') + '<span><b>Message de l’équipe.</b> ' + esc(c.review_note) + '</span></div>'
+        : '')
+    + (refus ? '' : '<div class="gate-steps">' + jalons.map(function (j) {
+        return '<div class="gate-step ' + j.etat + '"><div class="dot"></div>'
+          + '<b>' + esc(j.b) + '</b><span>' + esc(j.s) + '</span></div>';
+      }).join('') + '</div>')
+    + '</div></div>'
+
+    + '<div class="card card-pad" style="margin-top:16px;text-align:left">'
+      + '<div class="row-between wrapfx" style="gap:14px">'
+      + '<div><b style="color:var(--ink)">Votre dossier reste consultable</b>'
+      + '<div class="small muted" style="margin-top:3px">Vérifiez les informations transmises '
+      + 'et retrouvez votre code d’accès.</div></div>'
+      + '<a class="btn btn-ghost btn-sm nowrap" href="#dossier">Voir mon dossier</a></div></div>'
+
+    + '<p class="small muted" style="margin-top:18px">Une question en attendant ? '
+    + '<a href="contact.html" style="color:var(--ink);font-weight:600;border-bottom:1.5px solid var(--line-2)">Écrivez-nous</a>.</p>'
+    + '</div>';
+}
+
+function sablier() {
+  return '<svg class="hourglass" viewBox="0 0 48 74" aria-label="En attente" role="img">'
+    + '<line class="cap" x1="11" y1="6"  x2="37" y2="6"/>'
+    + '<line class="cap" x1="11" y1="68" x2="37" y2="68"/>'
+    + '<path class="glass" d="M14 6c0 12 10 15 10 31S14 56 14 68"/>'
+    + '<path class="glass" d="M34 6c0 12-10 15-10 31s10 19 10 31"/>'
+    + '<path class="sand-top" d="M15.5 8h17v18l-8.5 11L15.5 26z"/>'
+    + '<path class="sand-bot" d="M15.5 66h17V52l-8.5-11-8.5 11z"/>'
+    + '<line class="grain" x1="24" y1="38" x2="24" y2="56"/>'
+    + '</svg>';
+}
 
 /* =========================================================== Vue projet = */
 function vProjet() {
@@ -466,9 +554,18 @@ function vDossier() {
     : c.fee_status === 'regle' ? '<span class="badge ok">Réglés</span>'
     : '<span class="badge warn">En attente</span>';
 
+  var etat = ETATS[c.account_status];
   $('#page').innerHTML =
     '<div class="page-head"><h1>Mon dossier</h1>'
     + '<p class="lede">Les informations transmises à l’ouverture. Pour les corriger, écrivez-nous : nous les mettons à jour.</p></div>'
+    + (D.gated && etat
+        ? '<div class="note ' + (etat.tone === 'bad' ? 'bad' : 'warn') + '" style="margin-bottom:20px">'
+          + ico(etat.tone === 'bad' ? 'alert' : 'clock')
+          + '<span><b>' + esc(etat.titre) + '.</b> ' + esc(etat.texte)
+          + (c.account_status === 'en_verification'
+             ? ' <a href="#attente" style="font-weight:600;text-decoration:underline">Voir l’état de ma demande</a>' : '')
+          + '</span></div>'
+        : '')
     + '<div class="grid g-side">'
       + '<div class="card"><div class="card-head"><h3>Votre déclaration</h3></div><div class="card-list">'
         + info('Nom de l’activité', c.business_name)

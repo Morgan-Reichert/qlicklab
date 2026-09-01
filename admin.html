@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/icon-black.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="app.css?v=5" />
+<link rel="stylesheet" href="app.css?v=6" />
 <style>
   .rail-sub.admin{color:var(--accent-deep)}
   .codecell{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.14em;
@@ -59,7 +59,7 @@
 </div>
 
 <script src="qlab-config.js"></script>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 <script>
 (function () {
 var $ = QL.$, $$ = QL.$$, esc = QL.esc, ico = QL.ico, T = QL.token;
@@ -107,6 +107,7 @@ window.addEventListener('hashchange', render);
 /* ==================================================== Tableau de bord === */
 function vBord() {
   var s = A.stats;
+  var aVerifier = A.clients.filter(function (c) { return c.account_status === 'en_verification'; });
   var attente = A.clients.filter(function (c) { return c.account_status === 'attente_paiement'; });
   var recents = A.clients.slice().sort(function (a, b) {
     return (b.last_update || b.created_at).localeCompare(a.last_update || a.created_at); }).slice(0, 6);
@@ -115,14 +116,35 @@ function vBord() {
     '<div class="page-head"><h1>Vue d’ensemble</h1>'
     + '<p class="lede">L’état des dossiers en un coup d’œil.</p></div>'
     + '<div class="grid g4" style="margin-bottom:22px">'
-      + kpi('Dossiers actifs', s.clients, 'clients disposant d’un code')
-      + kpi('En attente de paiement', s.pending, 'code non délivré', s.pending ? 'warn' : '')
+      + kpi('Dossiers actifs', s.clients, 'espaces ouverts')
+      + kpi('Demandes à vérifier', s.to_verify || 0, 'en attente de votre décision',
+            (s.to_verify ? 'accent' : ''))
       + kpi('Formulaires ouverts', s.forms_waiting, 'chez les clients')
       + kpi('Réponses à examiner', s.to_review, 'formulaires envoyés', s.to_review ? 'accent' : '')
     + '</div>'
 
+    + (aVerifier.length
+      ? '<div class="card" style="margin-bottom:22px"><div class="card-head">'
+        + '<h3>Demandes à vérifier</h3><span class="badge accent">' + aVerifier.length + '</span></div>'
+        + '<div class="card-list">' + aVerifier.map(function (c) {
+            return '<div class="row-between wrapfx" style="gap:14px">'
+              + '<div class="grow" style="min-width:240px">'
+              + '<a href="#clients/' + esc(c.id) + '" style="font-weight:600;color:var(--ink);font-size:15px">'
+              + esc(c.business_name) + '</a>'
+              + '<div class="small muted" style="margin-top:2px">' + esc(natLabel(c.project_nature))
+              + ' · ' + esc(c.sector) + ' · ' + esc(QL.money(c.budget))
+              + ' · ' + esc(c.contact_value) + '</div>'
+              + '<div class="xsmall faint" style="margin-top:3px">Déposée ' + esc(QL.since(c.created_at))
+              + (c.promo_code ? ' · code promo ' + esc(c.promo_code) : '') + '</div></div>'
+              + '<div class="row" style="gap:8px">'
+              + '<a class="btn btn-ghost btn-sm" href="#clients/' + esc(c.id) + '/fiche">Examiner</a>'
+              + '<button class="btn btn-primary btn-sm" data-ok="' + esc(c.id) + '">Accepter</button>'
+              + '</div></div>';
+          }).join('') + '</div></div>'
+      : '')
+
     + (attente.length
-      ? '<div class="card" style="margin-bottom:22px"><div class="card-head"><h3>Demandes en attente de règlement</h3>'
+      ? '<div class="card" style="margin-bottom:22px"><div class="card-head"><h3>Acceptées, en attente de règlement</h3>'
         + '<span class="badge warn">' + attente.length + '</span></div><div class="card-list">'
         + attente.map(function (c) {
             return '<div class="row-between"><div><a href="#clients/' + esc(c.id) + '" style="font-weight:600;color:var(--ink)">'
@@ -151,6 +173,9 @@ function vBord() {
     b.onclick = function () {
       patch(b.dataset.paid, { fee_status:'regle', account_status:'actif' }, 'Dossier activé.');
     };
+  });
+  $$('[data-ok]').forEach(function (b) {
+    b.onclick = function () { decider(b.dataset.ok, 'accept'); };
   });
   $$('[data-go]').forEach(function (r) { r.onclick = function () { location.hash = '#clients/' + r.dataset.go; }; });
 }
@@ -215,9 +240,11 @@ function clientDetail(id) {
 function paintClient() {
   var c = CD.client;
   var onglet = (location.hash.split('/')[2]) || 'projet';
-  var st = c.account_status === 'actif' ? '<span class="badge ok">Actif</span>'
-    : c.account_status === 'attente_paiement' ? '<span class="badge warn">En attente de paiement</span>'
-    : '<span class="badge bad">Suspendu</span>';
+  var ETIQ = { actif:['ok','Actif'], en_verification:['accent','À vérifier'],
+    attente_paiement:['warn','En attente de paiement'], refuse:['bad','Refusée'],
+    suspendu:['bad','Suspendu'] };
+  var e = ETIQ[c.account_status] || ['plain', c.account_status];
+  var st = '<span class="badge ' + e[0] + '">' + e[1] + '</span>';
 
   $('#page').innerHTML =
     '<a class="btn btn-quiet btn-sm" href="#clients" style="margin-bottom:14px;padding-left:0">'
@@ -232,6 +259,7 @@ function paintClient() {
         + '<button class="btn btn-ghost btn-sm" id="regen">Nouveau code</button>'
       + '</div></div>'
 
+    + (c.account_status === 'en_verification' ? bandeauVerif(c) : '')
     + '<div class="tabs">' + [['projet','Projet'],['forms','Formulaires'],['docs','Documents'],
         ['liens','Liens'],['maj','Mises à jour'],['fiche','Fiche']].map(function (t) {
         return '<a class="tab' + (onglet === t[0] ? ' on' : '') + '" href="#clients/' + esc(c.id) + '/' + t[0] + '">'
@@ -239,6 +267,8 @@ function paintClient() {
     + '<div id="tabBody"></div>';
 
   $('#cpyCode').onclick = function () { QL.copier(c.code); };
+  if ($('#vOk'))  $('#vOk').onclick  = function () { decider(c.id, 'accept', reloadClient); };
+  if ($('#vNon')) $('#vNon').onclick = function () { decider(c.id, 'reject', reloadClient); };
   $('#regen').onclick = function () {
     QL.confirmer('Générer un nouveau code ?',
       'L’ancien code cessera immédiatement de fonctionner. Pensez à transmettre le nouveau au client.',
@@ -250,11 +280,75 @@ function paintClient() {
   };
   ({ projet:tProjet, forms:tForms, docs:tDocs, liens:tLiens, maj:tMaj, fiche:tFiche })[onglet]();
 }
+/* Tout ce que le client a déclaré, réuni pour décider sans naviguer. */
+function bandeauVerif(c) {
+  var ct = (QL.CONTACTS.filter(function (x) { return x.id === c.contact_method; })[0] || {}).label
+           || c.contact_method;
+  function ligne(k, v, large) {
+    return '<div' + (large ? ' style="grid-column:1/-1"' : '') + '>'
+      + '<div class="xsmall faint" style="letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:3px">'
+      + esc(k) + '</div><div style="color:var(--ink);font-weight:500;white-space:pre-wrap">'
+      + esc(v || '—') + '</div></div>';
+  }
+  return '<div class="card" style="margin-bottom:22px;border-color:var(--line-2)">'
+    + '<div class="card-head" style="background:var(--accent-soft);border-radius:var(--r-lg) var(--r-lg) 0 0;border-bottom-color:#EBD3F2">'
+      + '<div><h3 style="color:var(--accent-deep)">Demande à vérifier</h3>'
+      + '<p class="small" style="color:var(--accent-deep);opacity:.85;margin-top:3px">'
+      + 'Déposée ' + esc(QL.since(c.created_at)) + '. Le client patiente sur un écran d’attente.</p></div>'
+      + '<div class="row" style="gap:8px">'
+      + '<button class="btn btn-ghost btn-sm" id="vNon">Refuser</button>'
+      + '<button class="btn btn-primary btn-sm" id="vOk">Accepter la demande</button></div></div>'
+    + '<div class="card-body">'
+      + '<div class="grid g2" style="gap:16px 22px">'
+      + ligne('Nom de l’activité', c.business_name)
+      + ligne('Secteur d’activité', c.sector)
+      + ligne('Nature du projet', natLabel(c.project_nature))
+      + ligne('Budget envisagé', QL.money(c.budget))
+      + ligne('Moyen de contact', ct + ' · ' + c.contact_value)
+      + ligne('Frais de dossier', (c.fee_amount ? QL.money(c.fee_amount) : 'Offerts')
+          + (c.promo_code ? ' · code ' + c.promo_code : ''))
+      + ligne('Conditions acceptées', QL.dateTime(c.cgu_accepted_at))
+      + ligne('Code d’accès attribué', c.code)
+      + (c.brief ? ligne('Besoin exprimé', c.brief, true) : '')
+      + '</div>'
+      + '<div class="note" style="margin-top:18px">' + ico('info')
+      + '<span>À l’acceptation, l’espace s’ouvre immédiatement si les frais sont réglés ou offerts. '
+      + 'Sinon le dossier passe en attente de règlement et le client en est informé.</span></div>'
+    + '</div></div>';
+}
+
 function reloadClient() {
   return QL.api('qb_admin_client', { p_token:T(), p_id:CD.client.id })
     .then(function (d) { CD = d; paintClient(); return QL.api('qb_admin_data', { p_token:T() }); })
     .then(function (d) { A = d; drawNav(); });
 }
+/* Accepter ou refuser une demande. Le refus demande un motif : il s'affiche
+   au client sur son écran d'attente. */
+function decider(id, decision, apres) {
+  if (decision === 'accept') {
+    QL.api('qb_admin_review', { p_token:T(), p_id:id, p_decision:'accept', p_note:'' })
+      .then(function (r) {
+        QL.toast(r.account_status === 'actif'
+          ? 'Espace ouvert au client.'
+          : 'Demande acceptée — reste le règlement des frais.', 'ok');
+        return apres ? apres() : load();
+      }).catch(function (e) { QL.toast(e.message, 'bad'); });
+    return;
+  }
+  QL.modal({ title:'Refuser cette demande', ok:'Refuser',
+    sub:'Le motif sera affiché au client dans son espace.',
+    body:'<div class="field"><label>Motif</label>'
+      + '<textarea class="textarea" id="motif" placeholder="Ex. : le projet sort de notre champ d’intervention. Nous restons disponibles pour en parler."></textarea>'
+      + '<p class="hint">Écrivez-le comme vous le diriez de vive voix.</p></div>',
+    onOk:function (m) {
+      var note = QL.$('#motif', m).value.trim();
+      if (!note) { QL.toast('Un motif est nécessaire.', 'bad'); return false; }
+      QL.api('qb_admin_review', { p_token:T(), p_id:id, p_decision:'reject', p_note:note })
+        .then(function () { QL.toast('Demande refusée.', 'ok'); return apres ? apres() : load(); })
+        .catch(function (e) { QL.toast(e.message, 'bad'); });
+    } });
+}
+
 function patch(id, p, msg) {
   return QL.api('qb_admin_client_patch', { p_token:T(), p_id:id, p_patch:p })
     .then(function () { if (msg) QL.toast(msg, 'ok'); return load(); })
@@ -539,7 +633,8 @@ function tFiche() {
       + '<div class="card card-pad stack stack-14">'
         + '<div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700">Accès & facturation</div>'
         + '<div class="field"><label>État du compte</label><select class="select" id="fSt">'
-          + [['actif','Actif'],['attente_paiement','En attente de paiement'],['suspendu','Suspendu']]
+          + [['en_verification','En vérification'],['actif','Actif'],
+             ['attente_paiement','En attente de paiement'],['refuse','Refusée'],['suspendu','Suspendu']]
             .map(function (o) { return '<option value="' + o[0] + '"' + (o[0] === c.account_status ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('')
           + '</select></div>'
         + '<div class="field"><label>Frais de dossier</label>'
@@ -549,6 +644,7 @@ function tFiche() {
               return '<option value="' + o[0] + '"' + (o[0] === c.fee_status ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('')
           + '</select></div></div>'
         + (c.promo_code ? '<div class="note accent">' + ico('check') + '<span>Code promotionnel utilisé : <b>' + esc(c.promo_code) + '</b></span></div>' : '')
+        + (c.review_note ? '<div class="note"><span><b>Motif communiqué au client</b><br>' + esc(c.review_note) + '</span></div>' : '')
         + '<div class="xsmall faint">Conditions acceptées le ' + esc(QL.dateTime(c.cgu_accepted_at)) + '</div>'
       + '</div>'
       + '<div class="card card-pad">'
