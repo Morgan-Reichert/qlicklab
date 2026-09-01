@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Créer un accès client • QlickLab</title>
+<meta name="description" content="Ouvrir un dossier client QlickLab." />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="assets/icon-black.png" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="app.css?v=2" />
+<style>
+  .auth-card{position:relative;overflow:hidden}
+  .wiz{position:absolute;top:0;left:0;right:0;display:flex;gap:2px;z-index:2}
+  .wiz i{flex:1;height:3px;background:var(--paper-2);transition:background .45s var(--ease)}
+  .wiz i.on{background:var(--ink)}
+  .stepno{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);
+    font-weight:700;margin-bottom:9px}
+  .fee{display:flex;align-items:baseline;gap:10px}
+  .fee b{font-family:var(--display);font-size:34px;font-weight:600;letter-spacing:-.03em;color:var(--ink)}
+  .fee s{color:var(--faint);font-size:18px}
+  .done-code{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:24px;margin:20px 0;display:flex;flex-direction:column;align-items:center;gap:16px}
+</style>
+</head>
+<body class="qlab">
+
+<main class="auth">
+  <a class="auth-back" href="connexion.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    Se connecter
+  </a>
+
+  <section class="auth-card wide" id="card">
+    <img class="auth-logo" src="assets/wordmark-black.png" alt="QlickLab" />
+
+    <div id="wizard">
+      <div class="wiz"><i class="on"></i><i></i><i></i></div>
+
+      <!-- Étape 1 -->
+      <div class="pane" data-pane="0">
+        <div class="stepno">Étape 1 sur 3</div>
+        <h1>Votre projet</h1>
+        <p class="sub" style="text-align:left;margin:9px 0 24px">
+          Deux minutes pour cadrer l’essentiel. Rien n’est définitif : tout se précise ensuite.
+        </p>
+
+        <div class="field" style="margin-bottom:22px">
+          <label>Nature du projet <span class="req">*</span></label>
+          <div class="opts g2" id="natures"></div>
+          <p class="err hidden" data-err="nature">Choisissez la nature de votre projet.</p>
+        </div>
+
+        <div class="field" style="margin-bottom:22px">
+          <label>Budget envisagé <span class="req">*</span></label>
+          <div id="budget"></div>
+          <p class="hint">Une fourchette suffit. Elle nous sert à proposer un périmètre réaliste, pas à établir un devis.</p>
+        </div>
+
+        <div class="field">
+          <label for="brief">En quelques mots, de quoi avez-vous besoin ?</label>
+          <textarea class="textarea" id="brief" placeholder="Ce que vous voulez obtenir, le problème que ça résout, l’échéance si vous en avez une."></textarea>
+          <p class="hint">Facultatif — mais très utile pour préparer notre premier échange.</p>
+        </div>
+
+        <div class="row" style="justify-content:flex-end;margin-top:26px">
+          <button class="btn btn-primary btn-lg" data-next="1"><span>Continuer</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Étape 2 -->
+      <div class="pane hidden" data-pane="1">
+        <div class="stepno">Étape 2 sur 3</div>
+        <h1>Votre activité</h1>
+        <p class="sub" style="text-align:left;margin:9px 0 24px">
+          De quoi identifier votre dossier et vous joindre.
+        </p>
+
+        <div class="stack stack-20">
+          <div class="field">
+            <label for="nom">Nom de votre activité <span class="req">*</span></label>
+            <input class="input" id="nom" placeholder="Studio Carelin, Mairie de…, Association…" maxlength="90" />
+            <p class="err hidden" data-err="nom">Indiquez le nom sous lequel vous exercez.</p>
+          </div>
+
+          <div class="field">
+            <label for="secteur">Secteur d’activité <span class="req">*</span></label>
+            <select class="select" id="secteur"></select>
+            <p class="hint">Si vous n’êtes pas encore immatriculé, choisissez « Non immatriculé » — c’est très courant et sans conséquence.</p>
+          </div>
+
+          <div class="field">
+            <label>Comment vous joindre ? <span class="req">*</span></label>
+            <div class="opts g3" id="contacts"></div>
+            <input class="input" id="contactVal" style="margin-top:10px" placeholder="vous@exemple.fr" />
+            <p class="err hidden" data-err="contact">Renseignez un moyen de contact valide.</p>
+            <p class="hint">C’est par là que nous vous transmettrons votre code d’accès à six chiffres.</p>
+          </div>
+        </div>
+
+        <div class="row-between" style="margin-top:26px">
+          <button class="btn btn-quiet" data-prev="0"><span>Retour</span></button>
+          <button class="btn btn-primary btn-lg" data-next="2"><span>Continuer</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Étape 3 -->
+      <div class="pane hidden" data-pane="2">
+        <div class="stepno">Étape 3 sur 3</div>
+        <h1>Frais de dossier</h1>
+        <p class="sub" style="text-align:left;margin:9px 0 24px">
+          Ils couvrent l’étude de votre demande et l’ouverture de votre espace de suivi.
+        </p>
+
+        <div class="card card-pad quiet" style="margin-bottom:20px">
+          <div class="row-between">
+            <div>
+              <div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700">Montant dû</div>
+              <div class="fee" style="margin-top:6px"><b id="feeVal">—</b><s id="feeOld" class="hidden"></s></div>
+            </div>
+            <span class="badge hidden" id="feeBadge">Offert</span>
+          </div>
+        </div>
+
+        <div class="field" style="margin-bottom:20px">
+          <label for="promo">Code promotionnel</label>
+          <div class="input-group">
+            <input class="input" id="promo" placeholder="Si vous en avez un" autocapitalize="off" spellcheck="false" />
+            <button class="btn btn-ghost" id="btnPromo" type="button"><span>Appliquer</span></button>
+          </div>
+          <p class="small hidden" id="promoMsg" style="margin:0"></p>
+        </div>
+
+        <div class="note" style="margin-bottom:20px" id="payNote">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+          <span id="payTxt">Chargement…</span>
+        </div>
+
+        <label class="check" style="margin-bottom:8px">
+          <input type="checkbox" id="cgu" />
+          <span>J’ai lu et j’accepte les <a href="legal.html#mentions" target="_blank" style="font-weight:600;border-bottom:1.5px solid var(--line-2)">conditions générales</a>
+          ainsi que le traitement de mes données conformément à la <a href="legal.html#rgpd" target="_blank" style="font-weight:600;border-bottom:1.5px solid var(--line-2)">politique de confidentialité</a>. <span class="req">*</span></span>
+        </label>
+        <p class="err hidden" data-err="cgu">L’acceptation des conditions est nécessaire pour ouvrir le dossier.</p>
+
+        <div class="row-between" style="margin-top:26px">
+          <button class="btn btn-quiet" data-prev="1"><span>Retour</span></button>
+          <button class="btn btn-primary btn-lg" id="btnSend"><span>Ouvrir mon dossier</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation -->
+    <div id="done" class="hidden"></div>
+  </section>
+
+  <p class="auth-legal">
+    QlickLab · <a href="legal.html#rgpd">Données personnelles</a> · <a href="legal.html#mentions">Mentions légales</a>
+  </p>
+</main>
+
+<script src="qlab-config.js"></script>
+<script src="qlab-demo.js?v=2"></script>
+<script src="app.js?v=2"></script>
+<script>
+(function () {
+  var $ = QL.$, $$ = QL.$$;
+  QL.demoFlag();
+
+  var data = { project_nature:'', budget:5000, brief:'', business_name:'', sector:'',
+               contact_method:'mail', contact_value:'', promo_code:'', cgu:false };
+  var fee = { base:0, current:0, offered:false };
+
+  /* ---- Nature du projet ---- */
+  $('#natures').innerHTML = QL.NATURES.map(function (n) {
+    return '<label class="opt"><input type="radio" name="nature" value="' + n.id + '">'
+      + '<span class="dot"></span><span class="grow"><b class="ttl">' + QL.esc(n.label)
+      + '</b><span class="dsc">' + QL.esc(n.desc) + '</span></span></label>';
+  }).join('');
+  $$('#natures input').forEach(function (i) {
+    i.onchange = function () { data.project_nature = i.value; hideErr('nature'); };
+  });
+
+  /* ---- Budget ---- */
+  QL.budgetSlider($('#budget'), QL.BUDGETS, 4, function (v) { data.budget = v; });
+
+  /* ---- Secteur ---- */
+  $('#secteur').innerHTML = '<option value="">Choisir…</option>'
+    + QL.SECTEURS.map(function (s) { return '<option>' + QL.esc(s) + '</option>'; }).join('');
+
+  /* ---- Moyen de contact ---- */
+  $('#contacts').innerHTML = QL.CONTACTS.map(function (c, i) {
+    var ic = c.id === 'mail' ? 'mail' : c.id === 'tel' ? 'phone' : 'chat';
+    return '<label class="opt"><input type="radio" name="ct" value="' + c.id + '"' + (i === 0 ? ' checked' : '') + '>'
+      + '<span class="opt-ic">' + QL.ico(ic) + '</span>'
+      + '<span class="grow"><b class="ttl">' + QL.esc(c.label) + '</b></span></label>';
+  }).join('');
+  $$('#contacts input').forEach(function (i) {
+    i.onchange = function () {
+      data.contact_method = i.value;
+      var c = QL.CONTACTS.filter(function (x) { return x.id === i.value; })[0];
+      $('#contactVal').placeholder = c.ph;
+      $('#contactVal').type = c.type === 'email' ? 'email' : c.type === 'tel' ? 'tel' : 'text';
+    };
+  });
+
+  /* ---- Réglages (montant des frais) ---- */
+  QL.api('qb_settings', {}).then(function (s) {
+    fee.base = Number(s.fee_amount) || 0; fee.current = fee.base;
+    paintFee();
+    $('#payTxt').textContent = s.payment_instructions || '';
+  }).catch(function () { $('#payTxt').textContent = 'Les modalités de règlement vous seront transmises par notre équipe.'; });
+
+  function paintFee() {
+    $('#feeVal').textContent = fee.current === 0 ? 'Offert' : QL.money(fee.current);
+    $('#feeOld').classList.toggle('hidden', !fee.offered || !fee.base);
+    $('#feeOld').textContent = QL.money(fee.base);
+    $('#feeBadge').classList.toggle('hidden', !fee.offered);
+    $('#feeBadge').className = 'badge ok' + (fee.offered ? '' : ' hidden');
+    $('#feeBadge').textContent = 'Frais offerts';
+    $('#payNote').classList.toggle('hidden', fee.current === 0);
+  }
+
+  /* ---- Code promotionnel (vérifié à l'envoi côté serveur) ---- */
+  $('#btnPromo').onclick = function () {
+    var v = $('#promo').value.trim();
+    var m = $('#promoMsg'); m.classList.remove('hidden');
+    if (!v) { m.style.color = 'var(--muted)'; m.textContent = 'Saisissez un code puis appliquez-le.'; return; }
+    data.promo_code = v;
+    m.style.color = 'var(--ink-3)';
+    m.textContent = 'Code enregistré — il sera vérifié à l’ouverture du dossier.';
+  };
+  $('#promo').oninput = function () {
+    data.promo_code = this.value.trim();
+    fee.offered = false; fee.current = fee.base; paintFee();
+    $('#promoMsg').classList.add('hidden');
+  };
+
+  /* ---- Navigation entre étapes ---- */
+  function pane(n) {
+    $$('.pane').forEach(function (p) { p.classList.toggle('hidden', +p.dataset.pane !== n); });
+    $$('.wiz i').forEach(function (i, k) { i.classList.toggle('on', k <= n); });
+    $('#card').scrollIntoView({ block:'start', behavior:'smooth' });
+  }
+  function err(k, on) { var e = QL.$('[data-err="' + k + '"]'); if (e) e.classList.toggle('hidden', !on); }
+  function hideErr(k) { err(k, false); }
+
+  $$('[data-next]').forEach(function (b) {
+    b.onclick = function () {
+      var target = +b.dataset.next;
+      if (target === 1) {
+        if (!data.project_nature) { err('nature', true); return; }
+      }
+      if (target === 2) {
+        var ok = true;
+        data.business_name = $('#nom').value.trim();
+        data.sector = $('#secteur').value;
+        data.contact_value = $('#contactVal').value.trim();
+        if (!data.business_name) { err('nom', true); ok = false; } else hideErr('nom');
+        if (!data.sector) { $('#secteur').classList.add('invalid'); ok = false; }
+        else $('#secteur').classList.remove('invalid');
+        if (!data.contact_value || (data.contact_method === 'mail' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.contact_value))) {
+          err('contact', true); ok = false;
+        } else hideErr('contact');
+        if (!ok) return;
+      }
+      data.brief = $('#brief').value.trim();
+      pane(target);
+    };
+  });
+  $$('[data-prev]').forEach(function (b) { b.onclick = function () { pane(+b.dataset.prev); }; });
+
+  /* ---- Envoi ---- */
+  $('#btnSend').onclick = function () {
+    data.cgu = $('#cgu').checked;
+    if (!data.cgu) { err('cgu', true); return; } else hideErr('cgu');
+    var b = this; QL.busy(b, true, 'Ouverture du dossier…');
+    QL.api('qb_signup', { p_payload: data })
+      .then(function (r) { showDone(r); })
+      .catch(function (e) {
+        QL.busy(b, false);
+        if (/promo/i.test(e.message)) {
+          pane(2);
+          var m = $('#promoMsg'); m.classList.remove('hidden');
+          m.style.color = 'var(--bad)'; m.textContent = e.message;
+        } else QL.toast(e.message || 'Envoi impossible.', 'bad');
+      });
+  };
+
+  /* ---- Confirmation ---- */
+  function showDone(r) {
+    $('#wizard').classList.add('hidden');
+    var d = $('#done'); d.classList.remove('hidden');
+    var actif = r.status === 'actif';
+    d.innerHTML =
+      '<div class="center">'
+      + '<div style="width:56px;height:56px;border-radius:50%;background:' + (actif ? 'var(--ok-soft)' : 'var(--warn-soft)')
+      + ';color:' + (actif ? 'var(--ok)' : 'var(--warn)') + ';display:grid;place-items:center;margin:0 auto 18px">'
+      + QL.ico(actif ? 'check' : 'clock', 26) + '</div>'
+      + '<h1>' + (actif ? 'Votre dossier est ouvert' : 'Votre demande est enregistrée') + '</h1>'
+      + '<p class="sub" style="margin-top:10px">'
+      + (actif
+          ? 'Voici votre code d’accès personnel. Notez-le : il remplace à lui seul identifiant et mot de passe.'
+          : 'Votre code d’accès vous sera transmis par ' + QL.esc(labelContact()) + ' dès réception des frais de dossier.')
+      + '</p></div>'
+      + (actif
+        ? '<div class="done-code"><div class="code-show">'
+          + r.code.split('').map(function (c) { return '<b>' + c + '</b>'; }).join('')
+          + '</div><button class="btn btn-ghost btn-sm" id="cpy">'
+          + QL.ico('copy') + '<span>Copier le code</span></button></div>'
+        : '<div class="note warn" style="margin:20px 0">' + QL.ico('info')
+          + '<span>' + QL.esc(r.payment_instructions || '') + '</span></div>')
+      + '<div class="note" style="margin-bottom:20px">' + QL.ico('info')
+      + '<span><b>Conservez ce code.</b> Il donne accès à l’ensemble de votre dossier. '
+      + 'Ne le partagez qu’avec les personnes de votre structure qui doivent suivre le projet. '
+      + 'En cas de perte, nous vous en générons un nouveau.</span></div>'
+      + '<div class="row" style="gap:10px">'
+      + (actif ? '<a class="btn btn-primary btn-lg grow center" href="connexion.html#client" style="justify-content:center">Accéder à mon espace</a>' : '')
+      + '<a class="btn btn-ghost btn-lg' + (actif ? '' : ' grow') + '" href="index.html" style="justify-content:center">Revenir au site</a></div>';
+    if (actif) $('#cpy').onclick = function () { QL.copier(r.code); };
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+  function labelContact() {
+    var c = QL.CONTACTS.filter(function (x) { return x.id === data.contact_method; })[0];
+    return c ? c.label.toLowerCase() : 'e-mail';
+  }
+})();
+</script>
+</body>
+</html>

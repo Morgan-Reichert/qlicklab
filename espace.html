@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mon espace • QlickLab</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="assets/icon-black.png" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="app.css?v=2" />
+</head>
+<body class="qlab">
+
+<div class="shell">
+  <!-- ================= Menu latéral ================= -->
+  <aside class="rail">
+    <div class="rail-head">
+      <img class="rail-logo" src="assets/wordmark-black.png" alt="QlickLab" />
+      <div class="rail-sub">Espace client</div>
+    </div>
+    <nav class="rail-nav" id="nav"></nav>
+    <div class="rail-foot">
+      <div class="xsmall faint" id="whoami">—</div>
+      <button class="btn btn-quiet btn-sm" id="btnOut" style="justify-content:flex-start;padding-left:0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M9 21H5.5A1.5 1.5 0 0 1 4 19.5v-15A1.5 1.5 0 0 1 5.5 3H9"/><path d="M15.5 16.5 20 12l-4.5-4.5M20 12H9"/></svg>
+        <span>Se déconnecter</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= Contenu ================= -->
+  <div class="main">
+    <header class="topbar">
+      <button class="burger-app" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <h1 id="ttl">Mon projet</h1>
+      <div class="grow"></div>
+      <span class="badge plain" id="phaseBadge"></span>
+    </header>
+    <div class="page" id="page">
+      <div class="stack stack-14">
+        <div class="skel" style="width:180px;height:20px"></div>
+        <div class="skel" style="height:120px"></div>
+        <div class="skel" style="height:200px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="qlab-config.js"></script>
+<script src="qlab-demo.js?v=2"></script>
+<script src="app.js?v=2"></script>
+<script>
+(function () {
+var $ = QL.$, $$ = QL.$$, esc = QL.esc, ico = QL.ico;
+if (!QL.guard('client')) return;
+QL.demoFlag();
+
+var D = null;   /* données du dossier */
+var VUES = [
+  { id:'projet',     label:'Mon projet',    icon:'home' },
+  { id:'suivi',      label:'Mises à jour',  icon:'bell' },
+  { id:'formulaires',label:'Formulaires',   icon:'form' },
+  { id:'documents',  label:'Documents',     icon:'folder' },
+  { id:'liens',      label:'Liens utiles',  icon:'link' },
+  { id:'dossier',    label:'Mon dossier',   icon:'file' }
+];
+
+/* ------------------------------------------------------------- Menu ----- */
+function drawNav() {
+  var cur = route();
+  $('#nav').innerHTML = VUES.map(function (v) {
+    var n = badgeCount(v.id);
+    return '<a class="rail-link' + (v.id === cur ? ' on' : '') + '" href="#' + v.id + '">'
+      + ico(v.icon) + '<span>' + esc(v.label) + '</span>'
+      + (n ? '<span class="pill' + (v.id === 'formulaires' ? ' hot' : '') + '">' + n + '</span>' : '')
+      + '</a>';
+  }).join('');
+}
+function badgeCount(id) {
+  if (!D) return 0;
+  if (id === 'formulaires') return D.forms.filter(function (f) { return f.status === 'active'; }).length;
+  if (id === 'suivi') return 0;
+  if (id === 'documents') return D.documents.length;
+  return 0;
+}
+function route() { var h = (location.hash || '').replace('#', '').split('/')[0]; 
+  return VUES.some(function (v) { return v.id === h; }) ? h : 'projet'; }
+
+/* ------------------------------------------------------------ Chargement */
+function load() {
+  return QL.api('qb_client_data', { p_token: QL.token() }).then(function (d) {
+    D = d;
+    $('#whoami').textContent = d.client.business_name;
+    var ph = QL.PHASES.filter(function (p) { return p.id === d.client.project_phase; })[0];
+    $('#phaseBadge').textContent = ph ? ph.label : '';
+    $('#phaseBadge').className = 'badge ' + (d.client.project_phase === 'livre' ? 'ok' : 'accent');
+    drawNav(); render();
+  }).catch(function (e) {
+    if (/session/i.test(e.message)) { QL.setSession(null); location.replace('connexion.html'); return; }
+    $('#page').innerHTML = '<div class="note bad">' + ico('alert') + '<span>' + esc(e.message) + '</span></div>';
+  });
+}
+
+function render() {
+  var v = route();
+  $('#ttl').textContent = (VUES.filter(function (x) { return x.id === v; })[0] || {}).label;
+  drawNav();
+  ({ projet:vProjet, suivi:vSuivi, formulaires:vForms, documents:vDocs,
+     liens:vLiens, dossier:vDossier })[v]();
+  window.scrollTo({ top:0 });
+}
+window.addEventListener('hashchange', render);
+
+/* =========================================================== Vue projet = */
+function vProjet() {
+  var c = D.client;
+  var derniers = D.updates.slice(0, 3);
+  var actifs = D.forms.filter(function (f) { return f.status === 'active'; });
+
+  $('#page').innerHTML =
+    '<div class="page-head"><h1>' + esc(c.project_title || c.business_name) + '</h1>'
+    + '<p class="lede">' + esc(c.summary || 'Le résumé de votre projet apparaîtra ici dès que le cadrage sera posé.') + '</p></div>'
+
+    + '<div class="card card-pad" style="margin-bottom:16px">'
+      + '<div class="row-between" style="margin-bottom:18px">'
+        + '<h3>Avancement</h3>'
+        + '<span class="num" style="font-size:22px">' + (c.progress || 0) + '<span class="small muted" style="font-family:var(--sans)">&thinsp;%</span></span>'
+      + '</div>'
+      + '<div class="progress" style="margin-bottom:22px"><i style="width:' + (c.progress || 0) + '%"></i></div>'
+      + '<div id="phases"></div>'
+    + '</div>'
+
+    + '<div class="grid g-side">'
+      + '<div class="stack stack-16" style="gap:16px">'
+        + (actifs.length
+          ? '<div class="card"><div class="card-head"><h3>À faire de votre côté</h3>'
+            + '<span class="badge accent">' + actifs.length + '</span></div>'
+            + '<div class="card-list">' + actifs.map(function (f) {
+                return '<a class="row-between" href="#formulaires/' + esc(f.assignment_id) + '" style="cursor:pointer">'
+                  + '<div><div style="font-weight:600;color:var(--ink)">' + esc(f.title) + '</div>'
+                  + '<div class="small muted">' + esc(f.description || '') + '</div></div>'
+                  + '<span class="btn btn-ghost btn-sm nowrap">Remplir</span></a>';
+              }).join('') + '</div></div>'
+          : '<div class="card card-pad"><div class="row" style="gap:12px">'
+            + '<span style="color:var(--ok)">' + ico('check', 20) + '</span>'
+            + '<div><b style="color:var(--ink)">Rien ne vous est demandé pour l’instant.</b>'
+            + '<div class="small muted">Nous vous préviendrons dès qu’un formulaire vous attend.</div></div></div></div>')
+
+        + '<div class="card"><div class="card-head"><h3>Dernières nouvelles</h3>'
+          + '<a class="btn btn-quiet btn-sm" href="#suivi">Tout voir</a></div>'
+          + '<div class="card-body">' + (derniers.length ? tl(derniers) : vide('bell', 'Aucune mise à jour', 'Le journal du projet se remplira au fil de l’avancement.')) + '</div></div>'
+      + '</div>'
+
+      + '<div class="stack" style="gap:16px">'
+        + '<div class="card"><div class="card-head"><h3>Liens du projet</h3></div>'
+          + (D.links.length ? '<div class="card-list">' + D.links.map(linkRow).join('') + '</div>'
+             : '<div class="card-body">' + vide('link', 'Pas encore de lien', 'Les adresses de votre projet apparaîtront ici.') + '</div>') + '</div>'
+        + '<div class="card card-pad">'
+          + '<div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:10px">Votre contact</div>'
+          + '<div class="row" style="gap:10px"><span style="color:var(--ink-3)">' + ico('mail', 17) + '</span>'
+          + '<a href="contact.html" style="font-weight:600;color:var(--ink)">Écrire à l’équipe</a></div>'
+          + '<p class="small muted" style="margin-top:10px">Une question, un changement de périmètre, une urgence : passez par là, on répond vite.</p>'
+        + '</div>'
+      + '</div>'
+    + '</div>';
+
+  QL.phaseBar($('#phases'), c.project_phase);
+}
+
+/* ============================================================ Vue suivi = */
+function vSuivi() {
+  $('#page').innerHTML =
+    '<div class="page-head"><h1>Mises à jour</h1>'
+    + '<p class="lede">Chaque avancée est consignée ici, avec sa date. Rien ne se perd.</p></div>'
+    + '<div class="card card-body">' + (D.updates.length ? tl(D.updates)
+      : vide('bell', 'Journal vide', 'Les premières nouvelles arriveront après le cadrage.')) + '</div>';
+}
+function tl(list) {
+  return '<div class="tl">' + list.map(function (u) {
+    var k = QL.UPDATE_KINDS[u.kind] || QL.UPDATE_KINDS.info;
+    return '<div class="tl-item ' + k.cls + '">'
+      + '<div class="tl-date">' + esc(QL.dateTime(u.created_at)) + ' · ' + esc(k.label) + '</div>'
+      + '<h4>' + esc(u.title) + '</h4>'
+      + (u.body ? '<p>' + esc(u.body).replace(/\n/g, '<br>') + '</p>' : '')
+      + '</div>';
+  }).join('') + '</div>';
+}
+
+/* ====================================================== Vue formulaires = */
+function vForms() {
+  var sel = (location.hash.split('/')[1] || '');
+  if (sel) { var f = D.forms.filter(function (x) { return x.assignment_id === sel; })[0];
+    if (f) return formDetail(f); }
+
+  var actifs = D.forms.filter(function (f) { return f.status === 'active'; });
+  var faits = D.forms.filter(function (f) { return f.status === 'submitted'; });
+
+  $('#page').innerHTML =
+    '<div class="page-head"><h1>Formulaires</h1>'
+    + '<p class="lede">Nous vous en activons un à la fois, au moment où il est utile. '
+    + 'Vos réponses sont enregistrées au fur et à mesure.</p></div>'
+    + (actifs.length ? '<h3 style="margin-bottom:12px">À remplir</h3><div class="stack stack-10" style="margin-bottom:28px">'
+        + actifs.map(formCard).join('') + '</div>' : '')
+    + (faits.length ? '<h3 style="margin-bottom:12px">Envoyés</h3><div class="stack stack-10">'
+        + faits.map(formCard).join('') + '</div>' : '')
+    + (!D.forms.length ? '<div class="card card-body">'
+        + vide('form', 'Aucun formulaire pour l’instant', 'Ils apparaîtront ici quand nous en activerons un.') + '</div>' : '');
+}
+function formCard(f) {
+  var done = f.status === 'submitted';
+  return '<a class="card card-pad row-between" href="#formulaires/' + esc(f.assignment_id) + '" style="cursor:pointer;gap:16px">'
+    + '<div class="grow"><div class="row" style="gap:9px;margin-bottom:4px">'
+      + '<b style="color:var(--ink);font-size:15.5px">' + esc(f.title) + '</b>'
+      + (done ? '<span class="badge ok">Envoyé</span>' : '<span class="badge accent">À remplir</span>') + '</div>'
+    + '<div class="small muted">' + esc(f.description || '') + '</div>'
+    + '<div class="xsmall faint" style="margin-top:6px">' + (done
+        ? 'Envoyé ' + esc(QL.since(f.submitted_at)) : 'Proposé ' + esc(QL.since(f.assigned_at)))
+      + ' · ' + f.schema.length + ' question' + (f.schema.length > 1 ? 's' : '') + '</div></div>'
+    + '<span class="btn btn-ghost btn-sm nowrap">' + (done ? 'Consulter' : 'Remplir') + '</span></a>';
+}
+
+function formDetail(f) {
+  var done = f.status === 'submitted';
+  var answers = Object.assign({}, f.answers || {});
+  $('#page').innerHTML =
+    '<a class="btn btn-quiet btn-sm" href="#formulaires" style="margin-bottom:16px;padding-left:0">'
+      + ico('back') + '<span>Tous les formulaires</span></a>'
+    + '<div class="page-head"><div class="row" style="gap:10px;margin-bottom:6px">'
+      + '<h1 style="display:inline">' + esc(f.title) + '</h1>'
+      + (done ? '<span class="badge ok">Envoyé</span>' : '') + '</div>'
+    + '<p class="lede">' + esc(f.description || '') + '</p></div>'
+    + '<div class="card"><div class="card-body"><form id="frm" class="stack stack-20">'
+      + f.schema.map(function (fl) { return field(fl, answers[fl.key], done); }).join('')
+      + '</form></div>'
+    + (done
+      ? '<div class="card-foot small muted">Envoyé le ' + esc(QL.dateTime(f.submitted_at))
+        + '. Besoin de corriger une réponse ? Demandez-nous de rouvrir le formulaire.</div>'
+      : '<div class="card-foot row-between"><span class="small muted" id="saveState">Brouillon enregistré automatiquement.</span>'
+        + '<div class="row" style="gap:9px">'
+        + '<button class="btn btn-ghost btn-sm" id="btnDraft">Enregistrer</button>'
+        + '<button class="btn btn-primary" id="btnSubmit">Envoyer mes réponses</button></div></div>')
+    + '</div>';
+
+  if (done) return;
+
+  var save = QL.debounce(function () {
+    QL.api('qb_form_save', { p_token:QL.token(), p_assignment:f.assignment_id,
+      p_answers:collect(f), p_submit:false })
+      .then(function () { $('#saveState').textContent = 'Brouillon enregistré · ' + new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); })
+      .catch(function () { $('#saveState').textContent = 'Enregistrement impossible.'; });
+  }, 900);
+  $('#frm').addEventListener('input', function () { $('#saveState').textContent = 'Enregistrement…'; save(); });
+  $('#frm').addEventListener('change', save);
+
+  $('#btnDraft').onclick = function (e) { e.preventDefault(); save(); QL.toast('Brouillon enregistré', 'ok'); };
+  $('#btnSubmit').onclick = function (e) {
+    e.preventDefault();
+    var a = collect(f), manquants = f.schema.filter(function (fl) {
+      return fl.required && (a[fl.key] == null || a[fl.key] === '' || (Array.isArray(a[fl.key]) && !a[fl.key].length));
+    });
+    if (manquants.length) {
+      QL.toast('Il reste ' + manquants.length + ' réponse' + (manquants.length > 1 ? 's' : '') + ' obligatoire' + (manquants.length > 1 ? 's' : ''), 'bad');
+      var first = $('[data-k="' + manquants[0].key + '"]');
+      if (first) { first.scrollIntoView({ block:'center', behavior:'smooth' });
+        var inp = $('input,textarea,select', first); if (inp) inp.focus(); }
+      return;
+    }
+    var b = this; QL.busy(b, true, 'Envoi…');
+    QL.api('qb_form_save', { p_token:QL.token(), p_assignment:f.assignment_id, p_answers:a, p_submit:true })
+      .then(function () { QL.toast('Formulaire envoyé. Merci !', 'ok'); return load(); })
+      .then(function () { location.hash = '#formulaires'; })
+      .catch(function (err) { QL.busy(b, false); QL.toast(err.message, 'bad'); });
+  };
+}
+
+function field(fl, val, ro) {
+  var id = 'f_' + fl.key, dis = ro ? ' disabled' : '';
+  var head = '<div class="field" data-k="' + esc(fl.key) + '"><label for="' + id + '">' + esc(fl.label)
+    + (fl.required ? ' <span class="req">*</span>' : '') + '</label>'
+    + (fl.help ? '<p class="hint">' + esc(fl.help) + '</p>' : '');
+  var body;
+  switch (fl.type) {
+    case 'textarea':
+      body = '<textarea class="textarea" id="' + id + '" data-f="' + esc(fl.key) + '"'
+        + (fl.placeholder ? ' placeholder="' + esc(fl.placeholder) + '"' : '') + dis + '>' + esc(val || '') + '</textarea>';
+      break;
+    case 'select':
+      body = '<select class="select" id="' + id + '" data-f="' + esc(fl.key) + '"' + dis + '>'
+        + '<option value="">Choisir…</option>'
+        + (fl.options || []).map(function (o) {
+            return '<option' + (val === o ? ' selected' : '') + '>' + esc(o) + '</option>'; }).join('')
+        + '</select>';
+      break;
+    case 'radio':
+      body = '<div class="opts">' + (fl.options || []).map(function (o, i) {
+        return '<label class="opt"><input type="radio" name="' + id + '" data-f="' + esc(fl.key) + '" value="'
+          + esc(o) + '"' + (val === o ? ' checked' : '') + dis + '><span class="dot"></span>'
+          + '<span class="grow"><b class="ttl">' + esc(o) + '</b></span></label>'; }).join('') + '</div>';
+      break;
+    case 'multi':
+      var arr = Array.isArray(val) ? val : [];
+      body = '<div class="row wrapfx" style="gap:8px">' + (fl.options || []).map(function (o) {
+        return '<label class="chip' + (arr.indexOf(o) >= 0 ? ' on' : '') + '">'
+          + '<input type="checkbox" style="display:none" data-f="' + esc(fl.key) + '" data-multi value="'
+          + esc(o) + '"' + (arr.indexOf(o) >= 0 ? ' checked' : '') + dis + '>' + esc(o) + '</label>'; }).join('') + '</div>';
+      break;
+    case 'checkbox':
+      body = '<label class="check"><input type="checkbox" data-f="' + esc(fl.key) + '"'
+        + (val ? ' checked' : '') + dis + '><span>' + esc(fl.placeholder || 'Oui') + '</span></label>';
+      break;
+    default:
+      body = '<input class="input" id="' + id + '" data-f="' + esc(fl.key) + '" type="'
+        + (fl.type || 'text') + '" value="' + esc(val || '') + '"'
+        + (fl.placeholder ? ' placeholder="' + esc(fl.placeholder) + '"' : '') + dis + '>';
+  }
+  return head + body + '</div>';
+}
+
+function collect(f) {
+  var out = {};
+  f.schema.forEach(function (fl) {
+    var nodes = $$('[data-f="' + fl.key + '"]');
+    if (!nodes.length) return;
+    if (fl.type === 'multi') {
+      out[fl.key] = nodes.filter(function (n) { return n.checked; }).map(function (n) { return n.value; });
+    } else if (fl.type === 'radio') {
+      var c = nodes.filter(function (n) { return n.checked; })[0]; out[fl.key] = c ? c.value : '';
+    } else if (fl.type === 'checkbox') {
+      out[fl.key] = nodes[0].checked;
+    } else out[fl.key] = nodes[0].value;
+  });
+  return out;
+}
+/* Bascule visuelle des étiquettes multi-choix */
+document.addEventListener('change', function (e) {
+  if (e.target.hasAttribute && e.target.hasAttribute('data-multi'))
+    e.target.parentNode.classList.toggle('on', e.target.checked);
+});
+
+/* ======================================================== Vue documents = */
+function vDocs() {
+  $('#page').innerHTML =
+    '<div class="page-head"><h1>Documents</h1>'
+    + '<p class="lede">Logos, PDF, cahiers des charges, exports… Déposez ici tout ce qui nous aide. '
+    + 'Vous pouvez aussi coller un lien vers un fichier hébergé ailleurs.</p></div>'
+    + '<div class="grid g2" style="margin-bottom:20px">'
+      + '<div class="drop" id="drop">' + ico('cloud')
+        + '<b>Déposer un fichier</b><span>Glissez-le ici ou cliquez pour parcourir · 9 Mo maximum</span>'
+        + '<input type="file" id="fileIn" multiple style="display:none"></div>'
+      + '<button class="drop" id="addLink" style="width:100%">' + ico('link')
+        + '<b>Ajouter un lien</b><span>Drive, WeTransfer, Figma, site existant…</span></button>'
+    + '</div>'
+    + '<div class="card">'
+      + '<div class="card-head"><h3>Vos dépôts</h3><span class="small muted">' + D.documents.length + ' élément' + (D.documents.length > 1 ? 's' : '') + '</span></div>'
+      + (D.documents.length ? '<div class="card-list" id="docList">' + D.documents.map(docRow).join('') + '</div>'
+        : '<div class="card-body">' + vide('folder', 'Rien pour l’instant', 'Le premier document déposé apparaîtra ici.') + '</div>')
+    + '</div>';
+
+  var drop = $('#drop'), input = $('#fileIn');
+  drop.onclick = function () { input.click(); };
+  input.onchange = function () { upload(input.files); input.value = ''; };
+  ['dragenter','dragover'].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave','drop'].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function (e) { upload(e.dataTransfer.files); });
+
+  $('#addLink').onclick = function () {
+    QL.modal({ title:'Ajouter un lien', ok:'Ajouter',
+      body:'<div class="stack stack-14">'
+        + '<div class="field"><label>Intitulé</label><input class="input" id="lLab" placeholder="Charte graphique 2024"></div>'
+        + '<div class="field"><label>Adresse</label><input class="input" id="lUrl" placeholder="https://…"></div>'
+        + '<div class="field"><label>Précision</label><input class="input" id="lNote" placeholder="Facultatif"></div></div>',
+      onOk:function (m, close) {
+        var lab = QL.$('#lLab', m).value.trim(), url = QL.$('#lUrl', m).value.trim();
+        if (!lab || !url) { QL.toast('Intitulé et adresse sont nécessaires.', 'bad'); return false; }
+        if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+        QL.api('qb_doc_add', { p_token:QL.token(), p_doc:{ kind:'link', name:lab, url:url,
+          note:QL.$('#lNote', m).value.trim() } })
+          .then(function () { QL.toast('Lien ajouté', 'ok'); return load(); })
+          .catch(function (e) { QL.toast(e.message, 'bad'); });
+      } });
+  };
+
+  $$('[data-del]').forEach(function (b) {
+    b.onclick = function () {
+      QL.confirmer('Supprimer ce document ?', 'Cette suppression est définitive.', function () {
+        QL.api('qb_doc_delete', { p_token:QL.token(), p_id:b.dataset.del })
+          .then(function () { QL.toast('Supprimé', 'ok'); return load(); })
+          .catch(function (e) { QL.toast(e.message, 'bad'); });
+      }, true);
+    };
+  });
+  $$('[data-dl]').forEach(function (b) {
+    b.onclick = function () {
+      QL.api('qb_doc_get', { p_token:QL.token(), p_id:b.dataset.dl })
+        .then(function (d) { QL.download(d.name, d.mime, d.b64); })
+        .catch(function (e) { QL.toast(e.message, 'bad'); });
+    };
+  });
+}
+
+function upload(files) {
+  if (!files || !files.length) return;
+  var list = Array.prototype.slice.call(files);
+  var trop = list.filter(function (f) { return f.size > 9 * 1024 * 1024; });
+  if (trop.length) { QL.toast(trop[0].name + ' dépasse 9 Mo.', 'bad');
+    list = list.filter(function (f) { return f.size <= 9 * 1024 * 1024; }); }
+  if (!list.length) return;
+  QL.toast('Envoi de ' + list.length + ' fichier' + (list.length > 1 ? 's' : '') + '…');
+  Promise.all(list.map(function (f) {
+    return QL.readFile(f).then(function (b64) {
+      return QL.api('qb_doc_add', { p_token:QL.token(), p_doc:{ kind:'file', name:f.name,
+        mime:f.type, size:f.size, b64:b64 } });
+    });
+  })).then(function () { QL.toast('Dépôt terminé', 'ok'); return load(); })
+    .catch(function (e) { QL.toast(e.message, 'bad'); });
+}
+
+function docRow(d) {
+  var isLink = d.kind === 'link';
+  return '<div class="row-between">'
+    + '<div class="file grow"><div class="file-ic">'
+      + (isLink ? ico('link') : esc(QL.extOf(d.name).slice(0, 4))) + '</div>'
+    + '<div class="grow" style="min-width:0"><div class="file-nm truncate">' + esc(d.name) + '</div>'
+    + '<div class="file-meta">' + (isLink ? esc(d.url) : esc(QL.bytes(d.size)))
+      + ' · ' + esc(QL.since(d.created_at))
+      + (d.uploaded_by === 'admin' ? ' · <span class="badge plain" style="font-size:11px">Ajouté par QlickLab</span>' : '')
+      + '</div></div></div>'
+    + '<div class="row" style="gap:4px">'
+      + (isLink ? '<a class="btn btn-icon btn-quiet" href="' + esc(d.url) + '" target="_blank" rel="noopener" title="Ouvrir">' + ico('out') + '</a>'
+                : '<button class="btn btn-icon btn-quiet" data-dl="' + esc(d.id) + '" title="Télécharger">' + ico('dl') + '</button>')
+      + (d.uploaded_by === 'client' ? '<button class="btn btn-icon btn-danger" data-del="' + esc(d.id) + '" title="Supprimer">' + ico('trash') + '</button>' : '')
+    + '</div></div>';
+}
+
+/* ============================================================ Vue liens = */
+function vLiens() {
+  $('#page').innerHTML =
+    '<div class="page-head"><h1>Liens utiles</h1>'
+    + '<p class="lede">Les adresses de votre projet, tenues à jour par l’équipe.</p></div>'
+    + '<div class="card">' + (D.links.length
+      ? '<div class="card-list">' + D.links.map(linkRow).join('') + '</div>'
+      : '<div class="card-body">' + vide('link', 'Aucun lien pour l’instant',
+          'Maquettes, version de test, mise en ligne : tout arrivera ici.') + '</div>') + '</div>';
+}
+function linkRow(l) {
+  var k = QL.LINK_KINDS[l.kind] || QL.LINK_KINDS.autre;
+  return '<a class="row-between" href="' + esc(l.url) + '" target="_blank" rel="noopener">'
+    + '<div class="grow" style="min-width:0"><div class="row" style="gap:8px">'
+      + '<b style="color:var(--ink);font-size:14.5px">' + esc(l.label) + '</b>'
+      + '<span class="badge plain">' + esc(k.label) + '</span></div>'
+    + '<div class="small muted truncate">' + esc(l.url) + '</div></div>'
+    + '<span style="color:var(--faint)">' + ico('out') + '</span></a>';
+}
+
+/* ========================================================== Vue dossier = */
+function vDossier() {
+  var c = D.client;
+  var nat = (QL.NATURES.filter(function (n) { return n.id === c.project_nature; })[0] || {}).label || c.project_nature;
+  var ct = (QL.CONTACTS.filter(function (x) { return x.id === c.contact_method; })[0] || {}).label || c.contact_method;
+  var feeBadge = c.fee_status === 'offert' ? '<span class="badge ok">Offerts</span>'
+    : c.fee_status === 'regle' ? '<span class="badge ok">Réglés</span>'
+    : '<span class="badge warn">En attente</span>';
+
+  $('#page').innerHTML =
+    '<div class="page-head"><h1>Mon dossier</h1>'
+    + '<p class="lede">Les informations transmises à l’ouverture. Pour les corriger, écrivez-nous : nous les mettons à jour.</p></div>'
+    + '<div class="grid g-side">'
+      + '<div class="card"><div class="card-head"><h3>Votre déclaration</h3></div><div class="card-list">'
+        + info('Nom de l’activité', c.business_name)
+        + info('Secteur', c.sector)
+        + info('Nature du projet', nat)
+        + info('Budget envisagé', QL.money(c.budget))
+        + info('Contact', ct + ' · ' + c.contact_value)
+        + info('Dossier ouvert le', QL.dateFull(c.created_at))
+        + (c.brief ? info('Besoin exprimé', c.brief) : '')
+      + '</div></div>'
+      + '<div class="stack" style="gap:16px">'
+        + '<div class="card card-pad">'
+          + '<div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:12px">Votre code d’accès</div>'
+          + '<div class="code-show">' + c.code.split('').map(function (x) { return '<b>' + x + '</b>'; }).join('') + '</div>'
+          + '<button class="btn btn-ghost btn-sm" id="cpyCode" style="margin-top:14px">' + ico('copy') + '<span>Copier</span></button>'
+          + '<p class="small muted" style="margin-top:12px">Ne le partagez qu’au sein de votre structure. '
+          + 'En cas de doute, demandez-nous un nouveau code.</p>'
+        + '</div>'
+        + '<div class="card card-pad"><div class="row-between" style="margin-bottom:8px">'
+          + '<div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700">Frais de dossier</div>'
+          + feeBadge + '</div>'
+          + '<div class="num" style="font-size:26px;color:var(--ink)">' + (c.fee_amount ? QL.money(c.fee_amount) : 'Offert') + '</div>'
+        + '</div>'
+      + '</div>'
+    + '</div>';
+  $('#cpyCode').onclick = function () { QL.copier(c.code); };
+}
+function info(k, v) {
+  return '<div><div class="xsmall faint" style="letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:4px">'
+    + esc(k) + '</div><div style="color:var(--ink);font-weight:500">' + esc(v || '—') + '</div></div>';
+}
+
+function vide(icon, titre, txt) {
+  return '<div class="empty">' + ico(icon, 30) + '<b>' + esc(titre) + '</b><span>' + esc(txt) + '</span></div>';
+}
+
+/* ------------------------------------------------------------- Départ --- */
+$('#btnOut').onclick = function () { QL.logout(); };
+QL.railToggle();
+load();
+})();
+</script>
+</body>
+</html>

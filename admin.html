@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Administration • QlickLab</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="assets/icon-black.png" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="app.css?v=2" />
+<style>
+  .rail-sub.admin{color:var(--accent-deep)}
+  .codecell{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.14em;
+    background:var(--paper-2);padding:4px 10px;border-radius:8px;color:var(--ink)}
+  .fld{border:1px solid var(--line);border-radius:var(--r);padding:14px;background:#FCFCFB}
+  .fld + .fld{margin-top:10px}
+  .ansrow{padding:12px 0;border-bottom:1px solid var(--line)}
+  .ansrow:last-child{border-bottom:0}
+  .ansrow .q{font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:3px}
+  .ansrow .a{color:var(--ink);white-space:pre-wrap}
+</style>
+</head>
+<body class="qlab">
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <img class="rail-logo" src="assets/wordmark-black.png" alt="QlickLab" />
+      <div class="rail-sub admin">Administration</div>
+    </div>
+    <nav class="rail-nav" id="nav"></nav>
+    <div class="rail-foot">
+      <div class="xsmall faint">Connecté · équipe</div>
+      <button class="btn btn-quiet btn-sm" id="btnOut" style="justify-content:flex-start;padding-left:0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M9 21H5.5A1.5 1.5 0 0 1 4 19.5v-15A1.5 1.5 0 0 1 5.5 3H9"/><path d="M15.5 16.5 20 12l-4.5-4.5M20 12H9"/></svg>
+        <span>Se déconnecter</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="burger-app" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <h1 id="ttl">Tableau de bord</h1>
+      <div class="grow"></div>
+      <a class="btn btn-ghost btn-sm" href="index.html" target="_blank">Voir le site</a>
+    </header>
+    <div class="page" id="page">
+      <div class="stack stack-14">
+        <div class="skel" style="width:200px;height:22px"></div>
+        <div class="skel" style="height:110px"></div>
+        <div class="skel" style="height:240px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="qlab-config.js"></script>
+<script src="qlab-demo.js?v=2"></script>
+<script src="app.js?v=2"></script>
+<script>
+(function () {
+var $ = QL.$, $$ = QL.$$, esc = QL.esc, ico = QL.ico, T = QL.token;
+if (!QL.guard('admin')) return;
+QL.demoFlag();
+
+var A = null;      /* données globales admin */
+var VUES = [
+  { id:'bord',      label:'Tableau de bord', icon:'chart' },
+  { id:'clients',   label:'Clients',         icon:'users' },
+  { id:'formulaires', label:'Formulaires',   icon:'form' },
+  { id:'reglages',  label:'Réglages',        icon:'gear' }
+];
+
+function route() { var h = (location.hash || '').replace('#','').split('/')[0];
+  return VUES.some(function (v) { return v.id === h; }) ? h : 'bord'; }
+function sub() { return (location.hash || '').split('/')[1] || ''; }
+
+function drawNav() {
+  var cur = route();
+  $('#nav').innerHTML = VUES.map(function (v) {
+    var n = v.id === 'clients' && A ? A.clients.length : 0;
+    return '<a class="rail-link' + (v.id === cur ? ' on' : '') + '" href="#' + v.id + '">'
+      + ico(v.icon) + '<span>' + esc(v.label) + '</span>'
+      + (n ? '<span class="pill">' + n + '</span>' : '') + '</a>';
+  }).join('');
+}
+
+function load() {
+  return QL.api('qb_admin_data', { p_token:T() }).then(function (d) {
+    A = d; drawNav(); render();
+  }).catch(function (e) {
+    if (/session|refus/i.test(e.message)) { QL.setSession(null); location.replace('connexion.html'); return; }
+    $('#page').innerHTML = '<div class="note bad">' + ico('alert') + '<span>' + esc(e.message) + '</span></div>';
+  });
+}
+function render() {
+  var v = route();
+  $('#ttl').textContent = (VUES.filter(function (x) { return x.id === v; })[0] || {}).label;
+  drawNav();
+  ({ bord:vBord, clients:vClients, formulaires:vFormLib, reglages:vReglages })[v]();
+}
+window.addEventListener('hashchange', render);
+
+/* ==================================================== Tableau de bord === */
+function vBord() {
+  var s = A.stats;
+  var attente = A.clients.filter(function (c) { return c.account_status === 'attente_paiement'; });
+  var recents = A.clients.slice().sort(function (a, b) {
+    return (b.last_update || b.created_at).localeCompare(a.last_update || a.created_at); }).slice(0, 6);
+
+  $('#page').innerHTML =
+    '<div class="page-head"><h1>Vue d’ensemble</h1>'
+    + '<p class="lede">L’état des dossiers en un coup d’œil.</p></div>'
+    + '<div class="grid g4" style="margin-bottom:22px">'
+      + kpi('Dossiers actifs', s.clients, 'clients disposant d’un code')
+      + kpi('En attente de paiement', s.pending, 'code non délivré', s.pending ? 'warn' : '')
+      + kpi('Formulaires ouverts', s.forms_waiting, 'chez les clients')
+      + kpi('Réponses à examiner', s.to_review, 'formulaires envoyés', s.to_review ? 'accent' : '')
+    + '</div>'
+
+    + (attente.length
+      ? '<div class="card" style="margin-bottom:22px"><div class="card-head"><h3>Demandes en attente de règlement</h3>'
+        + '<span class="badge warn">' + attente.length + '</span></div><div class="card-list">'
+        + attente.map(function (c) {
+            return '<div class="row-between"><div><a href="#clients/' + esc(c.id) + '" style="font-weight:600;color:var(--ink)">'
+              + esc(c.business_name) + '</a><div class="small muted">' + esc(QL.money(c.fee_amount))
+              + ' · ouvert ' + esc(QL.since(c.created_at)) + ' · ' + esc(c.contact_value) + '</div></div>'
+              + '<button class="btn btn-primary btn-sm" data-paid="' + esc(c.id) + '">Marquer réglé & activer</button></div>';
+          }).join('') + '</div></div>'
+      : '')
+
+    + '<div class="card"><div class="card-head"><h3>Activité récente</h3>'
+      + '<a class="btn btn-quiet btn-sm" href="#clients">Tous les clients</a></div>'
+      + '<div class="tbl-wrap" style="padding:16px 22px 6px"><table class="tbl"><thead><tr>'
+      + '<th>Client</th><th>Phase</th><th class="r">Formulaires</th><th class="r">Documents</th><th>Dernière nouvelle</th></tr></thead><tbody>'
+      + recents.map(function (c) {
+        var ph = QL.PHASES.filter(function (p) { return p.id === c.project_phase; })[0];
+        return '<tr style="cursor:pointer" data-go="' + esc(c.id) + '">'
+          + '<td><b style="color:var(--ink)">' + esc(c.business_name) + '</b>'
+          + '<div class="xsmall faint">' + esc(natLabel(c.project_nature)) + '</div></td>'
+          + '<td><span class="badge plain">' + esc(ph ? ph.label : '—') + '</span></td>'
+          + '<td class="r">' + (c.forms_active ? '<span class="badge accent">' + c.forms_active + ' ouvert' + (c.forms_active > 1 ? 's' : '') + '</span>' : '<span class="faint">—</span>') + '</td>'
+          + '<td class="r">' + (c.docs || '<span class="faint">—</span>') + '</td>'
+          + '<td class="small muted">' + esc(c.last_update ? QL.since(c.last_update) : 'aucune') + '</td></tr>';
+      }).join('') + '</tbody></table></div></div>';
+
+  $$('[data-paid]').forEach(function (b) {
+    b.onclick = function () {
+      patch(b.dataset.paid, { fee_status:'regle', account_status:'actif' }, 'Dossier activé.');
+    };
+  });
+  $$('[data-go]').forEach(function (r) { r.onclick = function () { location.hash = '#clients/' + r.dataset.go; }; });
+}
+function kpi(k, v, d, tone) {
+  return '<div class="card kpi"><div class="k">' + esc(k) + '</div>'
+    + '<div class="v"' + (tone === 'warn' ? ' style="color:var(--warn)"' : tone === 'accent' ? ' style="color:var(--accent-deep)"' : '') + '>'
+    + v + '</div><div class="d">' + esc(d) + '</div></div>';
+}
+function natLabel(id) {
+  var n = QL.NATURES.filter(function (x) { return x.id === id; })[0]; return n ? n.label : (id || '—');
+}
+
+/* ========================================================== Clients ===== */
+function vClients() {
+  var id = sub();
+  if (id) return clientDetail(id);
+
+  $('#page').innerHTML =
+    '<div class="page-head row-between"><div><h1>Clients</h1>'
+    + '<p class="lede">Tous les dossiers ouverts, actifs ou en attente.</p></div></div>'
+    + '<div class="card" style="margin-bottom:16px"><div class="card-body" style="padding:14px 18px">'
+      + '<input class="input" id="q" placeholder="Rechercher un nom, un secteur, un code…"></div></div>'
+    + '<div class="card"><div class="tbl-wrap" style="padding:16px 22px 6px"><table class="tbl"><thead><tr>'
+      + '<th>Client</th><th>Code</th><th>Secteur</th><th class="r">Budget</th><th>État</th><th>Phase</th><th></th>'
+      + '</tr></thead><tbody id="rows"></tbody></table></div></div>';
+
+  function rows(filtre) {
+    var f = (filtre || '').toLowerCase();
+    var list = A.clients.filter(function (c) {
+      return !f || [c.business_name, c.sector, c.code, natLabel(c.project_nature)]
+        .join(' ').toLowerCase().indexOf(f) >= 0;
+    });
+    $('#rows').innerHTML = list.length ? list.map(function (c) {
+      var ph = QL.PHASES.filter(function (p) { return p.id === c.project_phase; })[0];
+      var st = c.account_status === 'actif' ? '<span class="badge ok">Actif</span>'
+        : c.account_status === 'attente_paiement' ? '<span class="badge warn">Paiement</span>'
+        : '<span class="badge bad">Suspendu</span>';
+      return '<tr data-go="' + esc(c.id) + '" style="cursor:pointer">'
+        + '<td><b style="color:var(--ink)">' + esc(c.business_name) + '</b>'
+        + '<div class="xsmall faint">' + esc(natLabel(c.project_nature)) + '</div></td>'
+        + '<td><span class="codecell">' + esc(c.code) + '</span></td>'
+        + '<td class="small">' + esc(c.sector) + '</td>'
+        + '<td class="r num">' + esc(QL.money(c.budget)) + '</td>'
+        + '<td>' + st + '</td>'
+        + '<td><span class="badge plain">' + esc(ph ? ph.label : '—') + '</span></td>'
+        + '<td class="r faint">' + ico('arrow') + '</td></tr>';
+    }).join('') : '<tr><td colspan="7">' + vide('users', 'Aucun dossier', 'Aucun résultat pour cette recherche.') + '</td></tr>';
+    $$('[data-go]').forEach(function (r) { r.onclick = function () { location.hash = '#clients/' + r.dataset.go; }; });
+  }
+  rows('');
+  $('#q').oninput = QL.debounce(function () { rows($('#q').value); }, 180);
+}
+
+/* ---------------------------------------------------- Détail d'un client */
+var CD = null;
+function clientDetail(id) {
+  $('#page').innerHTML = '<div class="skel" style="height:300px"></div>';
+  QL.api('qb_admin_client', { p_token:T(), p_id:id }).then(function (d) {
+    CD = d; paintClient();
+  }).catch(function (e) { QL.toast(e.message, 'bad'); location.hash = '#clients'; });
+}
+function paintClient() {
+  var c = CD.client;
+  var onglet = (location.hash.split('/')[2]) || 'projet';
+  var st = c.account_status === 'actif' ? '<span class="badge ok">Actif</span>'
+    : c.account_status === 'attente_paiement' ? '<span class="badge warn">En attente de paiement</span>'
+    : '<span class="badge bad">Suspendu</span>';
+
+  $('#page').innerHTML =
+    '<a class="btn btn-quiet btn-sm" href="#clients" style="margin-bottom:14px;padding-left:0">'
+      + ico('back') + '<span>Tous les clients</span></a>'
+    + '<div class="row-between wrapfx" style="margin-bottom:20px">'
+      + '<div><div class="row" style="gap:10px"><h1>' + esc(c.business_name) + '</h1>' + st + '</div>'
+      + '<p class="small muted" style="margin-top:6px">' + esc(natLabel(c.project_nature)) + ' · '
+      + esc(c.sector) + ' · ' + esc(QL.money(c.budget)) + ' · ouvert le ' + esc(QL.dateFull(c.created_at)) + '</p></div>'
+      + '<div class="row" style="gap:8px">'
+        + '<span class="codecell">' + esc(c.code) + '</span>'
+        + '<button class="btn btn-icon btn-ghost" id="cpyCode" title="Copier le code">' + ico('copy') + '</button>'
+        + '<button class="btn btn-ghost btn-sm" id="regen">Nouveau code</button>'
+      + '</div></div>'
+
+    + '<div class="tabs">' + [['projet','Projet'],['forms','Formulaires'],['docs','Documents'],
+        ['liens','Liens'],['maj','Mises à jour'],['fiche','Fiche']].map(function (t) {
+        return '<a class="tab' + (onglet === t[0] ? ' on' : '') + '" href="#clients/' + esc(c.id) + '/' + t[0] + '">'
+          + t[1] + '</a>'; }).join('') + '</div>'
+    + '<div id="tabBody"></div>';
+
+  $('#cpyCode').onclick = function () { QL.copier(c.code); };
+  $('#regen').onclick = function () {
+    QL.confirmer('Générer un nouveau code ?',
+      'L’ancien code cessera immédiatement de fonctionner. Pensez à transmettre le nouveau au client.',
+      function () {
+        QL.api('qb_admin_code_regen', { p_token:T(), p_id:c.id }).then(function (r) {
+          QL.toast('Nouveau code : ' + r.code, 'ok'); return reloadClient();
+        }).catch(function (e) { QL.toast(e.message, 'bad'); });
+      });
+  };
+  ({ projet:tProjet, forms:tForms, docs:tDocs, liens:tLiens, maj:tMaj, fiche:tFiche })[onglet]();
+}
+function reloadClient() {
+  return QL.api('qb_admin_client', { p_token:T(), p_id:CD.client.id })
+    .then(function (d) { CD = d; paintClient(); return QL.api('qb_admin_data', { p_token:T() }); })
+    .then(function (d) { A = d; drawNav(); });
+}
+function patch(id, p, msg) {
+  return QL.api('qb_admin_client_patch', { p_token:T(), p_id:id, p_patch:p })
+    .then(function () { if (msg) QL.toast(msg, 'ok'); return load(); })
+    .catch(function (e) { QL.toast(e.message, 'bad'); });
+}
+
+/* --- Onglet Projet --- */
+function tProjet() {
+  var c = CD.client;
+  $('#tabBody').innerHTML =
+    '<div class="grid g-side">'
+    + '<div class="card"><div class="card-head"><h3>Fiche projet</h3>'
+      + '<button class="btn btn-primary btn-sm" id="saveP">Enregistrer</button></div>'
+      + '<div class="card-body stack stack-20">'
+        + '<div class="field"><label for="pt">Titre affiché au client</label>'
+          + '<input class="input" id="pt" value="' + esc(c.project_title || '') + '" placeholder="Espace de coordination…"></div>'
+        + '<div class="field"><label for="ps">Résumé du projet</label>'
+          + '<textarea class="textarea" id="ps" placeholder="Deux ou trois phrases, en français simple, sur ce que le projet apporte.">' + esc(c.summary || '') + '</textarea>'
+          + '<p class="hint">Ce texte s’affiche en tête de l’espace client.</p></div>'
+        + '<div class="grid g2">'
+          + '<div class="field"><label for="pp">Phase</label><select class="select" id="pp">'
+            + QL.PHASES.map(function (p) { return '<option value="' + p.id + '"'
+              + (p.id === c.project_phase ? ' selected' : '') + '>' + esc(p.label) + '</option>'; }).join('')
+            + '</select></div>'
+          + '<div class="field"><label for="pg">Avancement · <span id="pgv" class="num">' + (c.progress || 0) + ' %</span></label>'
+            + '<input class="range" type="range" id="pg" min="0" max="100" step="5" value="' + (c.progress || 0) + '"></div>'
+        + '</div>'
+        + '<div><div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:12px">Aperçu côté client</div>'
+          + '<div id="phasePrev"></div></div>'
+      + '</div></div>'
+    + '<div class="stack" style="gap:16px">'
+      + '<div class="card card-pad"><div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:10px">Notes internes</div>'
+        + '<textarea class="textarea" id="notes" placeholder="Visible par vous seul.">' + esc(c.notes || '') + '</textarea>'
+        + '<button class="btn btn-ghost btn-sm" id="saveN" style="margin-top:10px">Enregistrer la note</button></div>'
+    + '</div></div>';
+
+  var r = $('#pg');
+  function pct() { r.style.setProperty('--pct', r.value + '%'); $('#pgv').textContent = r.value + ' %'; }
+  r.oninput = pct; pct();
+  QL.phaseBar($('#phasePrev'), c.project_phase);
+  $('#pp').onchange = function () { QL.phaseBar($('#phasePrev'), this.value); };
+  $('#saveP').onclick = function () {
+    patch(c.id, { project_title:$('#pt').value.trim(), summary:$('#ps').value.trim(),
+      project_phase:$('#pp').value, progress:+$('#pg').value }, 'Fiche projet enregistrée.')
+      .then(reloadClient);
+  };
+  $('#saveN').onclick = function () { patch(c.id, { notes:$('#notes').value }, 'Note enregistrée.'); };
+}
+
+/* --- Onglet Formulaires --- */
+function tForms() {
+  var c = CD.client;
+  var assigned = {}; CD.forms.forEach(function (f) { assigned[f.form_id] = f; });
+  $('#tabBody').innerHTML =
+    '<p class="small muted" style="margin-bottom:16px;max-width:70ch">Activez un formulaire pour le faire apparaître '
+    + 'dans l’espace du client. Vous pouvez le retirer ou le rouvrir à tout moment.</p>'
+    + '<div class="stack stack-10">' + A.forms.map(function (f) {
+      var a = assigned[f.id];
+      var etat = !a ? '<span class="badge plain">Non activé</span>'
+        : a.status === 'active' ? '<span class="badge accent">Ouvert chez le client</span>'
+        : '<span class="badge ok">Réponses reçues</span>';
+      return '<div class="card card-pad row-between wrapfx" style="gap:14px">'
+        + '<div class="grow" style="min-width:220px"><div class="row" style="gap:9px;margin-bottom:3px">'
+          + '<b style="color:var(--ink);font-size:15px">' + esc(f.title) + '</b>' + etat + '</div>'
+        + '<div class="small muted">' + esc(f.description || '') + ' · ' + f.schema.length + ' question'
+          + (f.schema.length > 1 ? 's' : '') + '</div>'
+        + (a && a.submitted_at ? '<div class="xsmall faint" style="margin-top:4px">Envoyé ' + esc(QL.since(a.submitted_at)) + '</div>' : '')
+        + '</div>'
+        + '<div class="row" style="gap:8px">'
+          + (a && a.status === 'submitted' ? '<button class="btn btn-ghost btn-sm" data-see="' + esc(f.id) + '">Voir les réponses</button>' : '')
+          + (a && a.status === 'submitted' ? '<button class="btn btn-quiet btn-sm" data-act="reopen" data-f="' + esc(f.id) + '">Rouvrir</button>' : '')
+          + (!a ? '<button class="btn btn-primary btn-sm" data-act="assign" data-f="' + esc(f.id) + '">Activer</button>' : '')
+          + (a && a.status === 'active' ? '<button class="btn btn-danger btn-sm" data-act="unassign" data-f="' + esc(f.id) + '">Retirer</button>' : '')
+        + '</div></div>';
+    }).join('') + '</div>';
+
+  $$('[data-act]').forEach(function (b) {
+    b.onclick = function () {
+      QL.api('qb_admin_assign', { p_token:T(), p_client:c.id, p_form:b.dataset.f, p_action:b.dataset.act })
+        .then(function () { QL.toast('Mis à jour', 'ok'); return reloadClient(); })
+        .catch(function (e) { QL.toast(e.message, 'bad'); });
+    };
+  });
+  $$('[data-see]').forEach(function (b) {
+    b.onclick = function () {
+      var a = assigned[b.dataset.see];
+      QL.modal({ title:a.title, sub:'Réponses envoyées le ' + QL.dateTime(a.submitted_at), wide:true, foot:false,
+        body:a.schema.map(function (fl) {
+          var v = a.answers[fl.key];
+          if (Array.isArray(v)) v = v.join(', ');
+          if (typeof v === 'boolean') v = v ? 'Oui' : 'Non';
+          return '<div class="ansrow"><div class="q">' + esc(fl.label) + '</div>'
+            + '<div class="a">' + (v ? esc(v) : '<span class="faint">Sans réponse</span>') + '</div></div>';
+        }).join('') });
+    };
+  });
+}
+
+/* --- Onglet Documents --- */
+function tDocs() {
+  var c = CD.client;
+  $('#tabBody').innerHTML =
+    '<div class="row-between" style="margin-bottom:16px">'
+      + '<p class="small muted" style="max-width:62ch">Les dépôts du client et les vôtres. '
+      + 'Ce que vous ajoutez ici est immédiatement visible dans son espace.</p>'
+      + '<div class="row" style="gap:8px"><button class="btn btn-ghost btn-sm" id="addF">' + ico('cloud') + '<span>Fichier</span></button>'
+      + '<button class="btn btn-ghost btn-sm" id="addL">' + ico('link') + '<span>Lien</span></button>'
+      + '<input type="file" id="fin" multiple style="display:none"></div></div>'
+    + '<div class="card">' + (CD.documents.length
+      ? '<div class="card-list">' + CD.documents.map(function (d) {
+          return '<div class="row-between"><div class="file grow"><div class="file-ic">'
+            + (d.kind === 'link' ? ico('link') : esc(QL.extOf(d.name).slice(0,4))) + '</div>'
+            + '<div class="grow" style="min-width:0"><div class="file-nm truncate">' + esc(d.name) + '</div>'
+            + '<div class="file-meta">' + (d.kind === 'link' ? esc(d.url) : esc(QL.bytes(d.size)))
+            + ' · ' + esc(QL.dateTime(d.created_at)) + ' · '
+            + (d.uploaded_by === 'client' ? 'déposé par le client' : 'ajouté par vous') + '</div></div></div>'
+            + '<div class="row" style="gap:4px">'
+            + (d.kind === 'link' ? '<a class="btn btn-icon btn-quiet" href="' + esc(d.url) + '" target="_blank" rel="noopener">' + ico('out') + '</a>'
+               : '<button class="btn btn-icon btn-quiet" data-dl="' + esc(d.id) + '">' + ico('dl') + '</button>')
+            + '<button class="btn btn-icon btn-danger" data-del="' + esc(d.id) + '">' + ico('trash') + '</button></div></div>';
+        }).join('') + '</div>'
+      : '<div class="card-body">' + vide('folder', 'Aucun document', 'Rien n’a encore été déposé.') + '</div>') + '</div>';
+
+  $('#addF').onclick = function () { $('#fin').click(); };
+  $('#fin').onchange = function () {
+    var files = Array.prototype.slice.call(this.files); this.value = '';
+    Promise.all(files.map(function (f) {
+      return QL.readFile(f).then(function (b64) {
+        return QL.api('qb_doc_add', { p_token:T(), p_client:c.id,
+          p_doc:{ kind:'file', name:f.name, mime:f.type, size:f.size, b64:b64 } });
+      });
+    })).then(function () { QL.toast('Ajouté', 'ok'); return reloadClient(); })
+      .catch(function (e) { QL.toast(e.message, 'bad'); });
+  };
+  $('#addL').onclick = function () {
+    QL.modal({ title:'Ajouter un lien au dossier', ok:'Ajouter',
+      body:'<div class="stack stack-14"><div class="field"><label>Intitulé</label>'
+        + '<input class="input" id="dLab"></div><div class="field"><label>Adresse</label>'
+        + '<input class="input" id="dUrl" placeholder="https://…"></div></div>',
+      onOk:function (m) {
+        var lab = QL.$('#dLab', m).value.trim(), url = QL.$('#dUrl', m).value.trim();
+        if (!lab || !url) { QL.toast('Intitulé et adresse requis.', 'bad'); return false; }
+        QL.api('qb_doc_add', { p_token:T(), p_client:c.id, p_doc:{ kind:'link', name:lab, url:url } })
+          .then(function () { QL.toast('Ajouté', 'ok'); return reloadClient(); })
+          .catch(function (e) { QL.toast(e.message, 'bad'); });
+      } });
+  };
+  $$('[data-del]').forEach(function (b) { b.onclick = function () {
+    QL.confirmer('Supprimer ce document ?', 'Suppression définitive, y compris côté client.', function () {
+      QL.api('qb_doc_delete', { p_token:T(), p_id:b.dataset.del })
+        .then(function () { return reloadClient(); }).catch(function (e) { QL.toast(e.message, 'bad'); });
+    }, true); }; });
+  $$('[data-dl]').forEach(function (b) { b.onclick = function () {
+    QL.api('qb_doc_get', { p_token:T(), p_id:b.dataset.dl })
+      .then(function (d) { QL.download(d.name, d.mime, d.b64); })
+      .catch(function (e) { QL.toast(e.message, 'bad'); }); }; });
+}
+
+/* --- Onglet Liens --- */
+function tLiens() {
+  var c = CD.client;
+  $('#tabBody').innerHTML =
+    '<div class="row-between" style="margin-bottom:16px">'
+      + '<p class="small muted" style="max-width:62ch">Les adresses que le client doit avoir sous la main : '
+      + 'maquettes, version de test, mise en ligne.</p>'
+      + '<button class="btn btn-primary btn-sm" id="addLien">' + ico('plus') + '<span>Ajouter</span></button></div>'
+    + '<div class="card">' + (CD.links.length
+      ? '<div class="card-list">' + CD.links.map(function (l) {
+          return '<div class="row-between"><div class="grow" style="min-width:0">'
+            + '<div class="row" style="gap:8px"><b style="color:var(--ink)">' + esc(l.label) + '</b>'
+            + '<span class="badge plain">' + esc((QL.LINK_KINDS[l.kind] || QL.LINK_KINDS.autre).label) + '</span></div>'
+            + '<div class="small muted truncate">' + esc(l.url) + '</div></div>'
+            + '<div class="row" style="gap:4px">'
+            + '<a class="btn btn-icon btn-quiet" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + ico('out') + '</a>'
+            + '<button class="btn btn-icon btn-danger" data-dl2="' + esc(l.id) + '">' + ico('trash') + '</button></div></div>';
+        }).join('') + '</div>'
+      : '<div class="card-body">' + vide('link', 'Aucun lien', 'Ajoutez la première adresse du projet.') + '</div>') + '</div>';
+
+  $('#addLien').onclick = function () {
+    QL.modal({ title:'Ajouter un lien', ok:'Ajouter',
+      body:'<div class="stack stack-14">'
+        + '<div class="field"><label>Intitulé</label><input class="input" id="nLab" placeholder="Version de test"></div>'
+        + '<div class="field"><label>Adresse</label><input class="input" id="nUrl" placeholder="https://…"></div>'
+        + '<div class="field"><label>Type</label><select class="select" id="nKind">'
+        + Object.keys(QL.LINK_KINDS).map(function (k) {
+            return '<option value="' + k + '">' + esc(QL.LINK_KINDS[k].label) + '</option>'; }).join('')
+        + '</select></div></div>',
+      onOk:function (m) {
+        var lab = QL.$('#nLab', m).value.trim(), url = QL.$('#nUrl', m).value.trim();
+        if (!lab || !url) { QL.toast('Intitulé et adresse requis.', 'bad'); return false; }
+        if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+        QL.api('qb_admin_link_add', { p_token:T(), p_client:c.id,
+          p_link:{ label:lab, url:url, kind:QL.$('#nKind', m).value } })
+          .then(function () { QL.toast('Lien ajouté', 'ok'); return reloadClient(); })
+          .catch(function (e) { QL.toast(e.message, 'bad'); });
+      } });
+  };
+  $$('[data-dl2]').forEach(function (b) { b.onclick = function () {
+    QL.api('qb_admin_link_delete', { p_token:T(), p_id:b.dataset.dl2 })
+      .then(reloadClient).catch(function (e) { QL.toast(e.message, 'bad'); }); }; });
+}
+
+/* --- Onglet Mises à jour --- */
+function tMaj() {
+  var c = CD.client;
+  $('#tabBody').innerHTML =
+    '<div class="grid g-side">'
+    + '<div class="card"><div class="card-head"><h3>Journal du projet</h3>'
+      + '<span class="small muted">' + CD.updates.length + ' entrée' + (CD.updates.length > 1 ? 's' : '') + '</span></div>'
+      + '<div class="card-body">' + (CD.updates.length
+        ? '<div class="tl">' + CD.updates.map(function (u) {
+            var k = QL.UPDATE_KINDS[u.kind] || QL.UPDATE_KINDS.info;
+            return '<div class="tl-item ' + k.cls + '"><div class="row-between">'
+              + '<div class="tl-date">' + esc(QL.dateTime(u.created_at)) + ' · ' + esc(k.label) + '</div>'
+              + '<button class="btn btn-icon btn-danger" data-du="' + esc(u.id) + '">' + ico('trash') + '</button></div>'
+              + '<h4>' + esc(u.title) + '</h4>'
+              + (u.body ? '<p>' + esc(u.body).replace(/\n/g, '<br>') + '</p>' : '') + '</div>';
+          }).join('') + '</div>'
+        : vide('bell', 'Journal vide', 'Publiez la première mise à jour.')) + '</div></div>'
+
+    + '<div class="card"><div class="card-head"><h3>Publier</h3></div><div class="card-body stack stack-14">'
+      + '<div class="field"><label for="uk">Nature</label><select class="select" id="uk">'
+        + Object.keys(QL.UPDATE_KINDS).map(function (k) {
+            return '<option value="' + k + '">' + esc(QL.UPDATE_KINDS[k].label) + '</option>'; }).join('')
+      + '</select></div>'
+      + '<div class="field"><label for="ut">Titre</label><input class="input" id="ut" placeholder="Maquettes livrées"></div>'
+      + '<div class="field"><label for="ub">Détail</label>'
+        + '<textarea class="textarea" id="ub" placeholder="Ce qui a avancé, ce qui est attendu du client, la prochaine étape."></textarea></div>'
+      + '<button class="btn btn-primary btn-block" id="post">' + ico('send') + '<span>Publier</span></button>'
+      + '<p class="xsmall faint">La date et l’heure sont apposées automatiquement. Le client voit la publication immédiatement.</p>'
+    + '</div></div></div>';
+
+  $('#post').onclick = function () {
+    var t = $('#ut').value.trim();
+    if (!t) { QL.toast('Un titre est nécessaire.', 'bad'); $('#ut').focus(); return; }
+    var b = this; QL.busy(b, true, 'Publication…');
+    QL.api('qb_admin_update_post', { p_token:T(), p_client:c.id,
+      p_update:{ kind:$('#uk').value, title:t, body:$('#ub').value.trim() } })
+      .then(function () { QL.toast('Publié', 'ok'); return reloadClient(); })
+      .catch(function (e) { QL.busy(b, false); QL.toast(e.message, 'bad'); });
+  };
+  $$('[data-du]').forEach(function (b) { b.onclick = function () {
+    QL.confirmer('Supprimer cette entrée ?', 'Elle disparaîtra du journal du client.', function () {
+      QL.api('qb_admin_update_delete', { p_token:T(), p_id:b.dataset.du })
+        .then(reloadClient).catch(function (e) { QL.toast(e.message, 'bad'); });
+    }, true); }; });
+}
+
+/* --- Onglet Fiche --- */
+function tFiche() {
+  var c = CD.client;
+  $('#tabBody').innerHTML =
+    '<div class="grid g-side">'
+    + '<div class="card"><div class="card-head"><h3>Déclaration du client</h3>'
+      + '<button class="btn btn-primary btn-sm" id="saveF">Enregistrer</button></div>'
+      + '<div class="card-body stack stack-16">'
+        + '<div class="grid g2">'
+          + '<div class="field"><label>Nom de l’activité</label><input class="input" id="fN" value="' + esc(c.business_name) + '"></div>'
+          + '<div class="field"><label>Secteur</label><select class="select" id="fS">'
+            + QL.SECTEURS.map(function (s) { return '<option' + (s === c.sector ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('')
+            + '</select></div>'
+        + '</div>'
+        + '<div class="grid g2">'
+          + '<div class="field"><label>Nature</label><select class="select" id="fNat">'
+            + QL.NATURES.map(function (n) { return '<option value="' + n.id + '"'
+              + (n.id === c.project_nature ? ' selected' : '') + '>' + esc(n.label) + '</option>'; }).join('')
+            + '</select></div>'
+          + '<div class="field"><label>Budget (€)</label><input class="input" type="number" id="fB" value="' + (c.budget || 0) + '"></div>'
+        + '</div>'
+        + '<div class="grid g2">'
+          + '<div class="field"><label>Moyen de contact</label><select class="select" id="fCm">'
+            + QL.CONTACTS.map(function (x) { return '<option value="' + x.id + '"'
+              + (x.id === c.contact_method ? ' selected' : '') + '>' + esc(x.label) + '</option>'; }).join('')
+            + '</select></div>'
+          + '<div class="field"><label>Coordonnée</label><input class="input" id="fCv" value="' + esc(c.contact_value) + '"></div>'
+        + '</div>'
+        + '<div class="field"><label>Besoin exprimé à l’inscription</label>'
+          + '<textarea class="textarea" id="fBr">' + esc(c.brief || '') + '</textarea></div>'
+      + '</div></div>'
+
+    + '<div class="stack" style="gap:16px">'
+      + '<div class="card card-pad stack stack-14">'
+        + '<div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700">Accès & facturation</div>'
+        + '<div class="field"><label>État du compte</label><select class="select" id="fSt">'
+          + [['actif','Actif'],['attente_paiement','En attente de paiement'],['suspendu','Suspendu']]
+            .map(function (o) { return '<option value="' + o[0] + '"' + (o[0] === c.account_status ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('')
+          + '</select></div>'
+        + '<div class="field"><label>Frais de dossier</label>'
+          + '<div class="input-group"><input class="input" type="number" id="fFa" value="' + (c.fee_amount || 0) + '">'
+          + '<select class="select" id="fFs">'
+          + [['du','Dû'],['regle','Réglé'],['offert','Offert']].map(function (o) {
+              return '<option value="' + o[0] + '"' + (o[0] === c.fee_status ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('')
+          + '</select></div></div>'
+        + (c.promo_code ? '<div class="note accent">' + ico('check') + '<span>Code promotionnel utilisé : <b>' + esc(c.promo_code) + '</b></span></div>' : '')
+        + '<div class="xsmall faint">Conditions acceptées le ' + esc(QL.dateTime(c.cgu_accepted_at)) + '</div>'
+      + '</div>'
+      + '<div class="card card-pad">'
+        + '<div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:10px">Zone sensible</div>'
+        + '<p class="small muted" style="margin-bottom:12px">La suppression efface le dossier, ses formulaires, ses documents et son journal. Sans retour possible.</p>'
+        + '<button class="btn btn-danger btn-sm" id="delC">' + ico('trash') + '<span>Supprimer ce dossier</span></button>'
+      + '</div>'
+    + '</div></div>';
+
+  $('#saveF').onclick = function () {
+    patch(c.id, { business_name:$('#fN').value.trim(), sector:$('#fS').value,
+      project_nature:$('#fNat').value, budget:+$('#fB').value, contact_method:$('#fCm').value,
+      contact_value:$('#fCv').value.trim(), brief:$('#fBr').value.trim(),
+      account_status:$('#fSt').value, fee_amount:+$('#fFa').value, fee_status:$('#fFs').value },
+      'Fiche enregistrée.').then(reloadClient);
+  };
+  $('#delC').onclick = function () {
+    QL.confirmer('Supprimer « ' + c.business_name + ' » ?',
+      'Toutes les données de ce dossier seront effacées définitivement.', function () {
+        QL.api('qb_admin_client_delete', { p_token:T(), p_id:c.id }).then(function () {
+          QL.toast('Dossier supprimé', 'ok'); location.hash = '#clients'; return load();
+        }).catch(function (e) { QL.toast(e.message, 'bad'); });
+      }, true);
+  };
+}
+
+/* ============================================ Bibliothèque de formulaires */
+function vFormLib() {
+  $('#page').innerHTML =
+    '<div class="row-between wrapfx" style="margin-bottom:20px"><div><h1>Bibliothèque de formulaires</h1>'
+    + '<p class="lede">Créez-les une fois, activez-les client par client, au moment utile.</p></div>'
+    + '<button class="btn btn-primary" id="newF">' + ico('plus') + '<span>Nouveau formulaire</span></button></div>'
+    + '<div class="stack stack-10">' + (A.forms.length ? A.forms.map(function (f) {
+        return '<div class="card card-pad row-between wrapfx" style="gap:14px">'
+          + '<div class="grow" style="min-width:220px"><b style="color:var(--ink);font-size:15.5px">' + esc(f.title) + '</b>'
+          + '<div class="small muted" style="margin-top:3px">' + esc(f.description || '') + '</div>'
+          + '<div class="xsmall faint" style="margin-top:5px">' + f.schema.length + ' question'
+          + (f.schema.length > 1 ? 's' : '') + ' · activé sur ' + f.used + ' dossier' + (f.used > 1 ? 's' : '') + '</div></div>'
+          + '<div class="row" style="gap:8px">'
+          + '<button class="btn btn-ghost btn-sm" data-ed="' + esc(f.id) + '">Modifier</button>'
+          + '<button class="btn btn-icon btn-danger" data-fdel="' + esc(f.id) + '">' + ico('trash') + '</button></div></div>';
+      }).join('') : '<div class="card card-body">'
+        + vide('form', 'Aucun formulaire', 'Créez le premier : il sera réutilisable pour tous vos clients.') + '</div>') + '</div>';
+
+  $('#newF').onclick = function () { editForm(null); };
+  $$('[data-ed]').forEach(function (b) { b.onclick = function () {
+    editForm(A.forms.filter(function (f) { return f.id === b.dataset.ed; })[0]); }; });
+  $$('[data-fdel]').forEach(function (b) { b.onclick = function () {
+    QL.confirmer('Supprimer ce formulaire ?',
+      'Il sera retiré de la bibliothèque et des espaces clients où il est activé.', function () {
+        QL.api('qb_admin_form_delete', { p_token:T(), p_id:b.dataset.fdel })
+          .then(function () { QL.toast('Supprimé', 'ok'); return load(); })
+          .catch(function (e) { QL.toast(e.message, 'bad'); });
+      }, true); }; });
+}
+
+var TYPES = [['text','Texte court'],['textarea','Texte long'],['select','Liste déroulante'],
+  ['radio','Choix unique'],['multi','Choix multiples'],['checkbox','Case à cocher'],
+  ['number','Nombre'],['date','Date'],['email','E-mail'],['url','Adresse web']];
+
+function editForm(f) {
+  var schema = f ? JSON.parse(JSON.stringify(f.schema)) : [];
+  var m = QL.modal({ title:f ? 'Modifier le formulaire' : 'Nouveau formulaire', wide:true,
+    ok:'Enregistrer',
+    body:'<div class="stack stack-14">'
+      + '<div class="field"><label>Titre</label><input class="input" id="ftTitle" value="' + esc(f ? f.title : '') + '" placeholder="Cadrage du besoin"></div>'
+      + '<div class="field"><label>Introduction</label><input class="input" id="ftDesc" value="' + esc(f ? f.description : '') + '" placeholder="Une phrase pour expliquer à quoi ça sert."></div>'
+      + '<div><div class="row-between" style="margin-bottom:10px"><label class="lbl">Questions</label>'
+      + '<button class="btn btn-ghost btn-sm" id="addFld">' + ico('plus') + '<span>Ajouter</span></button></div>'
+      + '<div id="flds"></div></div></div>',
+    onOk:function (mm) {
+      var title = QL.$('#ftTitle', mm).value.trim();
+      if (!title) { QL.toast('Le titre est obligatoire.', 'bad'); return false; }
+      var out = collectFields(mm);
+      if (!out.length) { QL.toast('Ajoutez au moins une question.', 'bad'); return false; }
+      QL.api('qb_admin_form_upsert', { p_token:T(),
+        p_form:{ id:f ? f.id : null, title:title, description:QL.$('#ftDesc', mm).value.trim(), schema:out } })
+        .then(function () { QL.toast('Formulaire enregistré', 'ok'); return load(); })
+        .catch(function (e) { QL.toast(e.message, 'bad'); });
+    } });
+
+  function drawFields() {
+    QL.$('#flds', m.root).innerHTML = schema.map(function (fl, i) {
+      return '<div class="fld" data-i="' + i + '">'
+        + '<div class="row-between" style="margin-bottom:10px">'
+          + '<span class="xsmall faint" style="font-weight:700;letter-spacing:.08em">QUESTION ' + (i + 1) + '</span>'
+          + '<div class="row" style="gap:2px">'
+          + (i > 0 ? '<button class="btn btn-icon btn-quiet" data-up="' + i + '">' + ico('up') + '</button>' : '')
+          + (i < schema.length - 1 ? '<button class="btn btn-icon btn-quiet" data-down="' + i + '">' + ico('down') + '</button>' : '')
+          + '<button class="btn btn-icon btn-danger" data-rm="' + i + '">' + ico('trash') + '</button></div></div>'
+        + '<div class="stack stack-10">'
+        + '<input class="input" data-p="label" placeholder="Intitulé de la question" value="' + esc(fl.label || '') + '">'
+        + '<div class="row" style="gap:8px">'
+          + '<select class="select" data-p="type" style="flex:1">' + TYPES.map(function (t) {
+              return '<option value="' + t[0] + '"' + (fl.type === t[0] ? ' selected' : '') + '>' + t[1] + '</option>'; }).join('') + '</select>'
+          + '<label class="check nowrap" style="align-items:center"><input type="checkbox" data-p="required"'
+            + (fl.required ? ' checked' : '') + '><span class="small">Obligatoire</span></label></div>'
+        + '<input class="input" data-p="help" placeholder="Précision affichée sous la question (facultatif)" value="' + esc(fl.help || '') + '">'
+        + '<input class="input" data-p="options" placeholder="Choix possibles, séparés par une virgule" value="'
+          + esc((fl.options || []).join(', ')) + '"' + (['select','radio','multi'].indexOf(fl.type) < 0 ? ' style="display:none"' : '') + '>'
+        + '</div></div>';
+    }).join('') || '<p class="small muted">Aucune question pour l’instant.</p>';
+
+    QL.$$('[data-rm]', m.root).forEach(function (b) { b.onclick = function () {
+      sync(); schema.splice(+b.dataset.rm, 1); drawFields(); }; });
+    QL.$$('[data-up]', m.root).forEach(function (b) { b.onclick = function () {
+      sync(); var i = +b.dataset.up; schema.splice(i - 1, 0, schema.splice(i, 1)[0]); drawFields(); }; });
+    QL.$$('[data-down]', m.root).forEach(function (b) { b.onclick = function () {
+      sync(); var i = +b.dataset.down; schema.splice(i + 1, 0, schema.splice(i, 1)[0]); drawFields(); }; });
+    QL.$$('[data-p="type"]', m.root).forEach(function (s) { s.onchange = function () {
+      var opt = QL.$('[data-p="options"]', s.closest('.fld'));
+      opt.style.display = ['select','radio','multi'].indexOf(s.value) >= 0 ? '' : 'none'; }; });
+  }
+  function sync() { schema = collectFields(m.root, true); }
+  function collectFields(scope, keepEmpty) {
+    return QL.$$('.fld', scope).map(function (n) {
+      var g = function (p) { return QL.$('[data-p="' + p + '"]', n); };
+      var label = g('label').value.trim();
+      return { key:'q' + (n.dataset.i || 0) + '_' + slug(label), label:label, type:g('type').value,
+        required:g('required').checked, help:g('help').value.trim(),
+        options:g('options').value.split(',').map(function (x) { return x.trim(); }).filter(Boolean) };
+    }).filter(function (x) { return keepEmpty || x.label; });
+  }
+  function slug(s) {
+    return (s || 'champ').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+      .replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'').slice(0, 28) || 'champ';
+  }
+  QL.$('#addFld', m.root).onclick = function () {
+    sync(); schema.push({ label:'', type:'text', required:false, help:'', options:[] }); drawFields();
+  };
+  drawFields();
+}
+
+/* ========================================================== Réglages ==== */
+function vReglages() {
+  var s = A.settings || {};
+  $('#page').innerHTML =
+    '<div class="page-head"><h1>Réglages</h1>'
+    + '<p class="lede">Ce qui s’applique à toutes les nouvelles demandes.</p></div>'
+    + '<div class="grid g-side">'
+    + '<div class="card"><div class="card-head"><h3>Ouverture de dossier</h3>'
+      + '<button class="btn btn-primary btn-sm" id="saveS">Enregistrer</button></div>'
+      + '<div class="card-body stack stack-16">'
+      + '<div class="field"><label for="sFee">Frais de dossier (€)</label>'
+        + '<input class="input" type="number" id="sFee" value="' + (s.fee_amount || 0) + '" min="0">'
+        + '<p class="hint">Mettez 0 pour ouvrir les dossiers gratuitement par défaut.</p></div>'
+      + '<div class="field"><label for="sPay">Modalités de règlement affichées au client</label>'
+        + '<textarea class="textarea" id="sPay" style="min-height:130px">' + esc(s.payment_instructions || '') + '</textarea>'
+        + '<p class="hint">Ce texte apparaît à l’étape « Frais de dossier » et sur l’écran de confirmation.</p></div>'
+      + '</div></div>'
+    + '<div class="stack" style="gap:16px">'
+      + '<div class="card card-pad"><div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:10px">Code promotionnel</div>'
+        + '<p class="small muted">Un code d’exonération est actif. Il annule les frais de dossier et active '
+        + 'immédiatement le compte du client. Il est vérifié côté serveur : il ne figure jamais dans le code du site.</p>'
+        + '<p class="small muted" style="margin-top:10px">Pour le modifier, mettez à jour la table <span class="mono">qb_promo</span> dans Supabase.</p></div>'
+      + '<div class="card card-pad"><div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:10px">Backend</div>'
+        + '<div class="row" style="gap:9px"><span class="badge ' + (QL.LIVE ? 'ok' : 'warn') + '">'
+        + (QL.LIVE ? 'Supabase connecté' : 'Mode démonstration') + '</span></div>'
+        + '<p class="small muted" style="margin-top:10px">' + (QL.LIVE
+          ? 'Les données sont stockées dans votre projet Supabase.'
+          : 'Les données restent dans ce navigateur. Renseignez <span class="mono">qlab-config.js</span> pour passer en production.') + '</p></div>'
+    + '</div></div>';
+
+  $('#saveS').onclick = function () {
+    var b = this; QL.busy(b, true, 'Enregistrement…');
+    QL.api('qb_admin_settings', { p_token:T(),
+      p_patch:{ fee_amount:+$('#sFee').value, payment_instructions:$('#sPay').value.trim() } })
+      .then(function () { QL.toast('Réglages enregistrés', 'ok'); return load(); })
+      .catch(function (e) { QL.busy(b, false); QL.toast(e.message, 'bad'); });
+  };
+}
+
+function vide(icon, titre, txt) {
+  return '<div class="empty">' + ico(icon, 30) + '<b>' + esc(titre) + '</b><span>' + esc(txt) + '</span></div>';
+}
+
+$('#btnOut').onclick = function () { QL.logout(); };
+QL.railToggle();
+load();
+})();
+</script>
+</body>
+</html>

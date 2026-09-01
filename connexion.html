@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Se connecter • QlickLab</title>
+<meta name="description" content="Accès à l'espace client QlickLab." />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="assets/icon-black.png" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="app.css?v=2" />
+</head>
+<body class="qlab">
+
+<main class="auth">
+  <a class="auth-back" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    Retour au site
+  </a>
+
+  <!-- ============ Vue 1 : choix du profil ============ -->
+  <section class="auth-card" id="vChoix">
+    <img class="auth-logo" src="assets/wordmark-black.png" alt="QlickLab" />
+    <h1>Se connecter</h1>
+    <p class="sub">Choisissez le type d’accès qui vous concerne.</p>
+
+    <div class="opts stack-10">
+      <a class="opt" href="#client" id="goClient">
+        <span class="opt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2.5h9A1.5 1.5 0 0 1 21 10v8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18z"/></svg></span>
+        <span class="grow">
+          <b class="ttl">Client</b>
+          <span class="dsc">Suivre votre projet, remplir vos formulaires et déposer vos documents.</span>
+        </span>
+        <span class="opt-arrow" style="align-self:center;color:var(--faint)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+
+      <a class="opt" href="#autre" id="goAdmin">
+        <span class="opt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10" width="15" height="11" rx="2.5"/><path d="M8 10V6.8a4 4 0 0 1 8 0V10"/></svg></span>
+        <span class="grow">
+          <b class="ttl">Autre</b>
+          <span class="dsc">Accès réservé à l’équipe QlickLab.</span>
+        </span>
+        <span style="align-self:center;color:var(--faint)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+
+    <div class="auth-foot">
+      Pas encore de dossier ? <a href="inscription.html">Créer un accès client</a>
+    </div>
+  </section>
+
+  <!-- ============ Vue 2 : code client ============ -->
+  <section class="auth-card hidden" id="vClient">
+    <img class="auth-logo" src="assets/wordmark-black.png" alt="QlickLab" />
+    <h1>Espace client</h1>
+    <p class="sub">Saisissez le code à six chiffres qui vous a été communiqué.<br>Pas d’identifiant, pas de mot de passe.</p>
+
+    <div id="codeHost"></div>
+    <p class="small center" id="codeMsg" style="min-height:22px;margin:16px 0 0;color:var(--bad);font-weight:500"></p>
+
+    <button class="btn btn-primary btn-lg btn-block" id="btnCode" style="margin-top:8px">
+      <span>Entrer dans mon espace</span>
+    </button>
+
+    <div class="auth-foot">
+      <a href="inscription.html">Je n’ai pas encore de compte</a>
+      <div class="xsmall faint" style="margin-top:12px">
+        Code égaré ? Écrivez-nous depuis l’adresse de contact de votre dossier.
+      </div>
+    </div>
+    <p style="margin-top:18px;text-align:center">
+      <a href="#" class="small muted" data-vue="choix">← Changer de type d’accès</a>
+    </p>
+  </section>
+
+  <!-- ============ Vue 3 : accès équipe ============ -->
+  <section class="auth-card hidden" id="vAdmin">
+    <img class="auth-logo" src="assets/wordmark-black.png" alt="QlickLab" />
+    <h1>Accès équipe</h1>
+    <p class="sub">Espace d’administration des dossiers clients.</p>
+
+    <form class="stack stack-14" id="formAdmin" autocomplete="on">
+      <div class="field">
+        <label for="au">Identifiant</label>
+        <input class="input" type="text" id="au" name="username" autocomplete="username" required />
+      </div>
+      <div class="field">
+        <label for="ap">Mot de passe</label>
+        <input class="input" type="password" id="ap" name="password" autocomplete="current-password" required />
+      </div>
+      <p class="small" id="adminMsg" style="min-height:18px;margin:0;color:var(--bad);font-weight:500"></p>
+      <button class="btn btn-primary btn-lg btn-block" type="submit"><span>Se connecter</span></button>
+    </form>
+
+    <p style="margin-top:20px;text-align:center">
+      <a href="#" class="small muted" data-vue="choix">← Changer de type d’accès</a>
+    </p>
+  </section>
+
+  <p class="auth-legal">
+    QlickLab · <a href="legal.html#rgpd">Données personnelles</a> · <a href="legal.html#mentions">Mentions légales</a>
+  </p>
+</main>
+
+<script src="qlab-config.js"></script>
+<script src="qlab-demo.js?v=2"></script>
+<script src="app.js?v=2"></script>
+<script>
+(function () {
+  var $ = QL.$, vues = { choix: QL.$('#vChoix'), client: QL.$('#vClient'), autre: QL.$('#vAdmin') };
+  QL.demoFlag();
+
+  /* Déjà connecté : on va droit au but. */
+  var s = QL.session();
+  if (s && s.token) location.replace(s.role === 'admin' ? 'admin.html' : 'espace.html');
+
+  var code = null;
+  function show(name) {
+    Object.keys(vues).forEach(function (k) { vues[k].classList.toggle('hidden', k !== name); });
+    if (name === 'client') { if (!code) code = QL.codeInput($('#codeHost'), submitCode); setTimeout(code.focus, 80); }
+    if (name === 'autre') setTimeout(function () { $('#au').focus(); }, 80);
+  }
+  function route() {
+    var h = (location.hash || '').replace('#', '');
+    show(vues[h] ? h : 'choix');
+  }
+  window.addEventListener('hashchange', route);
+  QL.$$('[data-vue]').forEach(function (a) {
+    a.onclick = function (e) { e.preventDefault(); location.hash = ''; show('choix'); };
+  });
+  route();
+
+  /* ---- Connexion client ---- */
+  var busyCode = false;
+  function submitCode() {
+    var v = code.value();
+    if (v.length !== 6) { $('#codeMsg').textContent = 'Le code comporte six chiffres.'; code.shake(); return; }
+    if (busyCode) return;
+    busyCode = true;
+    var b = $('#btnCode'); QL.busy(b, true, 'Vérification…');
+    $('#codeMsg').textContent = '';
+    QL.api('qb_client_login', { p_code: v, p_fp: QL.fp() })
+      .then(function (r) {
+        QL.setSession({ token: r.token, role: 'client', name: r.client && r.client.business_name });
+        b.innerHTML = '<span>Bienvenue…</span>';
+        location.replace('espace.html');
+      })
+      .catch(function (e) {
+        busyCode = false; QL.busy(b, false);
+        $('#codeMsg').textContent = e.message || 'Connexion impossible.';
+        code.shake(); code.clear();
+      });
+  }
+  $('#btnCode').onclick = submitCode;
+
+  /* ---- Connexion équipe ---- */
+  $('#formAdmin').onsubmit = function (e) {
+    e.preventDefault();
+    var b = QL.$('button[type=submit]', this);
+    QL.busy(b, true, 'Vérification…'); $('#adminMsg').textContent = '';
+    QL.api('qb_admin_login', { p_username: $('#au').value, p_password: $('#ap').value, p_fp: QL.fp() })
+      .then(function (r) {
+        QL.setSession({ token: r.token, role: 'admin', name: 'Équipe QlickLab' });
+        location.replace('admin.html');
+      })
+      .catch(function (err) {
+        QL.busy(b, false);
+        $('#adminMsg').textContent = err.message || 'Connexion impossible.';
+        $('#ap').value = ''; $('#ap').focus();
+      });
+  };
+})();
+</script>
+</body>
+</html>
