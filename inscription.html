@@ -9,7 +9,7 @@
 <link rel="icon" href="assets/icon-black.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="app.css?v=4" />
+<link rel="stylesheet" href="app.css?v=5" />
 <style>
   .auth-card{position:relative;overflow:hidden}
   .wiz{position:absolute;top:0;left:0;right:0;display:flex;gap:2px;z-index:2}
@@ -110,10 +110,36 @@
       <!-- Étape 3 -->
       <div class="pane hidden" data-pane="2">
         <div class="stepno">Étape 3 sur 3</div>
-        <h1>Frais de dossier</h1>
+        <h1>Votre accès</h1>
         <p class="sub" style="text-align:left;margin:9px 0 24px">
-          Ils couvrent l’étude de votre demande et l’ouverture de votre espace de suivi.
+          Un code à six chiffres remplacera identifiant et mot de passe.
         </p>
+
+        <div class="field" style="margin-bottom:22px">
+          <label>Comment voulez-vous votre code ? <span class="req">*</span></label>
+          <div class="opts" id="codeMode">
+            <label class="opt"><input type="radio" name="cm" value="auto" checked>
+              <span class="dot"></span><span class="grow">
+                <b class="ttl">Le générer pour moi</b>
+                <span class="dsc">Six chiffres tirés au hasard, affichés juste après. Le plus sûr.</span>
+              </span></label>
+            <label class="opt"><input type="radio" name="cm" value="perso">
+              <span class="dot"></span><span class="grow">
+                <b class="ttl">Le choisir moi-même</b>
+                <span class="dsc">Un code que vous retiendrez sans effort. Évitez les dates de naissance.</span>
+              </span></label>
+          </div>
+        </div>
+
+        <div class="field hidden" id="customWrap" style="margin-bottom:22px">
+          <label>Votre code à six chiffres</label>
+          <div id="customCode"></div>
+          <p class="small" id="codeMsg" style="margin:12px 0 0;min-height:18px"></p>
+          <p class="hint">Les suites et répétitions (123456, 000000, 121212…) sont refusées :
+            elles seraient devinées en quelques essais.</p>
+        </div>
+
+        <h3 style="margin:26px 0 12px">Frais de dossier</h3>
 
         <div class="card card-pad quiet" style="margin-bottom:20px">
           <div class="row-between">
@@ -163,14 +189,16 @@
 </main>
 
 <script src="qlab-config.js"></script>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 <script>
 (function () {
   var $ = QL.$, $$ = QL.$$;
   QL.demoFlag();
 
   var data = { project_nature:'', budget:5000, brief:'', business_name:'', sector:'',
-               contact_method:'mail', contact_value:'', promo_code:'', cgu:false };
+               contact_method:'mail', contact_value:'', promo_code:'', cgu:false,
+               custom_code:'', fp:QL.fp() };
+  var codeSaisie = null;
   var fee = { base:0, current:0, offered:false };
 
   /* ---- Nature du projet ---- */
@@ -221,6 +249,43 @@
     $('#feeBadge').className = 'badge ok' + (fee.offered ? '' : ' hidden');
     $('#feeBadge').textContent = 'Frais offerts';
     $('#payNote').classList.toggle('hidden', fee.current === 0);
+  }
+
+  /* ---- Code d'accès : automatique ou choisi ---- */
+  $$('#codeMode input').forEach(function (i) {
+    i.onchange = function () {
+      var perso = i.value === 'perso';
+      $('#customWrap').classList.toggle('hidden', !perso);
+      if (perso) {
+        if (!codeSaisie) codeSaisie = QL.codeInput($('#customCode'), function () { verifCode(); });
+        setTimeout(codeSaisie.focus, 60);
+      } else { data.custom_code = ''; $('#codeMsg').textContent = ''; }
+    };
+  });
+  /* Contrôle local : même règles que le serveur, pour prévenir avant l'envoi. */
+  function faible(c) {
+    if (!/^[0-9]{6}$/.test(c)) return 'Il faut exactement six chiffres.';
+    if (/^(.)\1{5}$/.test(c)) return 'Six fois le même chiffre : trop simple.';
+    var m = true, d = true;
+    for (var k = 0; k < 5; k++) {
+      if (+c[k+1] - +c[k] !== 1) m = false;
+      if (+c[k] - +c[k+1] !== 1) d = false;
+    }
+    if (m || d) return 'Une suite de chiffres se devine trop vite.';
+    if (c.slice(0,2) === c.slice(2,4) && c.slice(2,4) === c.slice(4,6)) return 'Motif répété : trop simple.';
+    if (c.slice(0,3) === c.slice(3,6)) return 'Motif répété : trop simple.';
+    if (/^(.)\1(.)\2(.)\3$/.test(c)) return 'Motif répété : trop simple.';
+    return null;
+  }
+  function verifCode() {
+    var c = codeSaisie ? codeSaisie.value() : '';
+    data.custom_code = c;
+    var m = $('#codeMsg');
+    if (c.length < 6) { m.textContent = ''; return false; }
+    var err = faible(c);
+    if (err) { m.style.color = 'var(--bad)'; m.textContent = err; codeSaisie.shake(); return false; }
+    m.style.color = 'var(--ok)'; m.textContent = 'Code valide. Notez-le dès maintenant.';
+    return true;
   }
 
   /* ---- Code promotionnel (vérifié à l'envoi côté serveur) ---- */
@@ -275,6 +340,16 @@
   /* ---- Envoi ---- */
   $('#btnSend').onclick = function () {
     data.cgu = $('#cgu').checked;
+    var perso = $('#codeMode input:checked').value === 'perso';
+    if (perso && !verifCode()) {
+      if (!data.custom_code || data.custom_code.length < 6) {
+        $('#codeMsg').style.color = 'var(--bad)';
+        $('#codeMsg').textContent = 'Saisissez vos six chiffres, ou laissez-nous le générer.';
+        if (codeSaisie) codeSaisie.focus();
+      }
+      return;
+    }
+    if (!perso) data.custom_code = '';
     if (!data.cgu) { err('cgu', true); return; } else hideErr('cgu');
     var b = this; QL.busy(b, true, 'Ouverture du dossier…');
     QL.api('qb_signup', { p_payload: data })
@@ -285,6 +360,11 @@
           pane(2);
           var m = $('#promoMsg'); m.classList.remove('hidden');
           m.style.color = 'var(--bad)'; m.textContent = e.message;
+        } else if (/code/i.test(e.message)) {
+          pane(2);
+          $('#codeMsg').style.color = 'var(--bad)';
+          $('#codeMsg').textContent = e.message;
+          if (codeSaisie) { codeSaisie.shake(); codeSaisie.clear(); }
         } else QL.toast(e.message || 'Envoi impossible.', 'bad');
       });
   };
@@ -302,7 +382,9 @@
       + '<h1>' + (actif ? 'Votre dossier est ouvert' : 'Votre demande est enregistrée') + '</h1>'
       + '<p class="sub" style="margin-top:10px">'
       + (actif
-          ? 'Voici votre code d’accès personnel. Notez-le : il remplace à lui seul identifiant et mot de passe.'
+          ? (r.chosen
+              ? 'Votre code est enregistré. Il remplace à lui seul identifiant et mot de passe : ne l’oubliez pas.'
+              : 'Voici votre code d’accès personnel. Notez-le : il remplace à lui seul identifiant et mot de passe.')
           : 'Votre code d’accès vous sera transmis par ' + QL.esc(labelContact()) + ' dès réception des frais de dossier.')
       + '</p></div>'
       + (actif

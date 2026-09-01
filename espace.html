@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/icon-black.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="app.css?v=4" />
+<link rel="stylesheet" href="app.css?v=5" />
 </head>
 <body class="qlab">
 
@@ -50,7 +50,7 @@
 </div>
 
 <script src="qlab-config.js"></script>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 <script>
 (function () {
 var $ = QL.$, $$ = QL.$$, esc = QL.esc, ico = QL.ico;
@@ -459,6 +459,7 @@ function linkRow(l) {
 /* ========================================================== Vue dossier = */
 function vDossier() {
   var c = D.client;
+  var memo = (QL.session() || {}).remembered;
   var nat = (QL.NATURES.filter(function (n) { return n.id === c.project_nature; })[0] || {}).label || c.project_nature;
   var ct = (QL.CONTACTS.filter(function (x) { return x.id === c.contact_method; })[0] || {}).label || c.contact_method;
   var feeBadge = c.fee_status === 'offert' ? '<span class="badge ok">Offerts</span>'
@@ -485,6 +486,11 @@ function vDossier() {
           + '<button class="btn btn-ghost btn-sm" id="cpyCode" style="margin-top:14px">' + ico('copy') + '<span>Copier</span></button>'
           + '<p class="small muted" style="margin-top:12px">Ne le partagez qu’au sein de votre structure. '
           + 'En cas de doute, demandez-nous un nouveau code.</p>'
+          + (memo
+            ? '<div class="note" style="margin-top:14px">' + ico('info')
+              + '<span><b>Cet appareil est mémorisé.</b> Vous revenez sans saisir votre code. '
+              + 'Sur un poste partagé, déconnectez-vous pour annuler la mémorisation.</span></div>'
+            : '')
         + '</div>'
         + '<div class="card card-pad"><div class="row-between" style="margin-bottom:8px">'
           + '<div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700">Frais de dossier</div>'

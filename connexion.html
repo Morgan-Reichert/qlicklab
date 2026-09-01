@@ -9,7 +9,7 @@
 <link rel="icon" href="assets/icon-black.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="app.css?v=4" />
+<link rel="stylesheet" href="app.css?v=5" />
 </head>
 <body class="qlab">
 
@@ -59,7 +59,14 @@
     <div id="codeHost"></div>
     <p class="small center" id="codeMsg" style="min-height:22px;margin:16px 0 0;color:var(--bad);font-weight:500"></p>
 
-    <button class="btn btn-primary btn-lg btn-block" id="btnCode" style="margin-top:8px">
+    <label class="check" style="margin:4px 0 18px">
+      <input type="checkbox" id="remember" />
+      <span>Se souvenir de moi sur cet appareil
+        <span class="hint" style="display:block;margin-top:2px">Vous reviendrez sans saisir votre code
+        pendant trois mois. À réserver à votre ordinateur ou téléphone personnel.</span></span>
+    </label>
+
+    <button class="btn btn-primary btn-lg btn-block" id="btnCode">
       <span>Entrer dans mon espace</span>
     </button>
 
@@ -104,7 +111,7 @@
 </main>
 
 <script src="qlab-config.js"></script>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 <script>
 (function () {
   var $ = QL.$, vues = { choix: QL.$('#vChoix'), client: QL.$('#vClient'), autre: QL.$('#vAdmin') };
@@ -139,9 +146,11 @@
     busyCode = true;
     var b = $('#btnCode'); QL.busy(b, true, 'Vérification…');
     $('#codeMsg').textContent = '';
-    QL.api('qb_client_login', { p_code: v, p_fp: QL.fp() })
+    var memo = $('#remember').checked;
+    QL.api('qb_client_login', { p_code: v, p_fp: QL.fp(), p_remember: memo })
       .then(function (r) {
-        QL.setSession({ token: r.token, role: 'client', name: r.client && r.client.business_name });
+        QL.setSession({ token: r.token, role: 'client', remembered: !!r.remembered,
+                        name: r.client && r.client.business_name });
         b.innerHTML = '<span>Bienvenue…</span>';
         location.replace('espace.html');
       })
