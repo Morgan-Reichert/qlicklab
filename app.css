@@ -511,3 +511,65 @@ body.qlab{
   .gate-step{padding-right:0}
   .gate-step::after{display:none}
 }
+
+/* ---------- 22. Champs modulables ---------- */
+/* Curseur entre deux pôles */
+.scale{border:1px solid var(--line-2);border-radius:var(--r);padding:14px 16px 8px;background:var(--card)}
+.scale-poles{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;color:var(--ink-3)}
+.scale .range{margin:8px 0 2px}
+.scale-read{font-size:13px;color:var(--muted);text-align:center;padding-bottom:6px}
+
+/* Liste à rallonge */
+.rep-row{display:flex;align-items:flex-start;gap:10px;padding:10px;border:1px solid var(--line);
+  border-radius:var(--r-sm);background:#FCFCFB;margin-bottom:8px}
+.rep-no{width:22px;height:22px;flex:none;border-radius:50%;background:var(--paper-2);
+  display:grid;place-items:center;font-size:11.5px;font-weight:700;color:var(--ink-3);margin-top:9px}
+.rep-fields{flex:1;display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));min-width:0}
+.rep-add{margin-top:2px}
+
+/* Couleurs */
+.swatches{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.sw{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);
+  border-radius:var(--r-pill);padding:4px 6px 4px 5px;background:var(--card)}
+.sw input[type=color]{width:26px;height:26px;padding:0;border:0;border-radius:50%;
+  background:none;cursor:pointer;appearance:none;-webkit-appearance:none}
+.sw input[type=color]::-webkit-color-swatch-wrapper{padding:0}
+.sw input[type=color]::-webkit-color-swatch{border:1px solid var(--line-2);border-radius:50%}
+.sw-hex{width:80px;border:0;background:none;font-family:var(--mono);font-size:12.5px;
+  color:var(--ink);outline:0;text-transform:uppercase}
+.sw-x{border:0;background:none;cursor:pointer;color:var(--faint);padding:2px;display:grid;
+  place-items:center;border-radius:50%}
+.sw-x:hover{color:var(--bad);background:var(--bad-soft)}
+.sw-x svg{width:13px;height:13px}
+
+/* Classement */
+.rank-item{display:flex;align-items:center;gap:11px;padding:9px 11px;border:1px solid var(--line);
+  border-radius:var(--r-sm);background:var(--card);margin-bottom:7px;font-size:14px;color:var(--ink)}
+.rank-no{width:22px;height:22px;flex:none;border-radius:50%;background:var(--ink);color:#fff;
+  display:grid;place-items:center;font-size:11.5px;font-weight:700}
+
+/* Dépôt de fichiers dans un formulaire */
+.drop-sm{padding:18px 16px;display:block}
+.drop-sm svg{width:21px;height:21px;margin-bottom:7px}
+.drop-sm b{font-size:14px}
+.ff-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);
+  border-radius:var(--r-sm);background:var(--card);font-size:14px}
+.ff-row .file-ic{width:30px;height:30px;font-size:9.5px}
+
+/* Restitution des réponses côté administration */
+.ans-scale-bar{height:6px;border-radius:99px;background:var(--paper-2);position:relative;margin:6px 0 8px}
+.ans-scale-bar i{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;
+  background:var(--accent);border:2px solid var(--card);transform:translate(-50%,-50%);
+  box-shadow:0 0 0 1px var(--accent)}
+.ans-line{padding:8px 11px;border-radius:var(--r-sm);background:var(--paper);font-size:13.5px;
+  display:flex;flex-wrap:wrap;gap:4px 16px}
+.ans-line i{font-style:normal;color:var(--faint);font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.05em;font-weight:700;margin-right:4px}
+.ans-file{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:var(--r-sm);
+  border:1px solid var(--line-2);background:var(--card);font-size:13.5px;font-weight:500;
+  color:var(--ink);cursor:pointer;transition:.18s}
+.ans-file:hover{border-color:var(--ink)}
+.ans-file svg{width:15px;height:15px}
+@media (max-width:560px){
+  .rep-fields{grid-template-columns:1fr}
+}

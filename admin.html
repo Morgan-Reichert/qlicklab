@@ -60,6 +60,7 @@
 
 <script src="qlab-config.js"></script>
 <script src="app.js?v=6"></script>
+<script src="forms.js?v=1"></script>
 <script>
 (function () {
 var $ = QL.$, $$ = QL.$$, esc = QL.esc, ico = QL.ico, T = QL.token;
@@ -435,14 +436,20 @@ function tForms() {
   $$('[data-see]').forEach(function (b) {
     b.onclick = function () {
       var a = assigned[b.dataset.see];
-      QL.modal({ title:a.title, sub:'Réponses envoyées le ' + QL.dateTime(a.submitted_at), wide:true, foot:false,
+      var m = QL.modal({ title:a.title, sub:'Réponses envoyées le ' + QL.dateTime(a.submitted_at),
+        wide:true, foot:false,
         body:a.schema.map(function (fl) {
-          var v = a.answers[fl.key];
-          if (Array.isArray(v)) v = v.join(', ');
-          if (typeof v === 'boolean') v = v ? 'Oui' : 'Non';
           return '<div class="ansrow"><div class="q">' + esc(fl.label) + '</div>'
-            + '<div class="a">' + (v ? esc(v) : '<span class="faint">Sans réponse</span>') + '</div></div>';
+            + '<div class="a">' + QL.form.reponse(fl, a.answers[fl.key]) + '</div></div>';
         }).join('') });
+      /* Les pièces jointes se téléchargent depuis la fiche. */
+      QL.$$('[data-doc]', m.root).forEach(function (btn) {
+        btn.onclick = function () {
+          QL.api('qb_doc_get', { p_token:T(), p_id:btn.dataset.doc })
+            .then(function (d) { QL.download(d.name, d.mime, d.b64); })
+            .catch(function (e) { QL.toast(e.message, 'bad'); });
+        };
+      });
     };
   });
 }
@@ -701,9 +708,7 @@ function vFormLib() {
       }, true); }; });
 }
 
-var TYPES = [['text','Texte court'],['textarea','Texte long'],['select','Liste déroulante'],
-  ['radio','Choix unique'],['multi','Choix multiples'],['checkbox','Case à cocher'],
-  ['number','Nombre'],['date','Date'],['email','E-mail'],['url','Adresse web']];
+var TYPES = QL.form.TYPES;
 
 function editForm(f) {
   var schema = f ? JSON.parse(JSON.stringify(f.schema)) : [];
@@ -743,8 +748,10 @@ function editForm(f) {
           + '<label class="check nowrap" style="align-items:center"><input type="checkbox" data-p="required"'
             + (fl.required ? ' checked' : '') + '><span class="small">Obligatoire</span></label></div>'
         + '<input class="input" data-p="help" placeholder="Précision affichée sous la question (facultatif)" value="' + esc(fl.help || '') + '">'
-        + '<input class="input" data-p="options" placeholder="Choix possibles, séparés par une virgule" value="'
-          + esc((fl.options || []).join(', ')) + '"' + (['select','radio','multi'].indexOf(fl.type) < 0 ? ' style="display:none"' : '') + '>'
+        + '<input class="input" data-p="options" placeholder="'
+          + esc(QL.form.OPTIONS_LABEL[fl.type] || 'Choix possibles, séparés par une virgule') + '" value="'
+          + esc((fl.options || []).join(', ')) + '"'
+          + (QL.form.usesOptions(fl.type) ? '' : ' style="display:none"') + '>'
         + '</div></div>';
     }).join('') || '<p class="small muted">Aucune question pour l’instant.</p>';
 
@@ -754,9 +761,11 @@ function editForm(f) {
       sync(); var i = +b.dataset.up; schema.splice(i - 1, 0, schema.splice(i, 1)[0]); drawFields(); }; });
     QL.$$('[data-down]', m.root).forEach(function (b) { b.onclick = function () {
       sync(); var i = +b.dataset.down; schema.splice(i + 1, 0, schema.splice(i, 1)[0]); drawFields(); }; });
-    QL.$$('[data-p="type"]', m.root).forEach(function (s) { s.onchange = function () {
-      var opt = QL.$('[data-p="options"]', s.closest('.fld'));
-      opt.style.display = ['select','radio','multi'].indexOf(s.value) >= 0 ? '' : 'none'; }; });
+    QL.$$('[data-p="type"]', m.root).forEach(function (sel) { sel.onchange = function () {
+      var opt = QL.$('[data-p="options"]', sel.closest('.fld'));
+      var use = QL.form.usesOptions(sel.value);
+      opt.style.display = use ? '' : 'none';
+      if (use) opt.placeholder = QL.form.OPTIONS_LABEL[sel.value]; }; });
   }
   function sync() { schema = collectFields(m.root, true); }
   function collectFields(scope, keepEmpty) {

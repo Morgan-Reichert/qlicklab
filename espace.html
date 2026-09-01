@@ -51,6 +51,7 @@
 
 <script src="qlab-config.js"></script>
 <script src="app.js?v=6"></script>
+<script src="forms.js?v=1"></script>
 <script>
 (function () {
 var $ = QL.$, $$ = QL.$$, esc = QL.esc, ico = QL.ico;
@@ -311,7 +312,22 @@ function formCard(f) {
 
 function formDetail(f) {
   var done = f.status === 'submitted';
-  var answers = Object.assign({}, f.answers || {});
+  var moteur = QL.form.engine(f.schema, f.answers, {
+    readonly: done,
+    upload: function (file) {
+      return QL.readFile(file).then(function (b64) {
+        return QL.api('qb_doc_add', { p_token:QL.token(), p_doc:{ kind:'file', name:file.name,
+          mime:file.type, size:file.size, b64:b64, note:'Joint au formulaire « ' + f.title + ' »' } })
+          .then(function (r) { return { id:r.id, name:file.name }; });
+      });
+    },
+    onChange: function () {
+      if (done) return;
+      $('#saveState').textContent = 'Enregistrement…';
+      save();
+    }
+  });
+
   $('#page').innerHTML =
     '<a class="btn btn-quiet btn-sm" href="#formulaires" style="margin-bottom:16px;padding-left:0">'
       + ico('back') + '<span>Tous les formulaires</span></a>'
@@ -319,113 +335,53 @@ function formDetail(f) {
       + '<h1 style="display:inline">' + esc(f.title) + '</h1>'
       + (done ? '<span class="badge ok">Envoyé</span>' : '') + '</div>'
     + '<p class="lede">' + esc(f.description || '') + '</p></div>'
-    + '<div class="card"><div class="card-body"><form id="frm" class="stack stack-20">'
-      + f.schema.map(function (fl) { return field(fl, answers[fl.key], done); }).join('')
-      + '</form></div>'
+    + '<div class="card"><div class="card-body"><div id="frm" class="stack stack-20">'
+      + moteur.html() + '</div></div>'
     + (done
       ? '<div class="card-foot small muted">Envoyé le ' + esc(QL.dateTime(f.submitted_at))
         + '. Besoin de corriger une réponse ? Demandez-nous de rouvrir le formulaire.</div>'
-      : '<div class="card-foot row-between"><span class="small muted" id="saveState">Brouillon enregistré automatiquement.</span>'
+      : '<div class="card-foot row-between wrapfx" style="gap:10px">'
+        + '<span class="small muted" id="saveState">Vos réponses sont enregistrées au fur et à mesure.</span>'
         + '<div class="row" style="gap:9px">'
         + '<button class="btn btn-ghost btn-sm" id="btnDraft">Enregistrer</button>'
         + '<button class="btn btn-primary" id="btnSubmit">Envoyer mes réponses</button></div></div>')
     + '</div>';
 
+  moteur.mount($('#frm'));
   if (done) return;
 
   var save = QL.debounce(function () {
     QL.api('qb_form_save', { p_token:QL.token(), p_assignment:f.assignment_id,
-      p_answers:collect(f), p_submit:false })
-      .then(function () { $('#saveState').textContent = 'Brouillon enregistré · ' + new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); })
+      p_answers:moteur.value(), p_submit:false })
+      .then(function () {
+        $('#saveState').textContent = 'Brouillon enregistré · '
+          + new Date().toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+      })
       .catch(function () { $('#saveState').textContent = 'Enregistrement impossible.'; });
   }, 900);
-  $('#frm').addEventListener('input', function () { $('#saveState').textContent = 'Enregistrement…'; save(); });
-  $('#frm').addEventListener('change', save);
 
   $('#btnDraft').onclick = function (e) { e.preventDefault(); save(); QL.toast('Brouillon enregistré', 'ok'); };
   $('#btnSubmit').onclick = function (e) {
     e.preventDefault();
-    var a = collect(f), manquants = f.schema.filter(function (fl) {
-      return fl.required && (a[fl.key] == null || a[fl.key] === '' || (Array.isArray(a[fl.key]) && !a[fl.key].length));
-    });
+    var manquants = moteur.manquants();
     if (manquants.length) {
-      QL.toast('Il reste ' + manquants.length + ' réponse' + (manquants.length > 1 ? 's' : '') + ' obligatoire' + (manquants.length > 1 ? 's' : ''), 'bad');
-      var first = $('[data-k="' + manquants[0].key + '"]');
-      if (first) { first.scrollIntoView({ block:'center', behavior:'smooth' });
-        var inp = $('input,textarea,select', first); if (inp) inp.focus(); }
+      QL.toast('Il reste ' + manquants.length + ' réponse' + (manquants.length > 1 ? 's' : '')
+        + ' obligatoire' + (manquants.length > 1 ? 's' : ''), 'bad');
+      var cible = $('[data-k="' + manquants[0].key + '"]');
+      if (cible) {
+        cible.scrollIntoView({ block:'center', behavior:'smooth' });
+        var champ = $('input,textarea,select', cible); if (champ) champ.focus();
+      }
       return;
     }
     var b = this; QL.busy(b, true, 'Envoi…');
-    QL.api('qb_form_save', { p_token:QL.token(), p_assignment:f.assignment_id, p_answers:a, p_submit:true })
+    QL.api('qb_form_save', { p_token:QL.token(), p_assignment:f.assignment_id,
+      p_answers:moteur.value(), p_submit:true })
       .then(function () { QL.toast('Formulaire envoyé. Merci !', 'ok'); return load(); })
       .then(function () { location.hash = '#formulaires'; })
       .catch(function (err) { QL.busy(b, false); QL.toast(err.message, 'bad'); });
   };
 }
-
-function field(fl, val, ro) {
-  var id = 'f_' + fl.key, dis = ro ? ' disabled' : '';
-  var head = '<div class="field" data-k="' + esc(fl.key) + '"><label for="' + id + '">' + esc(fl.label)
-    + (fl.required ? ' <span class="req">*</span>' : '') + '</label>'
-    + (fl.help ? '<p class="hint">' + esc(fl.help) + '</p>' : '');
-  var body;
-  switch (fl.type) {
-    case 'textarea':
-      body = '<textarea class="textarea" id="' + id + '" data-f="' + esc(fl.key) + '"'
-        + (fl.placeholder ? ' placeholder="' + esc(fl.placeholder) + '"' : '') + dis + '>' + esc(val || '') + '</textarea>';
-      break;
-    case 'select':
-      body = '<select class="select" id="' + id + '" data-f="' + esc(fl.key) + '"' + dis + '>'
-        + '<option value="">Choisir…</option>'
-        + (fl.options || []).map(function (o) {
-            return '<option' + (val === o ? ' selected' : '') + '>' + esc(o) + '</option>'; }).join('')
-        + '</select>';
-      break;
-    case 'radio':
-      body = '<div class="opts">' + (fl.options || []).map(function (o, i) {
-        return '<label class="opt"><input type="radio" name="' + id + '" data-f="' + esc(fl.key) + '" value="'
-          + esc(o) + '"' + (val === o ? ' checked' : '') + dis + '><span class="dot"></span>'
-          + '<span class="grow"><b class="ttl">' + esc(o) + '</b></span></label>'; }).join('') + '</div>';
-      break;
-    case 'multi':
-      var arr = Array.isArray(val) ? val : [];
-      body = '<div class="row wrapfx" style="gap:8px">' + (fl.options || []).map(function (o) {
-        return '<label class="chip' + (arr.indexOf(o) >= 0 ? ' on' : '') + '">'
-          + '<input type="checkbox" style="display:none" data-f="' + esc(fl.key) + '" data-multi value="'
-          + esc(o) + '"' + (arr.indexOf(o) >= 0 ? ' checked' : '') + dis + '>' + esc(o) + '</label>'; }).join('') + '</div>';
-      break;
-    case 'checkbox':
-      body = '<label class="check"><input type="checkbox" data-f="' + esc(fl.key) + '"'
-        + (val ? ' checked' : '') + dis + '><span>' + esc(fl.placeholder || 'Oui') + '</span></label>';
-      break;
-    default:
-      body = '<input class="input" id="' + id + '" data-f="' + esc(fl.key) + '" type="'
-        + (fl.type || 'text') + '" value="' + esc(val || '') + '"'
-        + (fl.placeholder ? ' placeholder="' + esc(fl.placeholder) + '"' : '') + dis + '>';
-  }
-  return head + body + '</div>';
-}
-
-function collect(f) {
-  var out = {};
-  f.schema.forEach(function (fl) {
-    var nodes = $$('[data-f="' + fl.key + '"]');
-    if (!nodes.length) return;
-    if (fl.type === 'multi') {
-      out[fl.key] = nodes.filter(function (n) { return n.checked; }).map(function (n) { return n.value; });
-    } else if (fl.type === 'radio') {
-      var c = nodes.filter(function (n) { return n.checked; })[0]; out[fl.key] = c ? c.value : '';
-    } else if (fl.type === 'checkbox') {
-      out[fl.key] = nodes[0].checked;
-    } else out[fl.key] = nodes[0].value;
-  });
-  return out;
-}
-/* Bascule visuelle des étiquettes multi-choix */
-document.addEventListener('change', function (e) {
-  if (e.target.hasAttribute && e.target.hasAttribute('data-multi'))
-    e.target.parentNode.classList.toggle('on', e.target.checked);
-});
 
 /* ======================================================== Vue documents = */
 function vDocs() {
