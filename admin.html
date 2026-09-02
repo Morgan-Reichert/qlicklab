@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/icon-black.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="app.css?v=10" />
+<link rel="stylesheet" href="app.css?v=11" />
 <style>
   .rail-sub.admin{color:var(--accent-deep)}
   .codecell{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.14em;
@@ -59,7 +59,7 @@
 </div>
 
 <script src="qlab-config.js"></script>
-<script src="app.js?v=9"></script>
+<script src="app.js?v=11"></script>
 <script src="forms.js?v=8"></script>
 <script>
 (function () {
@@ -734,7 +734,7 @@ function editForm(f) {
 
   function drawFields() {
     QL.$('#flds', m.root).innerHTML = schema.map(function (fl, i) {
-      return '<div class="fld" data-i="' + i + '">'
+      return '<div class="fld" data-i="' + i + '" data-key="' + esc(fl.key || '') + '">'
         + '<div class="row-between" style="margin-bottom:10px">'
           + '<span class="eyebrow">QUESTION ' + (i + 1) + '</span>'
           + '<div class="row" style="gap:2px">'
@@ -773,7 +773,10 @@ function editForm(f) {
     return QL.$$('.fld', scope).map(function (n) {
       var g = function (p) { return QL.$('[data-p="' + p + '"]', n); };
       var label = g('label').value.trim();
-      return { key:'q' + (n.dataset.i || 0) + '_' + slug(label), label:label, type:g('type').value,
+      /* On conserve la clé existante. En forger une nouvelle à chaque
+         enregistrement détacherait les réponses déjà reçues. */
+      var cle = n.dataset.key || ('q' + (n.dataset.i || 0) + '_' + slug(label));
+      return { key:cle, label:label, type:g('type').value,
         required:g('required').checked, help:g('help').value.trim(),
         options:g('options').value.split(',').map(function (x) { return x.trim(); }).filter(Boolean) };
     }).filter(function (x) { return keepEmpty || x.label; });
