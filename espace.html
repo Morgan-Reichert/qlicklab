@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/icon-black.png" />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="app.css?v=7" />
+<link rel="stylesheet" href="app.css?v=10" />
 </head>
 <body class="qlab">
 
@@ -50,8 +50,8 @@
 </div>
 
 <script src="qlab-config.js"></script>
-<script src="app.js?v=6"></script>
-<script src="forms.js?v=1"></script>
+<script src="app.js?v=9"></script>
+<script src="forms.js?v=8"></script>
 <script>
 (function () {
 var $ = QL.$, $$ = QL.$$, esc = QL.esc, ico = QL.ico;
@@ -122,6 +122,7 @@ function render() {
   ({ attente:vAttente, projet:vProjet, suivi:vSuivi, formulaires:vForms,
      documents:vDocs, liens:vLiens, dossier:vDossier })[v]();
   window.scrollTo({ top:0 });
+  QL.reveal($('#page'));
 }
 window.addEventListener('hashchange', render);
 
@@ -247,7 +248,7 @@ function vProjet() {
           + (D.links.length ? '<div class="card-list">' + D.links.map(linkRow).join('') + '</div>'
              : '<div class="card-body">' + vide('link', 'Pas encore de lien', 'Les adresses de votre projet apparaîtront ici.') + '</div>') + '</div>'
         + '<div class="card card-pad">'
-          + '<div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:10px">Votre contact</div>'
+          + '<div class="eyebrow" style="margin-bottom:10px">Votre contact</div>'
           + '<div class="row" style="gap:10px"><span style="color:var(--ink-3)">' + ico('mail', 17) + '</span>'
           + '<a href="contact.html" style="font-weight:600;color:var(--ink)">Écrire à l’équipe</a></div>'
           + '<p class="small muted" style="margin-top:10px">Une question, un changement de périmètre, une urgence : passez par là, on répond vite.</p>'
@@ -534,7 +535,7 @@ function vDossier() {
       + '</div></div>'
       + '<div class="stack" style="gap:16px">'
         + '<div class="card card-pad">'
-          + '<div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:12px">Votre code d’accès</div>'
+          + '<div class="eyebrow" style="margin-bottom:12px">Votre code d’accès</div>'
           + '<div class="code-show">' + c.code.split('').map(function (x) { return '<b>' + x + '</b>'; }).join('') + '</div>'
           + '<button class="btn btn-ghost btn-sm" id="cpyCode" style="margin-top:14px">' + ico('copy') + '<span>Copier</span></button>'
           + '<p class="small muted" style="margin-top:12px">Ne le partagez qu’au sein de votre structure. '
@@ -546,7 +547,7 @@ function vDossier() {
             : '')
         + '</div>'
         + '<div class="card card-pad"><div class="row-between" style="margin-bottom:8px">'
-          + '<div class="xsmall faint" style="letter-spacing:.09em;text-transform:uppercase;font-weight:700">Frais de dossier</div>'
+          + '<div class="eyebrow">Frais de dossier</div>'
           + feeBadge + '</div>'
           + '<div class="num" style="font-size:26px;color:var(--ink)">' + (c.fee_amount ? QL.money(c.fee_amount) : 'Offert') + '</div>'
         + '</div>'
@@ -555,17 +556,19 @@ function vDossier() {
   $('#cpyCode').onclick = function () { QL.copier(c.code); };
 }
 function info(k, v) {
-  return '<div><div class="xsmall faint" style="letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:4px">'
+  return '<div><div class="eyebrow" style="margin-bottom:4px">'
     + esc(k) + '</div><div style="color:var(--ink);font-weight:500">' + esc(v || '—') + '</div></div>';
 }
 
 function vide(icon, titre, txt) {
-  return '<div class="empty">' + ico(icon, 30) + '<b>' + esc(titre) + '</b><span>' + esc(txt) + '</span></div>';
+  return '<div class="empty"><div class="empty-ic">' + ico(icon, 24) + '</div>'
+    + '<b>' + esc(titre) + '</b><span>' + esc(txt) + '</span></div>';
 }
 
 /* ------------------------------------------------------------- Départ --- */
 $('#btnOut').onclick = function () { QL.logout(); };
 QL.railToggle();
+QL.stickyTop();
 load();
 })();
 </script>

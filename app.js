@@ -369,6 +369,34 @@ function railToggle() {
   };
 }
 
+/* Arrivée échelonnée du contenu.
+   La classe est posée puis retirée : l'animation ne se rejoue jamais, et le
+   contenu reste visible même si elle ne s'exécute pas. */
+function reveal(host) {
+  if (!host) return;
+  try {
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  } catch (e) { /* on continue */ }
+  host.classList.remove('reveal');
+  void host.offsetWidth;                      /* force le recalcul */
+  host.classList.add('reveal');
+  clearTimeout(host._rev);
+  host._rev = setTimeout(function () { host.classList.remove('reveal'); }, 950);
+}
+
+/* Ombre de la barre du haut, activée au défilement */
+function stickyTop() {
+  var bar = $('.topbar');
+  if (!bar) return;
+  var pose = false;
+  function maj() {
+    var doit = window.scrollY > 6;
+    if (doit !== pose) { pose = doit; bar.classList.toggle('scrolled', doit); }
+  }
+  window.addEventListener('scroll', maj, { passive: true });
+  maj();
+}
+
 /* Lecture d'un fichier -> base64 */
 function readFile(file) {
   return new Promise(function (res, rej) {
@@ -399,6 +427,6 @@ root.QL = {
   session:session, setSession:setSession, token:token, guard:guard, logout:logout,
   api:api, fp:fp, demoFlag:demoFlag,
   codeInput:codeInput, budgetSlider:budgetSlider, phaseBar:phaseBar,
-  railToggle:railToggle, readFile:readFile, download:download
+  railToggle:railToggle, stickyTop:stickyTop, reveal:reveal, readFile:readFile, download:download
 };
 })(window);
