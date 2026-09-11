@@ -69,7 +69,8 @@ if(spyLinks.length){
 /* ---------- FLOATING CTA ---------- */
 (function(){
   var fab=document.createElement('a'); fab.className='fab'; fab.href='contact.html';
-  fab.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Proposer un projet';
+  var lbl=(document.documentElement.lang||'fr').slice(0,2)==='en' ? 'Pitch a project' : 'Proposer un projet';
+  fab.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+lbl;
   document.body.appendChild(fab);
   window.addEventListener('scroll',function(){fab.classList.toggle('show',window.scrollY>window.innerHeight*0.85);},{passive:true});
 })();
@@ -184,4 +185,30 @@ document.addEventListener('click',function(e){
   setTimeout(done,650);
 });
 
+})();
+
+/* ---------- BARRES DE PROGRESSION ---------- */
+/* Les .bar-fill portent leur cible en data-w mais plus rien ne les remplissait. */
+(function(){
+  var bars=[].slice.call(document.querySelectorAll('.bar-fill[data-w]'));
+  if(!bars.length) return;
+  var fill=function(b){ b.style.width=Math.max(0,Math.min(100,parseFloat(b.dataset.w)||0))+'%'; };
+  if(!('IntersectionObserver' in window)){ bars.forEach(fill); return; }
+  var o=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ fill(e.target); o.unobserve(e.target); } });
+  },{threshold:.3});
+  bars.forEach(function(b){ o.observe(b); });
+})();
+
+/* ---------- HAUTEUR RÉELLE DE L'EN-TÊTE ---------- */
+/* Le menu mobile s'ouvre sous l'en-tête : barre de statut comprise. */
+(function(){
+  var h=document.getElementById('header'); if(!h) return;
+  var set=function(){
+    var px=Math.round(h.getBoundingClientRect().height);
+    document.documentElement.style.setProperty('--entete-bas',px+'px');
+  };
+  set();
+  window.addEventListener('resize',set,{passive:true});
+  if(window.ResizeObserver) new ResizeObserver(set).observe(h);
 })();

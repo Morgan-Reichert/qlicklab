@@ -36,18 +36,16 @@ function q(s,ctx){ return Array.prototype.slice.call((ctx||document).querySelect
 
 document.fonts.ready.then(function(){
 
-  /* ---------- 1. TITRES — révélation par mots masqués ---------- */
-  if(window.SplitType){
-    q('.sec-head h2,.chapter h2,.story-intro h2,.certs-head h2,.page-hero h1,.cta-box h2,.moody-tagline').forEach(function(h){
-      if(h.dataset.split) return; h.dataset.split='1';
-      var st = new SplitType(h,{ types:'lines,words' });
-      if(!st.words || !st.words.length) return;
-      gsap.from(st.words,{
-        yPercent:115, duration:.85, ease:'power4.out', stagger:.03,
-        scrollTrigger:{ trigger:h, start:'top 88%', once:true }
-      });
+  /* ---------- 1. TITRES — fondu simple ----------
+     Plus de découpage en lignes/mots : il sortait les fragments de leur
+     <span> et vidait de sa couleur le texte en dégradé, en plus de
+     rejeter les accolades du motif { … } sur leur propre ligne. */
+  q('.sec-head h2,.chapter h2,.story-intro h2,.certs-head h2,.page-hero h1,.cta-box h2,.moody-tagline').forEach(function(h){
+    gsap.fromTo(h,{ y:18, opacity:0 },{
+      y:0, opacity:1, duration:.7, ease:'power3.out', clearProps:'opacity,transform',
+      scrollTrigger:{ trigger:h, start:'top 90%', once:true }
     });
-  }
+  });
 
   /* ---------- 2. PARAGRAPHES & CTA des chapitres — fondu décalé ---------- */
   /* NB : fromTo + clearProps partout — certains éléments sont aussi gérés par
@@ -127,92 +125,9 @@ document.fonts.ready.then(function(){
     });
   });
 
-  /* ---------- 3ter. DOMAINES mobile — pile épinglée : les cartes volent
-     depuis 4 directions et se superposent exactement au même endroit ---------- */
-  if(window.matchMedia('(max-width:768px)').matches){
-    var polboard = document.querySelector('.feat-board');
-    var polcards = q('.feat-board .polcard');
-    if(polboard && polcards.length === 4){
-      polboard.classList.add('stacked');
-      polcards.forEach(function(c){ c.classList.add('in'); });   /* neutralise data-reveal */
-      gsap.set(polcards,{ xPercent:-50 });
-      gsap.set(polcards[0],{ rotation:-2 });
+  /* Les cartes « domaines » restent une grille lisible sur mobile :
+     la pile épinglée d'origine desservait la compréhension. */
 
-      /* la hauteur du plateau = la plus haute carte */
-      function sizeBoard(){
-        var h = 0;
-        polcards.forEach(function(c){ h = Math.max(h, c.offsetHeight); });
-        polboard.style.height = h + 'px';
-      }
-      sizeBoard();
-      window.addEventListener('resize', function(){ sizeBoard(); ScrollTrigger.refresh(); });
-
-      /* préparation du "ça se dessine / ça s'écrit" */
-      var intro = polcards.map(function(card){
-        var svg = card.querySelector('.pol-svg');
-        var strokes = [], fills = [];
-        if(svg){
-          q('path,circle,rect', svg).forEach(function(el){
-            if(el === svg.firstElementChild) return;            /* fond beige */
-            if(el.hasAttribute('pathLength') || el.hasAttribute('stroke-dasharray')) return;
-            var hasStroke = el.getAttribute('stroke') || el.closest('g[stroke]');
-            try{
-              if(hasStroke && el.getTotalLength){
-                var L = el.getTotalLength();
-                if(L > 0){ el.style.strokeDasharray = L; el.style.strokeDashoffset = L; strokes.push(el); }
-              }
-            }catch(e){}
-            var f = el.getAttribute('fill');
-            if(f && f !== 'none') fills.push(el);
-          });
-          gsap.set(fills,{ fillOpacity:0 });
-        }
-        var chars = [];
-        q('h3,p', card).forEach(function(t){
-          var txt = t.textContent; t.textContent = '';
-          txt.split('').forEach(function(ch){
-            var s = document.createElement('span');
-            s.textContent = ch; s.style.opacity = 0;
-            t.appendChild(s); chars.push(s);
-          });
-        });
-        return { strokes:strokes, fills:fills, chars:chars, played:false };
-      });
-      function playIntro(i){
-        var d = intro[i];
-        if(!d || d.played) return; d.played = true;
-        var tl = gsap.timeline();
-        if(d.strokes.length) tl.to(d.strokes,{ strokeDashoffset:0, duration:.75, ease:'power2.inOut', stagger:.035 },0);
-        if(d.fills.length)   tl.to(d.fills,{ fillOpacity:1, duration:.5, ease:'power1.out', stagger:.02 },.5);
-        if(d.chars.length)   tl.to(d.chars,{ opacity:1, duration:.01, ease:'none', stagger:.012 },.25);
-      }
-
-      /* aimantation propre à la pile : jamais plus d'une carte par geste */
-      var snapIdx = 0;
-      var poltl = gsap.timeline({
-        scrollTrigger:{
-          trigger:polboard, start:'top 108px', end:'+=250%', pin:true, scrub:.55, anticipatePin:1,
-          onEnter:function(){ playIntro(0); },
-          snap:{
-            snapTo:function(v){
-              var t = Math.round(v * 3);
-              return Math.max(snapIdx - 1, Math.min(snapIdx + 1, t)) / 3;
-            },
-            onComplete:function(self){ snapIdx = Math.round(self.progress * 3); },
-            duration:{min:.3,max:.7}, ease:'power3.out', delay:.05
-          }
-        }
-      });
-      window._pileST = poltl.scrollTrigger;
-      /* 2e carte : de la gauche · 3e : de la droite · 4e : d'en dessous */
-      poltl.call(function(){ playIntro(1); },null,0)
-        .fromTo(polcards[1],{ x:'-125vw', rotation:-26 },{ x:0, rotation:-2.2, duration:1, ease:'power2.out' },0)
-        .call(function(){ playIntro(2); },null,1)
-        .fromTo(polcards[2],{ x:'125vw', rotation:24 },{ x:0, rotation:1.8, duration:1, ease:'power2.out' },1)
-        .call(function(){ playIntro(3); },null,2)
-        .fromTo(polcards[3],{ y:'115vh', rotation:-16 },{ y:0, rotation:2.4, duration:1, ease:'power2.out' },2);
-    }
-  }
 
   /* ---------- moteur du carrousel dessiné : trace -> encre -> vit -> s'efface ----------
      getRot() fournit le mot tournant à synchroniser (change à chaque nouvelle illustration) */

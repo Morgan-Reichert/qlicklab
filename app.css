@@ -6,19 +6,22 @@
 
 /* ---------- 1. Jetons ---------- */
 :root{
-  --ink:#111111;        --ink-2:#2E2E2C;      --ink-3:#55554F;
-  --muted:#7B7B74;      --faint:#A6A69F;      --ghost:#C9C8C1;
+  --ink:#000000;        --ink-2:#1B1B20;      --ink-3:#3C3D45;
+  --muted:#56575E;      --faint:#8E8FA0;      --ghost:#C2C3CC;
 
-  --paper:#F6F5F2;      --paper-2:#EFEDE8;    --card:#FFFFFF;
-  --line:#E7E5DF;       --line-2:#D6D3CA;     --line-3:#111111;
+  --paper:#F2F3F6;      --paper-2:#E9EAEF;    --card:#FFFFFF;
+  --line:#E3E4EA;       --line-2:#CFD1DA;     --line-3:#000000;
 
-  --accent:#A62FBD;     --accent-deep:#7C1F92; --accent-soft:#F7EAFB;
-  --ok:#116B43;         --ok-soft:#E6F3EC;
+  --accent:#A62FBD;     --accent-deep:#7A1F8D; --accent-soft:#F7EAFB;
+  --peri:#E8A3F5;       --orange:#F97316;
+  --degrade:linear-gradient(100deg,#A62FBD 0%,#F97316 100%);
+  --nuit:#07060F;
+  --ok:#0B8A5B;         --ok-soft:#E6F5EE;
   --warn:#8A5A00;       --warn-soft:#FBF0DA;
   --bad:#A4231A;        --bad-soft:#FCECEA;
   --info:#1F4A8F;       --info-soft:#E9F0FB;
 
-  --r-xs:8px; --r-sm:10px; --r:14px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --r-xs:10px; --r-sm:12px; --r:16px; --r-lg:22px; --r-xl:28px; --r-pill:999px;
 
   /* Ombres empilées : un contact net, un halo court, une diffusion longue. */
   --sh-1:0 1px 1.5px rgba(17,17,17,.045), 0 2px 6px -3px rgba(17,17,17,.05);
@@ -35,8 +38,8 @@
   --swift:cubic-bezier(.4,0,.2,1);
   --rail:248px;
 
-  --sans:'Satoshi','Satoshi-Variable',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  --display:'Clash Display','Satoshi',-apple-system,sans-serif;
+  --sans:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
   --mono:'SF Mono',ui-monospace,'JetBrains Mono','Menlo',monospace;
 }
 
@@ -696,3 +699,52 @@ body.qlab::after{
 
 @media print{ body.qlab::after{display:none} .page.reveal > *{animation:none} }
 @media (prefers-reduced-motion:reduce){ .page.reveal > *{animation:none} }
+
+/* ==========================================================================
+   24. Alignement sur le système CRE8
+   Mêmes pilules, mêmes titres, mêmes surfaces que le site vitrine.
+   ========================================================================== */
+.qlab h1,.qlab h2,.qlab h3,.qlab h4{ font-weight:800; font-variation-settings:"wdth" 96; }
+.qlab h1{ font-size:clamp(1.7rem,3vw,2.1rem); letter-spacing:-.045em; }
+.qlab h2{ font-size:1.4rem; letter-spacing:-.038em; }
+.qlab h3{ font-size:1.08rem; letter-spacing:-.03em; }
+
+/* boutons : la pilule à bord de 2px */
+.qlab .btn{
+  min-height:48px; padding:0 1.6rem; border-radius:var(--r-pill);
+  border:2px solid var(--ink); background:var(--ink); color:#fff;
+  font-family:var(--display); font-weight:700; font-size:.9rem;
+  font-variation-settings:"wdth" 92; letter-spacing:-.015em;
+  backdrop-filter:none; -webkit-backdrop-filter:none;
+  box-shadow:0 10px 24px -12px rgba(30,10,40,.55);
+}
+.qlab .btn:hover{ background:var(--accent); border-color:var(--accent); transform:translateY(-2px); }
+.qlab .btn:active{ transform:translateY(0); }
+.qlab .btn-primary{
+  background:var(--accent); border-color:var(--accent); color:#fff;
+  background-image:none; box-shadow:0 12px 28px -12px rgba(166,47,189,.6);
+}
+.qlab .btn-primary:hover{ background:var(--ink); border-color:var(--ink); }
+.qlab .btn-ghost,.qlab .btn-secondary,.qlab .btn-quiet{
+  background:transparent; color:var(--ink); border-color:var(--ink); box-shadow:none;
+}
+.qlab .btn-ghost:hover,.qlab .btn-secondary:hover,.qlab .btn-quiet:hover{ background:var(--ink); color:#fff; }
+.qlab .btn-sm{ min-height:40px; padding:0 1.2rem; font-size:.84rem; }
+.qlab .btn svg{ width:16px; height:16px; }
+
+/* surfaces */
+.qlab .card,.qlab .panel,.qlab .box{ border-radius:var(--r-lg); border:1px solid var(--line); }
+.qlab .badge,.qlab .chip{ font-family:var(--display); font-weight:600; }
+
+/* champs */
+.qlab input,.qlab select,.qlab textarea{ border-radius:var(--r); }
+.qlab input:focus,.qlab select:focus,.qlab textarea:focus{
+  border-color:var(--accent); box-shadow:0 0 0 4px rgba(166,47,189,.16);
+}
+
+/* écrans d'authentification : la carte de verre du héro */
+.qlab .auth-card,.qlab .authbox{ border-radius:28px; }
+.qlab .toast{ font-family:var(--display); font-weight:600; }
+
+/* accents de marque */
+.qlab .brand-grad,.qlab .grad-text{ background:var(--degrade); -webkit-background-clip:text; background-clip:text; color:transparent; }
